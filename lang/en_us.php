@@ -212,7 +212,7 @@ class en_us extends Language
 		$strings['Members'] = 'Members';
 		$strings['QuickSlotCreation'] = 'Create slots every %s minutes between %s and %s';
 		$strings['ApplyUpdatesTo'] = 'Apply Updates To';
-		$strings['CancelParticipation'] = 'Cancel Participation';
+		$strings['CancelParticipation'] = 'Cancel Collaboration';
 		$strings['Attending'] = 'Attending';
 		$strings['QuotaConfiguration'] = 'On %s for %s users in %s are limited to %s %s per %s';
 		$strings['QuotaEnforcement'] = 'Enforced %s %s';
@@ -242,7 +242,7 @@ class en_us extends Language
 		$strings['AccessoryName'] = 'Accessory Name';
 		$strings['QuantityAvailable'] = 'Quantity Available';
 		$strings['Resources'] = 'Resources';
-		$strings['Participants'] = 'Participants';
+		$strings['Participants'] = 'Collaborators';
 		$strings['User'] = 'User';
 		$strings['Resource'] = 'Resource';
 		$strings['Status'] = 'Status';
@@ -295,8 +295,8 @@ class en_us extends Language
 		$strings['ChangeUser'] = 'Change User';
 		$strings['MoreResources'] = 'More Resources';
 		$strings['ReservationLength'] = 'Reservation Length';
-		$strings['ParticipantList'] = 'Participant List';
-		$strings['AddParticipants'] = 'Add Participants';
+		$strings['ParticipantList'] = 'Collaborator List';
+		$strings['AddParticipants'] = 'Add Collaborators';
 		$strings['InviteOthers'] = 'Invite Others';
 		$strings['AddResources'] = 'Add Resources';
 		$strings['AddAccessories'] = 'Add Accessories';
@@ -477,7 +477,7 @@ A confirmation email will be automatically sent to you.</br>
 		$strings['FlipSchedule'] = 'Flip the schedule layout';
 		$strings['Next'] = 'Next';
 		$strings['Success'] = 'Success';
-		$strings['Participant'] = 'Participant';
+		$strings['Participant'] = 'Collaborator';
 		$strings['ResourceFilter'] = 'Resource Filter';
 		$strings['ResourceGroups'] = 'Resource Groups';
 		$strings['AddNewGroup'] = 'Add a new group';
@@ -522,7 +522,7 @@ A confirmation email will be automatically sent to you.</br>
 		$strings['LimitAttributeScope'] = 'Collect In Specific Cases';
 		$strings['CollectFor'] = 'Collect For';
 		$strings['SignIn'] = 'Sign In';
-		$strings['AllParticipants'] = 'All Participants';
+		$strings['AllParticipants'] = 'All Collaborators';
 		$strings['RegisterANewAccount'] = 'Register a New Account';
 		$strings['Dates'] = 'Dates';
 		$strings['More'] = 'More';
@@ -533,9 +533,9 @@ A confirmation email will be automatically sent to you.</br>
         $strings['AvailableAt'] = 'Available At';
 		$strings['AllResourceTypes'] = 'All Resource Types';
 		$strings['AllResourceStatuses'] = 'All Resource Statuses';
-		$strings['AllowParticipantsToJoin'] = 'Allow Participants To Join';
+		$strings['AllowParticipantsToJoin'] = 'Allow Collaborators To Join';
 		$strings['Join'] = 'Join';
-		$strings['YouAreAParticipant'] = 'You are a participant of this reservation';
+		$strings['YouAreAParticipant'] = 'You are a collaborator of this reservation';
 		$strings['YouAreInvited'] = 'You are invited to this reservation';
 		$strings['YouCanJoinThisReservation'] = 'You can join this reservation';
 		$strings['Import'] = 'Import';
@@ -875,7 +875,7 @@ A confirmation email will be automatically sent to you.</br>
 		$strings['InvalidAttachmentExtension'] = 'You can only upload files of type: %s';
 		$strings['InvalidStartSlot'] = 'The start date and time requested is not valid.';
 		$strings['InvalidEndSlot'] = 'The end date and time requested is not valid.';
-		$strings['MaxParticipantsError'] = '%s can only support %s participants.';
+		$strings['MaxParticipantsError'] = '%s can only support %s collaborators.';
 		$strings['ReservationCriticalError'] = 'There was a critical error saving your reservation. If this continues, contact your system administrator.';
 		$strings['InvalidStartReminderTime'] = 'The start reminder time is not valid.';
 		$strings['InvalidEndReminderTime'] = 'The end reminder time is not valid.';
@@ -998,7 +998,7 @@ A confirmation email will be automatically sent to you.</br>
 		$strings['ReservationUpdatedAdminSubject'] = 'Notification: A reservation was updated';
 		$strings['ReservationDeleteAdminSubject'] = 'Notification: A reservation was removed';
 		$strings['ReservationApprovalAdminSubject'] = 'Notification: Reservation requires your approval';
-		$strings['ParticipantAddedSubject'] = 'Reservation participation notification';
+		$strings['ParticipantAddedSubject'] = 'Reservation collaboration notification';
 		$strings['ParticipantDeletedSubject'] = 'Reservation removed';
 		$strings['InviteeAddedSubject'] = 'Reservation invitation';
 		$strings['ResetPasswordRequest'] = 'Password reset request';
