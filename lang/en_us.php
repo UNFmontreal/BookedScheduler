@@ -30,37 +30,34 @@ class en_us extends Language
 	/**
 	 * @return array
 	 */
-	protected function _LoadDates()
-	{
-		$dates = array();
 
-		$dates['general_date'] = 'm/d/Y';
-		$dates['general_datetime'] = 'm/d/Y g:i:s A';
-		$dates['short_datetime'] = 'n/j/y g:i A';
-		$dates['schedule_daily'] = 'l, n/j/y';
-		$dates['reservation_email'] = 'm/d/Y @ g:i A (e)';
-		$dates['res_popup'] = 'D, n/d g:i A';
-		$dates['res_popup_time'] = 'g:i A';
-		$dates['short_reservation_date'] = 'n/j/y g:i A';
-		$dates['dashboard'] = 'D, n/d g:i A';
-		$dates['period_time'] = 'g:i A';
-		$dates['timepicker'] = 'h:i a';
-		$dates['mobile_reservation_date'] = 'n/j g:i A';
-		$dates['general_date_js'] = 'mm/dd/yy';
-        $dates['general_time_js'] = 'h:mm tt';
-        $dates['timepicker_js'] = 'h:i a';
-        $dates['momentjs_datetime'] = 'M/D/YY h:mm A';
-		$dates['calendar_time'] = 'h:mmt';
+    protected function _LoadDates()
+    {
+	$dates = array();
+        // change defaults here
+        $dates['general_date'] = 'Y/m/d';
+        $dates['general_datetime'] = 'Y/m/d H:i:s';
+        $dates['schedule_daily'] = 'l, Y/m/d';
+        $dates['reservation_email'] = 'Y/m/d @ H:i (e)';
+        $dates['res_popup'] = 'Y/m/d H:i';
+        $dates['dashboard'] = 'l, Y/m/d H:i';
+        $dates['period_time'] = "H:i";
+        $dates['timepicker'] = 'H:i';
+        $dates['general_date_js'] = "yy/mm/dd";
+		$dates['short_datetime'] = 'Y/n/j H:i';
+		$dates['schedule_daily'] = 'l, Y/m/d';
+		$dates['res_popup_time'] = 'D, d/n H:i';
+		$dates['short_reservation_date'] = 'Y/n/j H:i';
+		$dates['mobile_reservation_date'] = 'n/j H:i';
+        $dates['general_time_js'] = 'H:mm';
+        $dates['timepicker_js'] = 'H:i';
+        $dates['momentjs_datetime'] = 'YY/M/D H:mm';
+		$dates['calendar_time'] = 'H:mm';
 		$dates['calendar_dates'] = 'M d';
-		$dates['embedded_date'] = 'D d';
-		$dates['embedded_time'] = 'g:i A';
-		$dates['embedded_datetime'] = 'n/j g:i A';
-		$dates['report_date'] = '%m/%d';
-
-		$this->Dates = $dates;
-
-		return $this->Dates;
-	}
+        $dates['report_date'] = '%m/%d';
+        $this->Dates = $dates;
+        return $this->Dates;
+    }
 
 	/**
 	 * @return array
@@ -215,7 +212,7 @@ class en_us extends Language
 		$strings['Members'] = 'Members';
 		$strings['QuickSlotCreation'] = 'Create slots every %s minutes between %s and %s';
 		$strings['ApplyUpdatesTo'] = 'Apply Updates To';
-		$strings['CancelParticipation'] = 'Cancel Participation';
+		$strings['CancelParticipation'] = 'Cancel Collaboration';
 		$strings['Attending'] = 'Attending';
 		$strings['QuotaConfiguration'] = 'On %s for %s users in %s are limited to %s %s per %s';
 		$strings['QuotaEnforcement'] = 'Enforced %s %s';
@@ -245,7 +242,7 @@ class en_us extends Language
 		$strings['AccessoryName'] = 'Accessory Name';
 		$strings['QuantityAvailable'] = 'Quantity Available';
 		$strings['Resources'] = 'Resources';
-		$strings['Participants'] = 'Participants';
+		$strings['Participants'] = 'Collaborators';
 		$strings['User'] = 'User';
 		$strings['Resource'] = 'Resource';
 		$strings['Status'] = 'Status';
@@ -298,8 +295,8 @@ class en_us extends Language
 		$strings['ChangeUser'] = 'Change User';
 		$strings['MoreResources'] = 'More Resources';
 		$strings['ReservationLength'] = 'Reservation Length';
-		$strings['ParticipantList'] = 'Participant List';
-		$strings['AddParticipants'] = 'Add Participants';
+		$strings['ParticipantList'] = 'Collaborator List';
+		$strings['AddParticipants'] = 'Add Collaborators';
 		$strings['InviteOthers'] = 'Invite Others';
 		$strings['AddResources'] = 'Add Resources';
 		$strings['AddAccessories'] = 'Add Accessories';
@@ -458,7 +455,12 @@ class en_us extends Language
 		$strings['ReminderSendtimeTime'] = 'Time of Reminder (HH:MM)';
 		$strings['ReminderSendtimeAMPM'] = 'AM / PM';
 		$strings['AddReminder'] = 'Add Reminder';
-        $strings['DeleteReminderWarning'] = 'Are you sure you want to delete this?';
+        $strings['DeleteReminderWarning'] = 'Are you sure you want to delete this?</br>
+
+If you cancel a booked session, it will be immediately removed from the calendar and made available for other researchers.
+A confirmation email will be automatically sent to you.</br>
+
+<b>Please note that any MRI session cancelled less than seven (7) days in advance will be charged at the normal rate unless re-booked by another group.</b>';
         $strings['NoReminders'] = 'You have no upcoming reminders.';
 		$strings['Reminders'] = 'Reminders';
 		$strings['SendReminder'] = 'Send Reminder';
@@ -475,7 +477,7 @@ class en_us extends Language
 		$strings['FlipSchedule'] = 'Flip the schedule layout';
 		$strings['Next'] = 'Next';
 		$strings['Success'] = 'Success';
-		$strings['Participant'] = 'Participant';
+		$strings['Participant'] = 'Collaborator';
 		$strings['ResourceFilter'] = 'Resource Filter';
 		$strings['ResourceGroups'] = 'Resource Groups';
 		$strings['AddNewGroup'] = 'Add a new group';
@@ -520,7 +522,7 @@ class en_us extends Language
 		$strings['LimitAttributeScope'] = 'Collect In Specific Cases';
 		$strings['CollectFor'] = 'Collect For';
 		$strings['SignIn'] = 'Sign In';
-		$strings['AllParticipants'] = 'All Participants';
+		$strings['AllParticipants'] = 'All Collaborators';
 		$strings['RegisterANewAccount'] = 'Register a New Account';
 		$strings['Dates'] = 'Dates';
 		$strings['More'] = 'More';
@@ -531,9 +533,9 @@ class en_us extends Language
         $strings['AvailableAt'] = 'Available At';
 		$strings['AllResourceTypes'] = 'All Resource Types';
 		$strings['AllResourceStatuses'] = 'All Resource Statuses';
-		$strings['AllowParticipantsToJoin'] = 'Allow Participants To Join';
+		$strings['AllowParticipantsToJoin'] = 'Allow Collaborators To Join';
 		$strings['Join'] = 'Join';
-		$strings['YouAreAParticipant'] = 'You are a participant of this reservation';
+		$strings['YouAreAParticipant'] = 'You are a collaborator of this reservation';
 		$strings['YouAreInvited'] = 'You are invited to this reservation';
 		$strings['YouCanJoinThisReservation'] = 'You can join this reservation';
 		$strings['Import'] = 'Import';
@@ -852,7 +854,7 @@ class en_us extends Language
 		// Errors
 		$strings['LoginError'] = 'We could not match your username or password';
 		$strings['ReservationFailed'] = 'Your reservation could not be made';
-		$strings['MinNoticeError'] = 'This reservation requires advance notice. The earliest date and time that can be reserved is %s.';
+		$strings['MinNoticeError'] = 'This reservation requires advance notice. The earliest date and time that can be reserved is %s. Please contact UNF to confirm availability.';
 		$strings['MinNoticeErrorUpdate'] = 'Changing this reservation requires advance notice. Reservations before %s are not allowed to be changed.';
 		$strings['MinNoticeErrorDelete'] = 'Deleting this reservation requires advance notice. Reservations before %s are not allowed to be deleted.';
 		$strings['MaxNoticeError'] = 'This reservation cannot be made this far in the future. The latest date and time that can be reserved is %s.';
@@ -873,7 +875,7 @@ class en_us extends Language
 		$strings['InvalidAttachmentExtension'] = 'You can only upload files of type: %s';
 		$strings['InvalidStartSlot'] = 'The start date and time requested is not valid.';
 		$strings['InvalidEndSlot'] = 'The end date and time requested is not valid.';
-		$strings['MaxParticipantsError'] = '%s can only support %s participants.';
+		$strings['MaxParticipantsError'] = '%s can only support %s collaborators.';
 		$strings['ReservationCriticalError'] = 'There was a critical error saving your reservation. If this continues, contact your system administrator.';
 		$strings['InvalidStartReminderTime'] = 'The start reminder time is not valid.';
 		$strings['InvalidEndReminderTime'] = 'The end reminder time is not valid.';
@@ -996,7 +998,7 @@ class en_us extends Language
 		$strings['ReservationUpdatedAdminSubject'] = 'Notification: A reservation was updated';
 		$strings['ReservationDeleteAdminSubject'] = 'Notification: A reservation was removed';
 		$strings['ReservationApprovalAdminSubject'] = 'Notification: Reservation requires your approval';
-		$strings['ParticipantAddedSubject'] = 'Reservation participation notification';
+		$strings['ParticipantAddedSubject'] = 'Reservation collaboration notification';
 		$strings['ParticipantDeletedSubject'] = 'Reservation removed';
 		$strings['InviteeAddedSubject'] = 'Reservation invitation';
 		$strings['ResetPasswordRequest'] = 'Password reset request';

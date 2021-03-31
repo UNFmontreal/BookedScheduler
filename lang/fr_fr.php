@@ -142,7 +142,7 @@ class fr_fr extends en_gb
 		$strings['ResourceRequiresApprovalNone'] = 'Les réservations ne nécessitent pas d\'approbation';
 		$strings['ResourcePermissionAutoGranted'] = 'La permission est automatique';
 		$strings['ResourcePermissionNotAutoGranted'] = 'La permission n\'est pas automatique';
-		$strings['ResourceMinNotice'] = 'Les réservations doivent être créées au moins %s avant l\'heure de début de réservation';
+		$strings['ResourceMinNotice'] = 'Les réservations doivent être créées au moins %s avant l\'heure de début de réservation. Veuillez contacter l\'UNF pour confirmer la disponibilité.';
 		$strings['ResourceMinNoticeNone'] = 'Les réservations peuvent être saisies jusqu\'au dernier moment ';
 		$strings['ResourceMaxNotice'] = 'Les réservations ne doivent pas finir plus loin que %s du moment présent';
 		$strings['ResourceMaxNoticeNone'] = 'Les réservations peuvent finir n\'importe quand';
@@ -202,7 +202,7 @@ class fr_fr extends en_gb
 		$strings['AccessoryName'] = 'Nom de l\'accessoire';
 		$strings['QuantityAvailable'] = 'Quantité disponible';
 		$strings['Resources'] = 'Ressources';
-		$strings['Participants'] = 'Participants';
+		$strings['Participants'] = 'Collaborateurs';
 		$strings['User'] = 'Utilisateur';
 		$strings['Resource'] = 'Ressource';
 		$strings['Status'] = 'Statut';
@@ -255,8 +255,8 @@ class fr_fr extends en_gb
 		$strings['ChangeUser'] = 'Changer d\'Utilisateur';
 		$strings['MoreResources'] = '+ de  Resources';
 		$strings['ReservationLength'] = 'Durée de la réservation :';
-		$strings['ParticipantList'] = 'Liste des participants';
-		$strings['AddParticipants'] = 'Ajouter des Participants';
+		$strings['ParticipantList'] = 'Liste des collaborateurs';
+		$strings['AddParticipants'] = 'Ajouter des Collaborateurs';
 		$strings['InviteOthers'] = 'Autres Invités';
 		$strings['AddResources'] = 'Ajouter des Ressources';
 		$strings['AddAccessories'] = 'Ajouter des Accessoires';
@@ -436,7 +436,7 @@ class fr_fr extends en_gb
 		$strings['LimitAttributeScope'] = 'Afficher dans des Cas Spécifiques';
 		$strings['CollectFor'] = 'Afficher pour';
 		$strings['SignIn'] = 'Connexion';
-		$strings['AllParticipants'] = 'Tous les Participants';
+		$strings['AllParticipants'] = 'Tous les Collaborateurs';
 		$strings['More'] = 'Plus';
 		$strings['ResourceAvailability'] = 'Disponibilité des Ressources';
 		$strings['UnavailableAllDay'] = 'Indisponible toute la Journée';
@@ -622,13 +622,20 @@ class fr_fr extends en_gb
 		$strings['ReservationCreatedAdminSubject'] = 'Notification: Une réservation a été créée';
 		$strings['ReservationUpdatedAdminSubject'] = 'Notification: Une réservation a été mise à jour';
 		$strings['ReservationDeleteAdminSubject'] = 'Notification: Une réservation a été effacée';
-		$strings['ParticipantAddedSubject'] = 'Notication de Participation à une Réservation';
+		$strings['ParticipantAddedSubject'] = 'Notication de Collaboration à une Réservation';
 		$strings['ParticipantDeletedSubject'] = 'Réservation Effacée';
 		$strings['InviteeAddedSubject'] = 'Invitation à une Réservation';
 		$strings['ResetPasswordRequest'] = 'Demande de Réinitialisation du Mot de Passe';
 		$strings['ForgotPasswordEmailSent'] = 'Un email contenant les instructions pour réinitialiser votre mot de passe vous a été envoyé.';
 		$strings['ActivateYourAccount'] = 'Activez votre compte SVP';
 		$strings['ReportSubject'] = 'Le rapport demandé (%s)';
+
+
+		$strings['DeleteReminderWarning'] = "Voulez-vous supprimer cette réservation du calendrier?</br>
+Si vous annulez une réservation, celle-ci sera immédiatement retirée du calendrier.
+et sera disponible pour d'autres chercheurs. Un courriel confirmant votre annulation
+vous sera alors automatiquement envoyé.</br>
+<b>Veuillez noter que toute annulation d'une session d'IRM faite moins de sept (7) jours d'avance sera facturée au taux horaire applicable à moins d'être utilisée par un autre groupe</b>";
 		//
 
 		$this->Strings = $strings;
