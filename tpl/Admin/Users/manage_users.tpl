@@ -196,7 +196,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                 </td>
             </tr>
             {assign var=attributes value=$AttributeList}
-            {if $attributes|count > 0}
+            {if $attributes|default:array()|count > 0}
                 <tr data-userId="{$id}">
                     <td colspan="{$colCount}" class="{$rowCss} customAttributes" userId="{$id}">
 		        {assign var=changeAttributeAction value=ManageUsersActions::ChangeAttribute}
@@ -325,7 +325,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                                 </select>
                             </div>
                         </div>
-                        {if $AttributeList|count > 0}
+                        {if $AttributeList|default:array()|count > 0}
                             <div class="col-xs-12 col-sm-6">
                                 {control type="AttributeControl" attribute=$AttributeList[0]}
                             </div>
@@ -333,15 +333,15 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                             <div class="col-sm-12 col-md-6">&nbsp;</div>
                         {/if}
 
-                        {if $AttributeList|count > 1}
-                            {for $i=1 to $AttributeList|count-1}
+                        {if $AttributeList|default:array()|count > 1}
+                            {for $i=1 to $AttributeList|default:array()|count-1}
                                 {*{if $i%2==1}*}
                                 {*<div class="row">*}
                                 {*{/if}*}
                                 <div class="col-xs-12 col-sm-6">
                                     {control type="AttributeControl" attribute=$AttributeList[$i]}
                                 </div>
-                                {*{if $i%2==0 || $i==$AttributeList|count-1}*}
+                                {*{if $i%2==0 || $i==$AttributeList|default:array()|count-1}*}
                                 {*</div>*}
                                 {*{/if}*}
                             {/for}

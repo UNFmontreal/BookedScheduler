@@ -22,7 +22,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 开始时间: {formatdate date=$StartDate key=reservation_email}<br/>
 结束时间: {formatdate date=$EndDate key=reservation_email}<br/>
-{if $ResourceNames|count > 1}
+{if $ResourceNames|default:array()|count > 1}
 	资源名称:
 	<br/>
 	{foreach from=$ResourceNames item=resourceName}
@@ -53,7 +53,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 	<br/>
 {/foreach}
 
-{if $Accessories|count > 0}
+{if $Accessories|default:array()|count > 0}
 	<br/>
 	自主添加的附件列表:
 	<br/>
@@ -63,7 +63,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 	{/foreach}
 {/if}
 
-{if $Attributes|count > 0}
+{if $Attributes|default:array()|count > 0}
 	<br/>
 	{foreach from=$Attributes item=attribute}
 		<div>{control type="AttributeControl" attribute=$attribute readonly=true}</div>

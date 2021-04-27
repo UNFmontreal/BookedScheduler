@@ -31,7 +31,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
         {/validation_group}
     {/if}
 
-    {if $Announcements|count > 0}
+    {if $Announcements|default:array()|count > 0}
         <div id="announcements" class="col-sm-8 col-sm-offset-2 col-xs-12">
         {foreach from=$Announcements item=each}
             <div class="announcement">{$each->Text()|html_entity_decode|url2link|nl2br}</div>

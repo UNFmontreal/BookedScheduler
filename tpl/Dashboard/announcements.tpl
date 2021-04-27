@@ -18,7 +18,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 *}
 <div class="dashboard" id="announcementsDashboard">
 	<div class="dashboardHeader">
-		<div class="pull-left">{translate key="Announcements"} <span class="badge">{$Announcements|count}</span></div>
+		<div class="pull-left">{translate key="Announcements"} <span class="badge">{$Announcements|default:array()|count}</span></div>
 		<div class="pull-right">
 			<a href="#" title="{translate key=ShowHide} {translate key="Announcements"}">
 				<i class="glyphicon"></i>

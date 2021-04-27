@@ -23,7 +23,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 	<strong>End:</strong> {formatdate date=$EndDate key=reservation_email}<br/>
 	<strong>Title:</strong> {$Title}<br/>
 	<strong>Description:</strong> {$Description|nl2br}
-    {if $Attributes|count > 0}
+    {if $Attributes|default:array()|count > 0}
 	<br/>
     {foreach from=$Attributes item=attribute}
 	<div>{control type="AttributeControl" attribute=$attribute readonly=true}</div>
@@ -32,8 +32,8 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 </p>
 
 <p>
-    {if $ResourceNames|count > 1}
-		<strong>Resources ({$ResourceNames|count}):</strong>
+    {if $ResourceNames|default:array()|count > 1}
+		<strong>Resources ({$ResourceNames|default:array()|count}):</strong>
 		<br/>
         {foreach from=$ResourceNames item=resourceName}
             {$resourceName}
@@ -52,7 +52,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 {if count($RepeatRanges) gt 0}
 	<br/>
-	<strong>The reservation occurs on the following dates ({$RepeatRanges|count}):</strong>
+	<strong>The reservation occurs on the following dates ({$RepeatRanges|default:array()|count}):</strong>
 	<br/>
     {foreach from=$RepeatRanges item=date name=dates}
         {formatdate date=$date->GetBegin()}

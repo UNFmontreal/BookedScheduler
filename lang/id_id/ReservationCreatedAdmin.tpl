@@ -30,7 +30,7 @@ bersamaan dengan Booked Scheduler. Jika tidak, lihat
 	Nama Pengguna: {$UserName}
 	Mulai: {formatdate date=$StartDate key=reservation_email}<br/>
 	Akhir: {formatdate date=$EndDate key=reservation_email}<br/>
-	{if $ResourceNames|count > 1}
+	{if $ResourceNames|default:array()|count > 1}
 		Resource:<br/>
 		{foreach from=$ResourceNames item=resourceName}
 			{$resourceName}<br/>
@@ -56,7 +56,7 @@ bersamaan dengan Booked Scheduler. Jika tidak, lihat
 		{formatdate date=$date}<br/>
 	{/foreach}
 
-	{if $Accessories|count > 0}
+	{if $Accessories|default:array()|count > 0}
 		<br/>Aksesoris:<br/>
 		{foreach from=$Accessories item=accessory}
 			({$accessory->QuantityReserved}) {$accessory->Name}<br/>

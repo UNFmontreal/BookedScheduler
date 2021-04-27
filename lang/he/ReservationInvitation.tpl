@@ -23,7 +23,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 	התחלה: {formatdate date=$StartDate key=reservation_email}<br/>
 	סיום: {formatdate date=$EndDate key=reservation_email}<br/>
-	{if $ResourceNames|count > 1}
+	{if $ResourceNames|default:array()|count > 1}
 		משאבים:<br/>
 		{foreach from=$ResourceNames item=resourceName}
 			{$resourceName}<br/>
@@ -44,7 +44,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 		{formatdate date=$date}<br/>
 	{/foreach}
 
-	{if $Accessories|count > 0}
+	{if $Accessories|default:array()|count > 0}
 		<br/>משאבים:<br/>
 		{foreach from=$Accessories item=accessory}
 			({$accessory->QuantityReserved}) {$accessory->Name}<br/>

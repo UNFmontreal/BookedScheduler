@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with phpScheduleIt.  If not, see <http://www.gnu.org/licenses/>.
 *}
-{if $resource->GetResourceGroupIds()|count == 0}
+{if $resource->GetResourceGroupIds()|default:array()|count == 0}
 	{translate key=None}
 {/if}
 {foreach from=$resource->GetResourceGroupIds() item=resourceGroupId name=eachGroup}

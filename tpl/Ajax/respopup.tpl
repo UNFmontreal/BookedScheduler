@@ -112,7 +112,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
         {capture "attributes"}
             {if !$hideDetails}
-                {if $attributes|count > 0}
+                {if $attributes|default:array()|count > 0}
                     <br/>
                     {foreach from=$attributes item=attribute}
                         {assign var=attr value="att`$attribute->Id()`"}

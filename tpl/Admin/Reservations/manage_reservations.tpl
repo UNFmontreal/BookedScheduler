@@ -269,7 +269,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 							<label>{translate key='OriginalEndDate'}</label> {formatdate date=$reservation->OriginalEndDate timezone=$Timezone key=short_datetime}
 						</div>
 					</div>
-					{if $ReservationAttributes|count > 0}
+					{if $ReservationAttributes|default:array()|count > 0}
 						<div class="reservation-list-attributes">
 							{foreach from=$ReservationAttributes item=attribute}
 								{include file='Admin/InlineAttributeEdit.tpl'
