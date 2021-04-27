@@ -16,8 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 *}
-<h3>{$Attributes|count} {translate key=Attributes}</h3>
-{if $Attributes|count > 0}
+<h3>{$Attributes|default:array()|count} {translate key=Attributes}</h3>
+{if $Attributes|default:array()|count > 0}
 	<table class="table">
 		<thead>
 		<tr>
@@ -108,7 +108,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 		possibleValues: "{$attribute->PossibleValues()|escape:'javascript'}",
 		type: "{$attribute->Type()}",
 		sortOrder: "{$attribute->SortOrder()}",
-		{if $attribute->EntityIds()|count > 0}
+		{if $attribute->EntityIds()|default:array()|count > 0}
 		entityIds: ["{$attribute->EntityIds()|implode:'","'}"],
 		{else}
 		entityIds: [],

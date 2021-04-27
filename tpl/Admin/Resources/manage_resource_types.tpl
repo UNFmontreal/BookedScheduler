@@ -74,7 +74,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 					<input type="hidden" class="id" value="{$id}"/>
 				</td>
 			</tr>
-			{if $AttributeList|count > 0}
+			{if $AttributeList|default:array()|count > 0}
 				<tr>
 					<td colspan="4">
 						{foreach from=$AttributeList item=attribute}

@@ -24,7 +24,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 	Początek: {formatdate date=$StartDate key=reservation_email}<br/>
 	Koniec: {formatdate date=$EndDate key=reservation_email}<br/>
-	{if $ResourceNames|count > 1}
+	{if $ResourceNames|default:array()|count > 1}
 		Zasoby:<br/>
 		{foreach from=$ResourceNames item=resourceName}
 			{$resourceName}<br/>
@@ -50,7 +50,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 		{formatdate date=$date}<br/>
 	{/foreach}
 
-	{if $Accessories|count > 0}
+	{if $Accessories|default:array()|count > 0}
 		<br/>Akcesoria:<br/>
 		{foreach from=$Accessories item=accessory}
 			({$accessory->QuantityReserved}) {$accessory->Name}<br/>

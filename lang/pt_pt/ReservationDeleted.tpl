@@ -23,7 +23,7 @@ Detalhes da reserva:
 Utilizador: {$UserName}<br/>
 Início: {formatdate date=$StartDate key=reservation_email}<br/>
 Fim: {formatdate date=$EndDate key=reservation_email}<br/>
-{if $ResourceNames|count > 1}
+{if $ResourceNames|default:array()|count > 1}
     Recursos:
     <br/>
     {foreach from=$ResourceNames item=resourceName}
@@ -55,7 +55,7 @@ Motivo de exclusão: {$DeleteReason|nl2br}<br/>
     <br/>
 {/foreach}
 
-{if $Accessories|count > 0}
+{if $Accessories|default:array()|count > 0}
     <br/>
     Acessórios:
     <br/>

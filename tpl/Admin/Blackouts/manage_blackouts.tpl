@@ -54,7 +54,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 					<select {formname key=RESOURCE_ID} class="form-control" id="addResourceId">
 						{object_html_options options=$Resources key='GetId' label="GetName" selected=$ResourceId}
 					</select>
-					{if $Schedules|count > 0}
+					{if $Schedules|default:array()|count > 0}
 						|
 						<div class="checkbox">
 							<input {formname key=BLACKOUT_APPLY_TO_SCHEDULE} type="checkbox" id="allResources"/>

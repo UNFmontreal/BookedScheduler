@@ -23,7 +23,7 @@ Broneeringu detailid:
 Kasutaja: {$UserName}<br/>
 Algus: {formatdate date=$StartDate key=reservation_email}<br/>
 Lõpp: {formatdate date=$EndDate key=reservation_email}<br/>
-{if $ResourceNames|count > 1}
+{if $ResourceNames|default:array()|count > 1}
     Väljakud:
     <br/>
     {foreach from=$ResourceNames item=resourceName}
@@ -55,7 +55,7 @@ Kirjeldus: {$Description|nl2br}
     <br/>
 {/foreach}
 
-{if $Accessories|count > 0}
+{if $Accessories|default:array()|count > 0}
     <br/>
     Accessories:
     <br/>

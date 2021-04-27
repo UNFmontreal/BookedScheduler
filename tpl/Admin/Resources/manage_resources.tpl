@@ -359,7 +359,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 								<span class="propertyValue resourceAdminValue"
 									  data-type="select" data-pk="{$id}" data-value="{$resource->GetAdminGroupId()}"
 									  data-name="{FormKeys::RESOURCE_ADMIN_GROUP_ID}">{$GroupLookup[$resource->GetAdminGroupId()]->Name}</span>
-                                {if $AdminGroups|count > 0}
+                                {if $AdminGroups|default:array()|count > 0}
 									<a class="update changeResourceAdmin" href="#">
 										<span class="no-show">{translate key=ResourceAdministrator}</span>
 										<span class="fa fa-pencil-square-o"></span></a>
@@ -454,7 +454,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 
 					<div class="clearfix"></div>
 					<div class="customAttributes">
-                        {if $AttributeList|count > 0}
+                        {if $AttributeList|default:array()|count > 0}
                             {foreach from=$AttributeList item=attribute}
                                 {include file='Admin/InlineAttributeEdit.tpl' id=$id attribute=$attribute value=$resource->GetAttributeValue($attribute->Id())}
                             {/foreach}

@@ -27,9 +27,9 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
     {assign var=TodaysDate value=Date::Now()}
     {assign var=min value=$BoundDates[0]->TimeStamp()}
     {assign var=firstPeriods value=$DailyLayout->GetPeriods($BoundDates[0])}
-    {assign var=lastPeriods value=$DailyLayout->GetPeriods($BoundDates[$BoundDates|count-1])}
+    {assign var=lastPeriods value=$DailyLayout->GetPeriods($BoundDates[$BoundDates|default:array()|count-1])}
     {assign var=min value=$firstPeriods[0]->BeginDate()->TimeStamp()}
-    {assign var=max value=$lastPeriods[$lastPeriods|count-1]->EndDate()->TimeStamp()}
+    {assign var=max value=$lastPeriods[$lastPeriods|default:array()|count-1]->EndDate()->TimeStamp()}
     <table class="reservations" border="1" cellpadding="0" style="width:auto;" data-min="{$min}" data-max="{$max}">
         <thead>
         <tr>
@@ -39,12 +39,12 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                 {assign var=ts value=$date->Timestamp()}
                 {$periods.$ts = $DailyLayout->GetPeriods($date, false)}
                 {$slots.$ts = $DailyLayout->GetPeriods($date, false)}
-                {if $periods[$ts]|count == 0}{continue}{*dont show if there are no slots*}{/if}
+                {if $periods[$ts]|default:array()|count == 0}{continue}{*dont show if there are no slots*}{/if}
                 {if $date->DateEquals($TodaysDate)}
                     {assign var=class value="today"}
                 {/if}
                 <td class="resdate {$class}"
-                    colspan="{$periods[$ts]|count}">{formatdate date=$date key="schedule_daily"}</td>
+                    colspan="{$periods[$ts]|default:array()|count}">{formatdate date=$date key="schedule_daily"}</td>
             {/foreach}
         </tr>
         <tr>
