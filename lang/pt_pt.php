@@ -1,22 +1,4 @@
 <?php
-/**
-Copyright 2011-2020 Nick Korbel
-
-This file is part of Booked Scheduler.
-
-Booked Scheduler is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-Booked Scheduler is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
- */
 
 require_once('Language.php');
 require_once('en_gb.php');
@@ -55,7 +37,7 @@ class pt_pt extends en_gb
         $dates['embedded_time'] = 'H:i';
         $dates['embedded_datetime'] = 'd/m/Y H:i';
         $dates['report_date'] = '%m/%d';
-		
+
         $this->Dates = $dates;
         return $this->Dates;
     }
@@ -131,7 +113,7 @@ class pt_pt extends en_gb
 		$strings['AllResources'] = 'Todos os recursos';
 		$strings['AllResourcesOn'] = 'Todos recursos em';
 		$strings['AllSchedules'] = 'Todas as agendas';
-		$strings['AllTime'] = 'Todo os tempos';
+		$strings['AllTime'] = 'Todos os tempos';
 		$strings['AllUpcomingReservations'] = 'Todas as reservas futuras';
 		$strings['AllUsers'] = 'Todos os utilizadores';
 		$strings['AllYear'] = 'Ano inteiro';
@@ -570,6 +552,7 @@ class pt_pt extends en_gb
 		$strings['Participant'] = 'Participante';
 		$strings['ParticipantAddedSubject'] = 'Notificação de participação na reserva';
 		$strings['ParticipantAddedSubjectWithResource'] = '%1$s adicionou-o a uma reserva para %2$s';
+		$strings['ParticipantUpdatedSubjectWithResource'] = '%s actualizou a reserva para %s';
 		$strings['ParticipantDeletedSubject'] = 'Reserva removida';
 		$strings['ParticipantDeletedSubjectWithResource'] = '%1$s removida uma reserva para %2$s';
 		$strings['ParticipantList'] = 'Lista de participantes';
@@ -704,6 +687,8 @@ class pt_pt extends en_gb
 		$strings['ReservationParticipantAccept'] = '%1$s aceitou seu convite de reserva para %2$s em %3$s';
 		$strings['ReservationParticipantDecline'] = '%1$s recusou seu convite de reserva para %2$s em %3$s';
 		$strings['ReservationParticipantJoin'] = '%1$s juntou-se à sua reserva para %2$s em %3$s';
+		$strings['ReservationAvailableSubject'] = '%s está disponível em %s';
+		$strings['ResourceStatusChangedSubject'] = 'A disponibilidade de %s foi alterada';
 		$strings['ReservationParticipationActivityPreference'] = 'Quando alguém entra ou sai da minha reserva';
 		$strings['ReservationRemoved'] = 'A sua reserva foi removida';
 		$strings['ReservationRequiresApproval'] = 'Um ou mais dos recursos reservados requerem aprovação antes do uso. Esta reserva ficará pendente até que seja aprovada.';
@@ -749,7 +734,7 @@ class pt_pt extends en_gb
 		$strings['ResourceGroupWarning'] = 'Se estiver a utilizar grupos de recursos, cada recurso deve ser atribuído a pelo menos um grupo. Recursos não atribuídos não poderão ser reservados.';
 		$strings['ResourceGroups'] = 'Grupo de recursos';
 		$strings['ResourceImages'] = 'Imagens dos recursos';
-		$strings['ResourceImportInstructions'] = '<ul><li>O ficheiro deve estar em formato CSV com codificação UTF-8.</li><li>O nome é um campo obrigatório. Deixar os outros campos em branco irá defini-los os com valores padrão.</li><li>As opções de estado são \'Disponível\', \'Indisponível\' and \'Escondido\'.</li><li>A cor deverá ser um valor hexadecimal ex.: #ffffff.</li><li>As colunas de atribuição e aprovação automáticas podem ser verdadeiras ou falsas.</li><li>A validade dos atributos não será aplicada.</li><li>Separe com um vírgula múltiplos grupos de recursos.</li><li>Use o modelo fornecido como um exemplo.</li></ul>';
+		$strings['ResourceImportInstructions'] = '<ul><li>O ficheiro deve estar em formato CSV com codificação UTF-8.</li><li>O nome é um campo obrigatório. Deixar os outros campos em branco irá defini-los os com valores padrão.</li><li>As opções de estado são \'Disponível\', \'Indisponível\' and \'Escondido\'.</li><li>A cor deverá ser um valor hexadecimal ex.: #ffffff.</li><li>As colunas de atribuição e aprovação automáticas podem ser verdadeiras ou falsas.</li><li>A validade dos atributos não será aplicada.</li><li>Separe com um vírgula múltiplos grupos de recursos.</li><li>As durações podem ser especificadas no formato #d#h#m ou HH:mm (1d3h30m ou 27:30 para 1 dia, 3 horas, 30 minutos)</li><li>Use o modelo fornecido como um exemplo.</li></ul>';
 		$strings['ResourceList'] = 'Recursos a serem reservados';
 		$strings['ResourceMaxLength'] = 'As reservas não podem durar mais de %s';
 		$strings['ResourceMaxLengthCsv'] = 'Duração máxima da reserva';
@@ -1002,6 +987,8 @@ class pt_pt extends en_gb
 		$strings['PhoneRequired'] = 'O telefone é obrigatório';
 		$strings['OrganizationRequired'] = 'A organização é obrigatória';
 		$strings['PositionRequired'] = 'A posição é obrigatória';
+		$strings['AvailableGroups'] = 'Grupos disponiveis';
+		$strings['CheckingAvailabilityError'] = 'Não é possível obter a disponibilidade do recurso - demasiados recursos';
 		//--
         $this->Strings = $strings;
 

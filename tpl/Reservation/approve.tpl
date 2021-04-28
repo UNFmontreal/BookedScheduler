@@ -43,6 +43,10 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
 					<span class="fa fa-print"></span>
 					{translate key='Print'}</a>
 			</li>
+			<li><a href="#" class="btnPDF">
+					<span class="fa fa-file-pdf-o"></span>
+					PDF</a>
+			</li>
 		</ul>
 	</div>
 
@@ -61,8 +65,8 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                     </div>
                 </div>
                 <div class="modal-footer">
-                    {cancel_button id="cancelDelete" class="cancel"}
-                    {delete_button id="confirmDelete" class="delete save" key=Reject}
+                    {cancel_button class="cancelDelete cancel"}
+                    {delete_button class="confirmDelete delete save" key=Reject}
                 </div>
             </div>
         </div>
@@ -80,7 +84,7 @@ along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
                         <div>{translate key=DeleteReminderWarning}</div>
                         <div>
                             <label for="deleteReasonRecurring">{translate key=Reason} ({translate key=Optional})</label>
-                            <textarea id="deleteReasonRecurring" class="form-control"></textarea>
+                            <textarea class="deleteReasonRecurring form-control"></textarea>
                         </div>
                     </div>
                     <button type="button" class="btn btn-success save btnUpdateThisInstance">
