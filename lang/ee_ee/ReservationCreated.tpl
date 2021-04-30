@@ -4,7 +4,7 @@
 
 	Algus: {formatdate date=$StartDate key=reservation_email}<br/>
 	Lõpp: {formatdate date=$EndDate key=reservation_email}<br/>
-	{if $ResourceNames|count > 1}
+	{if $ResourceNames|default:array()|count > 1}
 		Väljak:<br/>
 		{foreach from=$ResourceNames item=resourceName}
 			{$resourceName}<br/>
