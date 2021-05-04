@@ -1,23 +1,10 @@
 <?php
-/**
- * Copyright 2011-2020 Nick Korbel
- * Copyright 2014 Jason Gerfen
- *
- * This file is part of Booked Scheduler.
- *
- * Booked Scheduler is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Booked Scheduler is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
- */
+
+// debugging tools / libs
+if (file_exists(ROOT_DIR . 'vendor/autoload.php'))
+{
+	require ROOT_DIR . 'vendor/autoload.php';
+}
 
 require_once(ROOT_DIR . 'Pages/IPage.php');
 require_once(ROOT_DIR . 'Pages/Pages.php');
@@ -64,7 +51,11 @@ abstract class Page implements IPage
         $appTitle = Configuration::Instance()->GetKey(ConfigKeys::APP_TITLE);
         $pageTile = $resources->GetString($titleKey);
         $this->smarty->assign('Title', (empty($appTitle) ? 'Booked' : $appTitle) . (empty($pageTile) ? '' : ' - ' . $pageTile));
-        $this->smarty->assign('AppTitle', (empty($appTitle) ? 'Booked' : $appTitle));
+        $this->smarty->assign('AppTitle', (empty($appTitle) ? 'Booked Scheduler' : $appTitle));
+        $companyName = Configuration::Instance()->GetKey(ConfigKeys::COMPANY_NAME);
+        $companyUrl = Configuration::Instance()->GetKey(ConfigKeys::COMPANY_URL);
+        $this->smarty->assign('CompanyName', (empty($companyName) ? '' : $companyName));
+        $this->smarty->assign('CompanyUrl', (empty($companyUrl) ? '' : $companyUrl));
         $this->smarty->assign('CalendarJSFile', $resources->CalendarLanguageFile);
 
         $this->smarty->assign('LoggedIn', $userSession->IsLoggedIn());

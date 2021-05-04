@@ -1,20 +1,5 @@
 <?php
 
-/**
- * Copyright 2012-2020 Nick Korbel
- *
- * This file is part of Booked Scheduler is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Booked Scheduler.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 class SlotLabelFactory
 {
     /**
@@ -70,8 +55,9 @@ class SlotLabelFactory
     {
         $shouldHideUser = Configuration::Instance()->GetSectionKey(ConfigSection::PRIVACY, ConfigKeys::PRIVACY_HIDE_USER_DETAILS, new BooleanConverter());
         $shouldHideDetails = ReservationDetailsFilter::HideReservationDetails($reservation->StartDate, $reservation->EndDate);
-
-        if ($shouldHideUser || $shouldHideDetails) {
+        $shouldHideReservations = Configuration::Instance()->GetSectionKey(ConfigSection::PRIVACY, ConfigKeys::PRIVACY_VIEW_RESERVATIONS, new BooleanConverter());
+        
+		if ($shouldHideUser || $shouldHideDetails) {
             $canSeeUserDetails = $reservation->OwnerId == $this->user->UserId || $this->user->IsAdmin || $this->user->IsAdminForGroup($reservation->OwnerGroupIds());
             $canEditResource = $this->authorizationService->CanEditForResource($this->user, new SlotLabelResource($reservation));
             $shouldHideUser = $shouldHideUser && !$canSeeUserDetails && !$canEditResource;
@@ -79,6 +65,10 @@ class SlotLabelFactory
         }
 
         if ($shouldHideDetails) {
+            return '';
+        }
+		
+        if ($shouldHideReservations || !$this->user->IsLoggedIn()) {
             return '';
         }
 
