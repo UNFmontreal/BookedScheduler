@@ -14,7 +14,7 @@
 	<strong>Fim:</strong> {formatdate date=$EndDate key=reservation_email}<br/>
 	<strong>Title:</strong> {$Title}<br/>
 	<strong>Descrição:</strong> {$Description|nl2br}
-    {if $Attributes|count > 0}
+    {if $Attributes|default:array()|count > 0}
 	<br/>
     {foreach from=$Attributes item=attribute}
 	<div>{control type="AttributeControl" attribute=$attribute readonly=true}</div>
@@ -23,8 +23,8 @@
 </p>
 
 <p>
-    {if $ResourceNames|count > 1}
-		<strong>Recursos ({$ResourceNames|count}):</strong>
+    {if $ResourceNames|default:array()|count > 1}
+		<strong>Recursos ({$ResourceNames|default:array()|count}):</strong>
 		<br/>
         {foreach from=$ResourceNames item=resourceName}
             {$resourceName}
