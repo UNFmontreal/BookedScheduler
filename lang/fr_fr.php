@@ -22,7 +22,7 @@ class fr_fr extends en_gb
 		$strings['Rename'] = 'Renommer';
 		$strings['Remove'] = 'Enlever';
 		$strings['Delete'] = 'Effacer';
-		$strings['Update'] = 'Enregistrer';
+		$strings['Update'] = 'Mettre à jour';
 		$strings['Cancel'] = 'Annuler';
 		$strings['Add'] = 'Ajouter';
 		$strings['Name'] = 'Nom';
