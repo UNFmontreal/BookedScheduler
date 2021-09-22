@@ -229,10 +229,10 @@
                         <div class="legend unreservable">{translate key=Unreservable}</div>
                         <div class="legend reserved">{translate key=Reserved}</div>
                         {if $LoggedIn}
-                            <div class="legend reserved mine">{translate key=MyReservation}</div>
+                            <div class="legend reserved mine" style="width:120px">{translate key=MyReservation}</div>
                             <div class="legend reserved participating">{translate key=Participant}</div>
                         {/if}
-                        <div class="legend reserved pending">{translate key=Pending}</div>
+                        <div class="legend reserved pending" style="width:160px">{translate key=Pending}</div>
                         <div class="legend pasttime">{translate key=Past}</div>
                         <div class="legend restricted">{translate key=Restricted}</div>
                     </div>

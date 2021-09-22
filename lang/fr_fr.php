@@ -308,7 +308,7 @@ class fr_fr extends en_gb
 		$strings['Unreservable'] = 'Non Réservable';
 		$strings['Reserved'] = 'Réservé';
 		$strings['MyReservation'] = 'Mes Réservations';
-		$strings['Pending'] = 'En attente';
+		$strings['Pending'] = 'En attente du dépistage';
 		$strings['Past'] = 'Passé';
 		$strings['Restricted'] = 'Restreint';
 		$strings['ViewAll'] = 'Tout Voir';

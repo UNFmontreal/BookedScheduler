@@ -344,7 +344,7 @@ class en_us extends Language
 		$strings['Unreservable'] = 'Blocked';
 		$strings['Reserved'] = 'Reserved';
 		$strings['MyReservation'] = 'My Reservation';
-		$strings['Pending'] = 'Pending';
+		$strings['Pending'] = 'Waiting for screening';
 		$strings['Past'] = 'Past';
 		$strings['Restricted'] = 'Restricted';
 		$strings['ViewAll'] = 'View All';
