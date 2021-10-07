@@ -546,7 +546,7 @@ class fr_fr extends en_gb
 		$strings['LogIn'] = 'Connexion';
 		$strings['ManageReservations'] = 'Réservations';
 		$strings['AwaitingActivation'] = 'En attente d\'Activation';
-		$strings['PendingApproval'] = 'En attente d\'Approbation';
+		$strings['PendingApproval'] = 'En attente de dépistage';
 		$strings['ManageSchedules'] = 'Plannings';
 		$strings['ManageResources'] = 'Ressources';
 		$strings['ManageAccessories'] = 'Accessoires';
