@@ -913,7 +913,7 @@ class en_us extends Language
 		$strings['LogIn'] = 'Log In';
 		$strings['ManageReservations'] = 'Reservations';
 		$strings['AwaitingActivation'] = 'Awaiting Activation';
-		$strings['PendingApproval'] = 'Pending Approval';
+		$strings['PendingApproval'] = 'Pending Reservation';
 		$strings['ManageSchedules'] = 'Schedules';
 		$strings['ManageResources'] = 'Resources';
 		$strings['ManageAccessories'] = 'Accessories';
