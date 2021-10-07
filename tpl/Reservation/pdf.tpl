@@ -74,7 +74,7 @@ $('.btnPDF').click(function (e) {
 		  styles: { lineWidth: 0.02},
 		  theme: 'plain',
 		  body: [
-			{ user: '{$ReservationUserName}'},
+			{ user: '{$ReservationUserName|escape:'javascript'}'},
 		  ],
 		  columns: [
 			{ header: '{translate key='User'}', dataKey: 'user' },
@@ -156,7 +156,7 @@ $('.btnPDF').click(function (e) {
 		],
 	});
 
-	{if $ShowReservationDetails && $Accessories|count > 0}
+	{if $ShowReservationDetails && is_array($Accessories) && $Accessories|default:array()|count > 0}
 	pdfDocument.autoTable({
 	  styles: { lineWidth: 0.02},
 	  columnStyles: { 1: { cellWidth: 18}},
@@ -174,7 +174,7 @@ $('.btnPDF').click(function (e) {
 	});
 	{/if}
 
-	{if $ShowReservationDetails && $ShowParticipation && $Participants|count > 0}
+	{if $ShowReservationDetails && $ShowParticipation && $Participants|default:array()|count > 0}
 	pdfDocument.autoTable({
 	  styles: { lineWidth: 0.02},
 	  columnStyles: { 1: { cellWidth: 80}},
@@ -192,7 +192,7 @@ $('.btnPDF').click(function (e) {
 	});
 	{/if}
 
-	{if $ShowReservationDetails && $ShowParticipation && $Invitees|count > 0}
+	{if $ShowReservationDetails && $ShowParticipation && $Invitees|default:array()|count > 0}
 	pdfDocument.autoTable({
 	  styles: { lineWidth: 0.02},
 	  columnStyles: { 1: { cellWidth: 80}},
@@ -264,12 +264,12 @@ $('.btnPDF').click(function (e) {
 	});
 	{/if}
 
-	{if $Attachments|count > 0}
+	{if $Attachments|default:array()|count > 0}
 	pdfDocument.autoTable({
 	  styles: { lineWidth: 0.02},
 	  theme: 'plain',
 		body: [
-		[{ content: '{{translate key=Attachments}|escape:'javascript'} ({$Attachments|count})', styles: { fontStyle: 'bold'}},
+		[{ content: '{{translate key=Attachments}|escape:'javascript'} ({$Attachments|default:array()|count})', styles: { fontStyle: 'bold'}},
 		],
 		{foreach from=$Attachments item=attachment}
 		[{ content: '{$attachment->FileName()|escape:'javascript'}'},
@@ -285,7 +285,7 @@ $('.btnPDF').click(function (e) {
 	  columnStyles: { 1: { cellWidth: 10}},
 	  theme: 'plain',
 		body: [
-		[{ content: '{translate key=IAccept|escape:'javascript'} {translate key=TheTermsOfService}', styles: { fontStyle: 'bold'}},
+		[{ content: "{translate key=IAccept|escape:'javascript'} {translate key=TheTermsOfService}", styles: { fontStyle: 'bold'}},
 		 { content: 'X', styles: { fontStyle: 'bold', halign: 'center'}},
 		],
 		]
