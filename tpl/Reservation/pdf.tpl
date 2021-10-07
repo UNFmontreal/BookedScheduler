@@ -74,7 +74,7 @@ $('.btnPDF').click(function (e) {
 		  styles: { lineWidth: 0.02},
 		  theme: 'plain',
 		  body: [
-			{ user: '{$ReservationUserName}'},
+			{ user: '{$ReservationUserName|escape:'javascript'}'},
 		  ],
 		  columns: [
 			{ header: '{translate key='User'}', dataKey: 'user' },
@@ -156,7 +156,7 @@ $('.btnPDF').click(function (e) {
 		],
 	});
 
-	{if $ShowReservationDetails && $Accessories|default:array()|count > 0}
+	{if $ShowReservationDetails && is_array($Accessories) && $Accessories|default:array()|count > 0}
 	pdfDocument.autoTable({
 	  styles: { lineWidth: 0.02},
 	  columnStyles: { 1: { cellWidth: 18}},
@@ -285,7 +285,7 @@ $('.btnPDF').click(function (e) {
 	  columnStyles: { 1: { cellWidth: 10}},
 	  theme: 'plain',
 		body: [
-		[{ content: '{translate key=IAccept|escape:'javascript'} {translate key=TheTermsOfService}', styles: { fontStyle: 'bold'}},
+		[{ content: "{translate key=IAccept|escape:'javascript'} {translate key=TheTermsOfService}", styles: { fontStyle: 'bold'}},
 		 { content: 'X', styles: { fontStyle: 'bold', halign: 'center'}},
 		],
 		]
