@@ -151,6 +151,9 @@ class ReservationConflictIdentifier implements IReservationConflictIdentifier
 
 		if (array_key_exists($existingItem->GetResourceId(), $keyedResources))
 		{
+			if ($existingItem->GetReferenceNumber() == "") {
+				return $existingItem->Date->Overlaps($instance->Duration());
+			}
 			return $existingItem->BufferedTimes()->Overlaps($instance->Duration());
 		}
 
