@@ -123,8 +123,8 @@ class ReservationConflictIdentifier implements IReservationConflictIdentifier
 							   $reservation->StartDate());
 
 					$instanceConflicts[] = new IdentifiedConflict($reservation, $existingItem);
+					$anyConflictsAreBlackouts = $anyConflictsAreBlackouts || $existingItem->GetReferenceNumber() == "";
 				}
-				$anyConflictsAreBlackouts = $anyConflictsAreBlackouts || $existingItem->GetReferenceNumber() == "";
 			}
 
 			$totalConflicts = $this->GetMaxConcurrentConflicts($instanceConflicts);
