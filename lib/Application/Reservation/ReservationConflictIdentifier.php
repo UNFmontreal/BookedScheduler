@@ -123,8 +123,8 @@ class ReservationConflictIdentifier implements IReservationConflictIdentifier
 							   $reservation->StartDate());
 
 					$instanceConflicts[] = new IdentifiedConflict($reservation, $existingItem);
+					$anyConflictsAreBlackouts = $anyConflictsAreBlackouts || $existingItem->GetReferenceNumber() == "";
 				}
-				$anyConflictsAreBlackouts = $anyConflictsAreBlackouts || $existingItem->GetReferenceNumber() == "";
 			}
 
 			$totalConflicts = $this->GetMaxConcurrentConflicts($instanceConflicts);
@@ -151,6 +151,9 @@ class ReservationConflictIdentifier implements IReservationConflictIdentifier
 
 		if (array_key_exists($existingItem->GetResourceId(), $keyedResources))
 		{
+			if ($existingItem->GetReferenceNumber() == "") {
+				return $existingItem->Date->Overlaps($instance->Duration());
+			}
 			return $existingItem->BufferedTimes()->Overlaps($instance->Duration());
 		}
 
