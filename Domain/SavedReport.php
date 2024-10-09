@@ -55,9 +55,15 @@ class SavedReport implements ISavedReport
      */
     private $dateCreated;
 
-    public function __construct($reportName, $userId, Report_Usage $usage, Report_ResultSelection $selection, Report_GroupBy $groupBy, Report_Range $range,
-                                Report_Filter $filter)
-    {
+    public function __construct(
+        $reportName,
+        $userId,
+        Report_Usage $usage,
+        Report_ResultSelection $selection,
+        Report_GroupBy $groupBy,
+        Report_Range $range,
+        Report_Filter $filter
+    ) {
         $this->reportName = $reportName;
         $this->userId = $userId;
         $this->usage = $usage;
@@ -270,7 +276,8 @@ class ReportSerializer
     {
         $template = 'usage=%s;selection=%s;groupby=%s;range=%s;range_start=%s;range_end=%s;resourceid=%s;scheduleid=%s;userid=%s;groupid=%s;accessoryid=%s;participantid=%s;deleted=%s;resourceTypeId=%s';
 
-        return sprintf($template,
+        return sprintf(
+            $template,
             $report->Usage(),
             $report->Selection(),
             $report->GroupBy(),
@@ -284,7 +291,8 @@ class ReportSerializer
             implode('|', $report->AccessoryIds()),
             $report->ParticipantId(),
             $report->IncludeDeleted(),
-            implode('|', $report->ResourceTypeIds()));
+            implode('|', $report->ResourceTypeIds())
+        );
     }
 
     /**
@@ -296,7 +304,7 @@ class ReportSerializer
      */
     public static function Deserialize($reportName, $userId, $serialized)
     {
-        $values = array();
+        $values = [];
         $pairs = explode(';', $serialized);
         foreach ($pairs as $pair) {
             $keyValue = explode('=', $pair);
@@ -306,8 +314,15 @@ class ReportSerializer
             }
         }
 
-        return new SavedReport($reportName, $userId, self::GetUsage($values), self::GetSelection($values), self::GetGroupBy($values), self::GetRange($values),
-            self::GetFilter($values));
+        return new SavedReport(
+            $reportName,
+            $userId,
+            self::GetUsage($values),
+            self::GetSelection($values),
+            self::GetGroupBy($values),
+            self::GetRange($values),
+            self::GetFilter($values)
+        );
     }
 
     /**
@@ -319,8 +334,7 @@ class ReportSerializer
     {
         if (array_key_exists('usage', $values)) {
             return new Report_Usage($values['usage']);
-        }
-        else {
+        } else {
             return new Report_Usage(Report_Usage::RESOURCES);
         }
     }
@@ -334,8 +348,7 @@ class ReportSerializer
     {
         if (array_key_exists('selection', $values)) {
             return new Report_ResultSelection($values['selection']);
-        }
-        else {
+        } else {
             return new Report_ResultSelection(Report_ResultSelection::FULL_LIST);
         }
     }
@@ -349,8 +362,7 @@ class ReportSerializer
     {
         if (array_key_exists('groupby', $values)) {
             return new Report_GroupBy($values['groupby']);
-        }
-        else {
+        } else {
             return new Report_GroupBy(Report_GroupBy::NONE);
         }
     }
@@ -367,8 +379,7 @@ class ReportSerializer
             $end = $values['range_end'];
 
             return new Report_Range($values['range'], $start, $end, 'UTC');
-        }
-        else {
+        } else {
             return Report_Range::AllTime();
         }
     }
@@ -380,14 +391,14 @@ class ReportSerializer
      */
     private static function GetFilter($values)
     {
-        $resourceIds = isset($values['resourceid']) ? explode('|',$values['resourceid']) : array();
-        $scheduleIds = isset($values['scheduleid']) ? explode('|',$values['scheduleid']) :  array();
+        $resourceIds = isset($values['resourceid']) ? explode('|', $values['resourceid']) : [];
+        $scheduleIds = isset($values['scheduleid']) ? explode('|', $values['scheduleid']) : [];
         $userId = isset($values['userid']) ? $values['userid'] : '';
-        $groupIds = isset($values['groupid']) ? explode('|',$values['groupid']) : array();
-        $accessoryIds = isset($values['accessoryid']) ? explode('|',$values['accessoryid']) : array();
-        $participantId = isset($values['participantid']) ? $values['participantid'] : array();
+        $groupIds = isset($values['groupid']) ? explode('|', $values['groupid']) : [];
+        $accessoryIds = isset($values['accessoryid']) ? explode('|', $values['accessoryid']) : [];
+        $participantId = isset($values['participantid']) ? $values['participantid'] : [];
         $deleted = isset($values['deleted']) ? intval($values['deleted']) : false;
-        $resourceTypeIds = isset($values['resourceTypeId']) ? explode('|',$values['resourceTypeId']) : array();
+        $resourceTypeIds = isset($values['resourceTypeId']) ? explode('|', $values['resourceTypeId']) : [];
 
         return new Report_Filter($resourceIds, $scheduleIds, $userId, $groupIds, $accessoryIds, $participantId, $deleted, $resourceTypeIds);
     }

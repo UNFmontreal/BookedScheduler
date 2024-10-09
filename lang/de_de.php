@@ -708,16 +708,58 @@ class de_de extends en_gb
         $strings['OnlyViewedCalendar'] = 'Dieser Terminplan kann nur aus der Kalenderansicht betrachtet werden';
         $strings['Grid'] = 'Raster';
         $strings['List'] = 'Liste';
+        $strings['NoReservationsFound'] = 'Keine Reservierung gefunden';
+        $strings['EmailReservation'] = 'E-Mail-Reservierung';
+        $strings['AdHocMeeting'] = 'Ad hoc-Meeting';
+        $strings['NextReservation'] = 'Nächste Reservierung';
         $strings['ReservationParticipationActivityPreference'] = 'Wenn jemand meiner Reservierung beitritt oder sie verlässt';
+        $strings['Utilization'] = 'Auslastung';
+        $strings['SpecificTime'] = 'Spezifische Zeit';
         $strings['ReservationSeriesEndingPreference'] = 'Wenn die Serie meiner wiederkehrenden Reservierungen endet';
+        $strings['NotAttending'] = 'Nicht teilnehmen';
+        $strings['ViewAvailability'] = 'View Availability';
+        $strings['ReservationDetails'] = 'Reservierungsdetails';
+        $strings['StartTime'] = 'Startzeit';
+        $strings['EndTime'] = 'Endzeit';
+        $strings['New'] = 'Neu';
+        $strings['Updated'] = 'Aktualisiert';
+        $strings['Custom'] = 'Benutzerdefiniert';
+        $strings['AddDate'] = 'Datum hinzufügen';
+        $strings['RepeatOn'] = 'Wiederholen am';
+        $strings['ScheduleConcurrentMaximum'] = 'Maximal <b>%s</b> Ressourcen können gleichzeitig reserviert werden';
+        $strings['ScheduleConcurrentMaximumNone'] = 'Es können unbeschränkt viele Ressourcen gleichzeitig reserviert werden';
+        $strings['ScheduleMaximumConcurrent'] = 'Maximale Anzahl gleichzeitig reservierter Ressourcen';
+        $strings['ScheduleMaximumConcurrentNote'] = 'Beschränkt die maximale Zahl der gleichzeitig reservierbaren Ressourcen für diesen Terminplan.';
+        $strings['ScheduleResourcesPerReservationMaximum'] = 'Jede Reservierung ist auf maximal <b>%s</b> Ressourcen beschränkt';
+        $strings['ScheduleResourcesPerReservationNone'] = 'Es gibt keine Beschränkung für Ressourcen pro Reservierung';
+        $strings['ScheduleResourcesPerReservation'] = 'Maximale Anzahl an Ressourcen pro Reservierung';
+        $strings['ResourceConcurrentReservations'] = 'Lasse %s gleichzeitige Reservierungen zu';
+        $strings['ResourceConcurrentReservationsNone'] = 'Lasse keine gleichzeitigen Reservierungen zu';
+        $strings['AllowConcurrentReservations'] = 'Lasse gleichzeitige Reservierungen zu';
+        $strings['ResourceDisplayInstructions'] = 'Keine Ressource ausgewählt. Sie finden die URL um eine Ressource anzuzeigen in Anwendungsverwaltung, Ressourcen. Die Ressource muss öffentlich einsehbar sein.';
+        $strings['Owner'] = 'Besitzer';
+        $strings['MaximumConcurrentReservations'] = 'Maximale gleichzeitige Reservierungen';
+        $strings['NotifyUsers'] = 'Benutzer benachrichtigen';
+        $strings['Message'] = 'Nachricht';
+        $strings['AllUsersWhoHaveAReservationInTheNext'] = 'Jemand mit einer Reserveriung in den nächsten';
+        $strings['ChangeResourceStatus'] = 'Ressourcenstatus ändern';
+        $strings['UpdateGroupsOnImport'] = 'Bestehende Gruppe ändern, wenn sie gefunden wird';
+        $strings['GroupsImportInstructions'] = '<ul><li>Dati muss im CSV-Format sein.</li><li>Name ist obligatorisch.</li><li>Teilnehmerlisten sind kommagetrennte Listen von E-mails.</li><li>Eine leere Teilnehmerliste, lässt diese unverändert wenn Gruppen aktualisiert werden.</li><li>Berchtigungslisten sind eine Kommagetrennte Liste von Ressourcennamen.</li><li>Leere Berechtigungen lassen die bestehenden unverändert beim Aktualisieren von Gruppen.</li><li>Verwenden Sie die Vorlage als Beispiel.</li></ul>';
+        $strings['PhoneRequired'] = 'Telefonnummer wird benötigt.';
+        $strings['OrganizationRequired'] = 'Organisation wird benötigt';
+        $strings['PositionRequired'] = 'Position wird benötigt';
+        $strings['GroupMembership'] = 'Gruppen-Mitgliedschaft';
+        $strings['AvailableGroups'] = 'Verfügbare Gruppen';
+        $strings['CheckingAvailabilityError'] = 'Ressourcenverfügbarkeit kann nicht abgefragt werden - zu viele Ressourcen';
+
         // End Strings
 
         // Install
-        $strings['InstallApplication'] = 'Installiere Booked Scheduler (Nur mit MySQL)';
+        $strings['InstallApplication'] = 'Installiere LibreBooking (Nur mit MySQL)';
         $strings['IncorrectInstallPassword'] = 'Sorry, das Installationspasswort war falsch.';
         $strings['SetInstallPassword'] = 'Sie müssen ein Installationspasswort setzen, bevor die Installation ausgeführt werden kann.';
         $strings['InstallPasswordInstructions'] = 'In %s bitte ein %s Passwort setzen, das zufällig und schwer zu erraten ist, dann auf diese Seite zurück. <br/> Sie können %s verwenden.';
-        $strings['NoUpgradeNeeded'] = 'Booked ist auf dem neuesten Stand. Es ist kein Upgrade erforderlich.';
+        $strings['NoUpgradeNeeded'] = 'LibreBooking ist auf dem neuesten Stand. Es ist kein Upgrade erforderlich.';
         $strings['ProvideInstallPassword'] = 'Bitte geben Sie Ihr Installationspasswort ein.';
         $strings['InstallPasswordLocation'] = 'Dies finden Sie in %s in %s.';
         $strings['VerifyInstallSettings'] = 'Überprüfen Sie die folgenden Standardeinstellungen, bevor Sie fortfahren. Sie können die Einstellungen in %s ändern.';
@@ -742,10 +784,10 @@ class de_de extends en_gb
         $strings['InstallationSuccess'] = 'Installation erfolgreich abgeschlossen!';
         $strings['RegisterAdminUser'] = 'Registrieren Sie Ihren Admin-Benutzer. Dies ist erforderlich, wenn Sie die Beispiel-Daten nicht importiert haben. Stellen Sie sicher, dass $conf[\'settings\'][\'allow.self.registration\'] = \'true\' in Ihrer %s-Datei ist.';
         $strings['LoginWithSampleAccounts'] = 'Wenn Sie die Beispiel-Daten importiert haben, können Sie sich mit admin/password als Admin Benutzer oder mit user/password als Benutzer anmelden.';
-        $strings['InstalledVersion'] = 'Sie haben jetzt die Version %s von Booked Scheduler.';
+        $strings['InstalledVersion'] = 'Sie haben jetzt die Version %s von LibreBooking.';
         $strings['InstallUpgradeConfig'] = 'Es wird empfohlen, dass Sie Ihre Konfigurationsdatei aktualisieren.';
         $strings['InstallationFailure'] = 'Es gab Probleme mit der Installation. Bitte korrigieren Sie sie und wiederholen Sie die Installation.';
-        $strings['ConfigureApplication'] = 'Booked Scheduler konfigurieren';
+        $strings['ConfigureApplication'] = 'LibreBooking konfigurieren';
         $strings['ConfigUpdateSuccess'] = 'Ihre Konfigurationsdatei ist nun auf dem neuesten Stand!';
         $strings['ConfigUpdateFailure'] = 'Wir konnten die Konfigurationsdatei nicht automatisch aktualisieren. Bitte überschreiben Sie den Inhalt der config.php mit den folgenden Werten:';
         $strings['ScriptUrlWarning'] = 'Die <em>script.url</em> is möglicherweise falsch. Die aktuelle Einstellung ist <strong>%s</strong>, während wir glauben, dass es <strong>%s</strong> sein sollte';
@@ -801,6 +843,13 @@ class de_de extends en_gb
         $strings['ReservationNotAvailable'] = 'Reservierung nicht verfügbar';
         $strings['TitleRequiredRule'] = 'Titel der Reservierung muss eingetragen werden';
         $strings['DescriptionRequiredRule'] = 'Beschreibung der Reservierung muss eingetragen werden';
+        $strings['ScheduleResourcesPerReservation'] = 'Maximale Anzahl von Ressourcen pro Reservierung';
+        $strings['ScheduleMaximumConcurrent'] = 'Maximale Anzahl von gleichzeitig reservierten Ressourcen';
+        $strings['ScheduleMaximumConcurrentNote'] = 'Wenn diese Option gesetzt ist, ist die Gesamtzahl der Ressourcen, die gleichzeitig für diesen Zeitplan reserviert werden können, begrenzt.';
+        $strings['ScheduleConcurrentMaximumNone'] = 'Es gibt keine Begrenzung für die Anzahl der gleichzeitig reservierten Ressourcen';
+        $strings['ScheduleResourcesPerReservationNone'] = 'Es gibt keine Begrenzung für die Anzahl der Ressourcen pro Reservierung';
+        $strings['AllowConcurrentReservations'] = 'Gleichzeitige Reservierungen zulassen';
+        $strings['ResourceConcurrentReservationsNone'] = 'Keine gleichzeitigen Reservierungen zulassen';
         // End Errors
 
         // Page Titles
@@ -920,6 +969,44 @@ class de_de extends en_gb
         $strings['MissedCheckinEmailSubject'] = 'Anmeldung verpasst für %s';
         // End Email Subjects
 
+        //NEEDS CHECKING
+        //Past Reservations
+        $strings['NoPastReservations'] = 'Sie haben keine vergangenen Reservierungen';
+        $strings['PastReservations'] = 'Vergangene Reservierungen';
+        $strings['AllNoPastReservations'] = 'Es gibt keine vergangenen Reservierungen in den letzten %s Tagen';
+        $strings['AllPastReservations'] = 'Alle vergangenen Reservierungen';
+        $strings['Yesterday'] = 'Gestern';
+        $strings['EarlierThisWeek'] = 'Früher in dieser Woche';
+        $strings['PreviousWeek'] = 'Vorherige Woche';
+        //End Past Reservations
+
+        //Group Upcoming Reservations
+        $strings['NoGroupUpcomingReservations'] = 'Ihre Gruppe hat keine kommenden Reservierungen';
+        $strings['GroupUpcomingReservations'] = 'Kommende Reservierungen meiner Gruppe(n)';
+        //End Group Upcoming Reservations
+        
+        //Facebook Login SDK Error
+        $strings['FacebookLoginErrorMessage'] = 'Bei der Anmeldung mit Facebook ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.';
+        //End Facebook Login SDK Error
+
+        //Pending Approval Reservations in Dashboard
+        $strings['NoPendingApprovalReservations'] = 'Sie haben keine Reservierungen, die auf Genehmigung warten';
+        $strings['PendingApprovalReservations'] = 'Reservierungen zur Genehmigung ausstehend';
+        $strings['LaterThisMonth'] = 'Später in diesem Monat';
+        $strings['LaterThisYear'] = 'Später in diesem Jahr';
+        $strings['Remaining'] = 'Verbleibend';  
+        //End Pending Approval Reservations in Dashboard
+
+        //Missing Check In/Out Reservations in Dashboard
+        $strings['NoMissingCheckOutReservations'] = 'Es gibt keine fehlenden Auscheck-Reservierungen';
+        $strings['MissingCheckOutReservations'] = 'Fehlende Auscheck-Reservierungen';       
+        //End Missing Check In/Out Reservations in Dashboard
+
+        //Schedule Resource Permissions
+        $strings['NoResourcePermissions'] = 'Detailansicht gesperrt: Berechtigung für eine der verbundenen Ressourcen erforderlich';
+        //End Schedule Resource Permissions
+        //END NEEDS CHECKING
+
         $this->Strings = $strings;
 
         return $this->Strings;
@@ -938,13 +1025,13 @@ class de_de extends en_gb
          * and go through the seven day week, ending on Saturday
          ***/
         // The full day name
-        $days['full'] = array('Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag');
+        $days['full'] = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
         // The three letter abbreviation
-        $days['abbr'] = array('So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa');
+        $days['abbr'] = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
         // The two letter abbreviation
-        $days['two'] = array('So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa');
+        $days['two'] = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
         // The one letter abbreviation
-        $days['letter'] = array('S', 'M', 'D', 'M', 'D', 'F', 'S');
+        $days['letter'] = ['S', 'M', 'D', 'M', 'D', 'F', 'S'];
 
         $this->Days = $days;
 
@@ -964,9 +1051,9 @@ class de_de extends en_gb
          * and go through the twelve months of the year, ending on December
          ***/
         // The full month name
-        $months['full'] = array('Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember');
+        $months['full'] = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
         // The three letter month name
-        $months['abbr'] = array('Jan', 'Feb', 'Mrz', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez');
+        $months['abbr'] = ['Jan', 'Feb', 'Mrz', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
 
         $this->Months = $months;
 
@@ -978,7 +1065,7 @@ class de_de extends en_gb
      */
     protected function _LoadLetters()
     {
-        $this->Letters = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+        $this->Letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
         return $this->Letters;
     }

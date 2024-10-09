@@ -61,7 +61,7 @@
 <div id="page-schedule">
     {assign var=startTime value=microtime(true)}
 
-    {if $ShowResourceWarning}
+    {if isset($ShowResourceWarning) && $ShowResourceWarning}
         <div class="alert alert-warning no-resource-warning"><span
                     class="fa fa-warning"></span> {translate key=NoResources} <a
                     href="admin/manage_resources.php">{translate key=AddResource}</a></div>
@@ -94,7 +94,7 @@
         {block name="schedule_control"}
             <div class="row">
                 {assign var=titleWidth value="col-sm-12 col-xs-12"}
-                {if !$HideSchedule}
+                {if !isset($HideSchedule) || !$HideSchedule}
                     {assign var=titleWidth value="col-sm-6 col-xs-12"}
                     <div id="schedule-actions" class="col-sm-3 col-xs-12">
                         {block name="actions"}
@@ -111,7 +111,7 @@
                             <a href="#" class="schedule-style hidden-sm hidden-xs" id="schedule_week"
                                schedule-display="{ScheduleStyle::CondensedWeek}">{html_image src="table-week.png" altKey="CondensedWeekScheduleDisplay"}</a>
                             <div>
-                                {if $SubscriptionUrl != null && $ShowSubscription}
+                                {if isset($SubscriptionUrl) && $SubscriptionUrl != null && $ShowSubscription}
                                     {html_image src="feed.png"}
                                     <a target="_blank" href="{$SubscriptionUrl->GetAtomUrl()}">Atom</a>
                                     |
@@ -150,7 +150,7 @@
                 </div>
 
                 {capture name="date_navigation"}
-                    {if !$HideSchedule}
+                    {if !isset($HideSchedule) || !$HideSchedule}
                         <div class="schedule-dates col-sm-3 col-xs-12">
                             {assign var=TodaysDate value=Date::Now()}
                             <a href="#" class="change-date btn-link btn-success" data-year="{$TodaysDate->Year()}"
@@ -185,7 +185,7 @@
             <div type="text" id="datepicker" style="display:none;"></div>
         {/block}
 
-        {if $ScheduleAvailabilityEarly}
+        {if isset($ScheduleAvailabilityEarly) && $ScheduleAvailabilityEarly}
             <div class="alert alert-warning center">
                 <strong>
                     {translate key=ScheduleAvailabilityEarly}
@@ -203,7 +203,7 @@
             </div>
         {/if}
 
-        {if $ScheduleAvailabilityLate}
+        {if isset($ScheduleAvailabilityLate) && $ScheduleAvailabilityLate}
             <div class="alert alert-warning center">
                 <strong>
                     {translate key=ScheduleAvailabilityLate}
@@ -221,7 +221,7 @@
             </div>
         {/if}
 
-        {if !$HideSchedule}
+        {if !isset($HideSchedule) || !$HideSchedule}
             {block name="legend"}
                 <div class="hidden-xs row col-sm-12 schedule-legend">
                     <div class="center">
@@ -229,10 +229,10 @@
                         <div class="legend unreservable">{translate key=Unreservable}</div>
                         <div class="legend reserved">{translate key=Reserved}</div>
                         {if $LoggedIn}
-                            <div class="legend reserved mine" style="width:120px">{translate key=MyReservation}</div>
+                            <div class="legend reserved mine">{translate key=MyReservation}</div>
                             <div class="legend reserved participating">{translate key=Participant}</div>
                         {/if}
-                        <div class="legend reserved pending" style="width:160px">{translate key=Pending}</div>
+                        <div class="legend reserved pending">{translate key=Pending}</div>
                         <div class="legend pasttime">{translate key=Past}</div>
                         <div class="legend restricted">{translate key=Restricted}</div>
                     </div>
@@ -267,7 +267,7 @@
                                     <div class="form-group col-xs-12">
                                         <label for="ownerFilter">{translate key=Owner}</label>
                                         <input type='search' id='ownerFilter'
-                                               class="form-control input-sm search" {formname key=OWNER_TEXT} value="{$OwnerText}" />
+                                               class="form-control input-sm search" {formname key=OWNER_TEXT} value="{if isset($OwnerText)}{$OwnerText}{/if}" />
                                         <input {formname key=USER_ID} id="ownerId" type="hidden" value="{$OwnerId}"/>
                                         <span class="searchclear searchclear-label glyphicon glyphicon-remove-circle" ref="ownerFilter,ownerId"></span>
                                     </div>
@@ -275,7 +275,7 @@
                                         <div class="form-group col-xs-12">
                                             <label for="participantFilter">{translate key=Participant}</label>
                                             <input type='search' id='participantFilter'
-                                                   class="form-control input-sm search" {formname key=PARTICIPANT_TEXT} value="{$ParticipantText}" />
+                                                   class="form-control input-sm search" {formname key=PARTICIPANT_TEXT} value="{if isset($ParticipantText)}{$ParticipantText}{/if}" />
                                             <input {formname key=PARTICIPANT_ID} id="participantId" type="hidden" value="{$ParticipantId}"/>
                                             <span class="searchclear searchclear-label glyphicon glyphicon-remove-circle" ref="participantFilter,participantId"></span>
                                         </div>
@@ -369,7 +369,7 @@
     {foreach from=$SpecificDates item=d}
         <input type="hidden" {formname key=SPECIFIC_DATES multi=true} value="{formatdate date=$d key=system}"/>
     {/foreach}
-    <input type="hidden" {formname key=MIN_CAPACITY} value="{$MinCapacityFilter}"/>
+    <input type="hidden" {formname key=MIN_CAPACITY} value="{if isset($MinCapacityFilter)}{$MinCapacityFilter}{/if}"/>
     <input type="hidden" {formname key=RESOURCE_TYPE_ID} value="{$ResourceTypeIdFilter}"/>
     {foreach from=$ResourceAttributes item=attribute}
         <input type="hidden" name="RESOURCE_ATTRIBUTE_ID[{$attribute->Id()}]" value="{$attribute->Value()}"/>
@@ -405,6 +405,12 @@
 {jsfile src="ajax-helpers.js"}
 <script type="text/javascript">
 
+let resourceMaxConcurrentReservations = {};
+{foreach from=$Resources item=r}
+    resourceMaxConcurrentReservations[{$r->GetId()}] = {$r->MaxConcurrentReservations};
+{/foreach}
+
+
     const scheduleOpts = {
         reservationUrlTemplate: "{$Path}{Pages::RESERVATION}?{QueryStringKeys::REFERENCE_NUMBER}=[referenceNumber]",
         summaryPopupUrl: "{$Path}ajax/respopup.php",
@@ -415,7 +421,7 @@
         selectedResources: [{','|implode:$ResourceIds}],
         specificDates: [{foreach from=$SpecificDates item=d}'{$d->Format('Y-m-d')}',{/foreach}],
         updateReservationUrl: "{$Path}ajax/reservation_move.php",
-        lockTableHead: "{$LockTableHead}",
+        lockTableHead: "{if isset($LockTableHead)}{$LockTableHead}{/if}",
         disableSelectable: "{$IsMobile}",
         reservationLoadUrl: "{$Path}{Pages::SCHEDULE}?{QueryStringKeys::DATA_REQUEST}=reservations",
         scheduleStyle: "{$ScheduleStyle}",
@@ -425,6 +431,8 @@
         updatedLabel: "{translate key=Updated}",
         isReservable: 1,
         autocompleteUrl: "{$Path}ajax/autocomplete.php?type={AutoCompleteType::User}",
+        fastReservationLoad: "{$FastReservationLoad}",
+        resourceMaxConcurrentReservations,
     };
 
     const resourceOrder = [];

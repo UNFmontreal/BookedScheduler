@@ -2,7 +2,7 @@
 
 class CustomAttributeValueRow
 {
-    private $rows = array();
+    private $rows = [];
 
     public function Rows()
     {
@@ -11,9 +11,9 @@ class CustomAttributeValueRow
 
     public function With($attributeId, $value, $attributeLabel = null)
     {
-        $this->rows[] = array(ColumnNames::ATTRIBUTE_ID => $attributeId,
+        $this->rows[] = [ColumnNames::ATTRIBUTE_ID => $attributeId,
             ColumnNames::ATTRIBUTE_VALUE => $value,
-            ColumnNames::ATTRIBUTE_LABEL => $attributeLabel);
+            ColumnNames::ATTRIBUTE_LABEL => $attributeLabel];
 
         return $this;
     }
@@ -21,25 +21,36 @@ class CustomAttributeValueRow
 
 class ReminderNoticeRow
 {
-    private $row = array();
+    private $row = [];
 
     public function Rows()
     {
-        return array($this->row);
+        return [$this->row];
     }
 
-    public function __construct($seriesId = 1, $reservationId = 1, $referenceNumber = 'referencenumber',
-                                $startDate = null, $endDate = null, $title = 'title', $description = 'description',
-                                $resourceName = 'resourcename', $emailAddress = 'email@address.com', $fname = 'fname',
-                                $lname = 'lname', $timezone = 'UTC', $reminder_minutes = 100, $language = 'en_us')
-    {
+    public function __construct(
+        $seriesId = 1,
+        $reservationId = 1,
+        $referenceNumber = 'referencenumber',
+        $startDate = null,
+        $endDate = null,
+        $title = 'title',
+        $description = 'description',
+        $resourceName = 'resourcename',
+        $emailAddress = 'email@address.com',
+        $fname = 'fname',
+        $lname = 'lname',
+        $timezone = 'UTC',
+        $reminder_minutes = 100,
+        $language = 'en_us'
+    ) {
         if (empty($startDate)) {
             $startDate = Date::Now()->ToDatabase();
         }
         if (empty($endDate)) {
             $endDate = Date::Now()->ToDatabase();
         }
-        $this->row = array(
+        $this->row = [
             ColumnNames::SERIES_ID => $seriesId,
             ColumnNames::RESERVATION_INSTANCE_ID => $reservationId,
             ColumnNames::REFERENCE_NUMBER => $referenceNumber,
@@ -54,17 +65,17 @@ class ReminderNoticeRow
             ColumnNames::TIMEZONE_NAME => $timezone,
             ColumnNames::REMINDER_MINUTES_PRIOR => $reminder_minutes,
             ColumnNames::LANGUAGE_CODE => $language,
-        );
+        ];
     }
 }
 
 class ReservationRow
 {
-    private $row = array();
+    private $row = [];
 
     public function Rows()
     {
-        return array($this->row);
+        return [$this->row];
     }
 
     public function __construct(
@@ -80,9 +91,8 @@ class ReservationRow
         $ownerId,
         $statusId,
         $allowParticipation
-    )
-    {
-        $this->row = array(
+    ) {
+        $this->row = [
             ColumnNames::RESERVATION_INSTANCE_ID => $reservationId,
             ColumnNames::RESERVATION_START => $startDate,
             ColumnNames::RESERVATION_END => $endDate,
@@ -99,14 +109,14 @@ class ReservationRow
             ColumnNames::CHECKIN_DATE => null,
             ColumnNames::CHECKOUT_DATE => null,
             ColumnNames::CREDIT_COUNT => null,
-        );
+        ];
     }
 }
 
 class ReservationInstanceRow
 {
     private $seriesId;
-    private $rows = array();
+    private $rows = [];
 
     public function Rows()
     {
@@ -130,7 +140,7 @@ class ReservationInstanceRow
      */
     public function WithInstance($instanceId, $referenceNum, $duration, $checkinTime = null, $checkoutTime = null, $previousEnd = null, $creditCount = null)
     {
-        $this->rows[] = array(
+        $this->rows[] = [
             ColumnNames::SERIES_ID => $this->seriesId,
             ColumnNames::RESERVATION_INSTANCE_ID => $instanceId,
             ColumnNames::REFERENCE_NUMBER => $referenceNum,
@@ -140,7 +150,7 @@ class ReservationInstanceRow
             ColumnNames::CHECKOUT_DATE => $checkoutTime == null ? null : $checkoutTime->ToDatabase(),
             ColumnNames::PREVIOUS_END_DATE => $previousEnd == null ? null : $previousEnd->ToDatabase(),
             ColumnNames::CREDIT_COUNT => $creditCount
-        );
+        ];
 
         return $this;
     }
@@ -149,35 +159,35 @@ class ReservationInstanceRow
 class ReservationResourceRow
 {
     private $seriesId;
-    private $rows = array();
+    private $rows = [];
 
     public function Rows()
     {
         return $this->rows;
     }
 
-    public function __construct($seriesId,
-                                $resourceName = null,
-                                $location = null,
-                                $contact = null,
-                                $notes = null,
-                                $minLength = null,
-                                $maxLength = null,
-                                $autoAssign = null,
-                                $requiresApproval = null,
-                                $allowMultiDay = null,
-                                $maxParticipants = null,
-                                $minNoticeAdd = null,
-                                $maxNotice = null,
-                                $scheduleId = null,
-                                $statusId = ResourceStatus::AVAILABLE,
-                                $color = null,
-                                $creditCount = null,
-                                $peakCreditCount = null,
-                                $minNoticeUpdate = null,
-                                $minNoticeDelete = null
-    )
-    {
+    public function __construct(
+        $seriesId,
+        $resourceName = null,
+        $location = null,
+        $contact = null,
+        $notes = null,
+        $minLength = null,
+        $maxLength = null,
+        $autoAssign = null,
+        $requiresApproval = null,
+        $allowMultiDay = null,
+        $maxParticipants = null,
+        $minNoticeAdd = null,
+        $maxNotice = null,
+        $scheduleId = null,
+        $statusId = ResourceStatus::AVAILABLE,
+        $color = null,
+        $creditCount = null,
+        $peakCreditCount = null,
+        $minNoticeUpdate = null,
+        $minNoticeDelete = null
+    ) {
         $this->seriesId = $seriesId;
         $this->resourceName = $resourceName;
         $this->location = $location;
@@ -199,7 +209,6 @@ class ReservationResourceRow
         $this->peakCreditCount = $peakCreditCount;
         $this->minNoticeUpdate = $minNoticeUpdate;
         $this->minNoticeDelete = $minNoticeDelete;
-
     }
 
     public function WithPrimary($resourceId)
@@ -216,7 +225,7 @@ class ReservationResourceRow
 
     private function AddRow($resourceId, $levelId)
     {
-        $this->rows[] = array(
+        $this->rows[] = [
             ColumnNames::SERIES_ID => $this->seriesId,
             ColumnNames::RESOURCE_ID => $resourceId,
             ColumnNames::RESOURCE_LEVEL_ID => $levelId,
@@ -249,13 +258,13 @@ class ReservationResourceRow
             ColumnNames::PEAK_CREDIT_COUNT => $this->peakCreditCount,
             ColumnNames::RESOURCE_MINNOTICE_UPDATE => $this->minNoticeUpdate,
             ColumnNames::RESOURCE_MINNOTICE_DELETE => $this->minNoticeDelete,
-        );
+        ];
     }
 }
 
 class ReservationUserRow
 {
-    private $rows = array();
+    private $rows = [];
 
     public function Rows()
     {
@@ -264,9 +273,9 @@ class ReservationUserRow
 
     private function AddRow($referenceNumber, $userId, $levelId)
     {
-        $this->rows[] = array(ColumnNames::REFERENCE_NUMBER => $referenceNumber,
+        $this->rows[] = [ColumnNames::REFERENCE_NUMBER => $referenceNumber,
             ColumnNames::USER_ID => $userId,
-            ColumnNames::RESERVATION_USER_LEVEL => $levelId);
+            ColumnNames::RESERVATION_USER_LEVEL => $levelId];
     }
 
     /**
@@ -298,7 +307,7 @@ class ReservationUserRow
 
 class ReservationGuestRow
 {
-    private $rows = array();
+    private $rows = [];
 
     public function Rows()
     {
@@ -307,9 +316,9 @@ class ReservationGuestRow
 
     private function AddRow($referenceNumber, $email, $levelId)
     {
-        $this->rows[] = array(ColumnNames::REFERENCE_NUMBER => $referenceNumber,
+        $this->rows[] = [ColumnNames::REFERENCE_NUMBER => $referenceNumber,
             ColumnNames::EMAIL => $email,
-            ColumnNames::RESERVATION_USER_LEVEL => $levelId);
+            ColumnNames::RESERVATION_USER_LEVEL => $levelId];
     }
 
     /**
@@ -341,7 +350,7 @@ class ReservationGuestRow
 
 class ReservationAccessoryRow
 {
-    private $rows = array();
+    private $rows = [];
 
     public function Rows()
     {
@@ -350,12 +359,12 @@ class ReservationAccessoryRow
 
     public function WithAccessory($accessoryId, $quantityReserved, $name = null, $quantityAvailable = 0, $resourceCount = 0)
     {
-        $this->rows[] = array(
+        $this->rows[] = [
             ColumnNames::ACCESSORY_ID => $accessoryId,
             ColumnNames::QUANTITY => $quantityReserved,
             ColumnNames::ACCESSORY_QUANTITY => $quantityAvailable,
             ColumnNames::ACCESSORY_NAME => $name,
-            ColumnNames::ACCESSORY_RESOURCE_COUNT => $resourceCount);
+            ColumnNames::ACCESSORY_RESOURCE_COUNT => $resourceCount];
 
         return $this;
     }
@@ -363,7 +372,7 @@ class ReservationAccessoryRow
 
 class ReservationAttachmentItemRow
 {
-    private $rows = array();
+    private $rows = [];
 
     public function Rows()
     {
@@ -372,10 +381,10 @@ class ReservationAttachmentItemRow
 
     public function With($fileId, $seriesId, $fileName = null, $extension = null)
     {
-        $this->rows[] = array(ColumnNames::FILE_ID => $fileId,
+        $this->rows[] = [ColumnNames::FILE_ID => $fileId,
             ColumnNames::SERIES_ID => $seriesId,
             ColumnNames::FILE_NAME => $fileName,
-            ColumnNames::FILE_EXTENSION => $extension);
+            ColumnNames::FILE_EXTENSION => $extension];
 
         return $this;
     }
@@ -383,7 +392,7 @@ class ReservationAttachmentItemRow
 
 class ReservationReminderRow
 {
-    private $rows = array();
+    private $rows = [];
 
     public function Rows()
     {
@@ -392,11 +401,11 @@ class ReservationReminderRow
 
     public function With($reminderId, $seriesId, $minutesPrior = 15, $type = ReservationReminderType::Start)
     {
-        $this->rows[] = array(
+        $this->rows[] = [
             ColumnNames::REMINDER_ID => $reminderId,
             ColumnNames::SERIES_ID => $seriesId,
             ColumnNames::REMINDER_MINUTES_PRIOR => $minutesPrior,
-            ColumnNames::REMINDER_TYPE => $type);
+            ColumnNames::REMINDER_TYPE => $type];
 
         return $this;
     }
@@ -404,7 +413,7 @@ class ReservationReminderRow
 
 class SavedReportRow
 {
-    private $rows = array();
+    private $rows = [];
 
     public function Rows()
     {
@@ -413,11 +422,11 @@ class SavedReportRow
 
     public function With($userId, $reportName, $dateCreated = null, $serialized = null, $reportId = 1)
     {
-        $this->rows[] = array(ColumnNames::USER_ID => $userId,
+        $this->rows[] = [ColumnNames::USER_ID => $userId,
             ColumnNames::REPORT_NAME => $reportName,
             ColumnNames::DATE_CREATED => $dateCreated,
             ColumnNames::REPORT_DETAILS => $serialized,
-            ColumnNames::REPORT_ID => $reportId);
+            ColumnNames::REPORT_ID => $reportId];
 
         return $this;
     }
@@ -425,7 +434,7 @@ class SavedReportRow
 
 class GroupItemRow
 {
-    private $rows = array();
+    private $rows = [];
 
     public function Rows()
     {
@@ -434,13 +443,13 @@ class GroupItemRow
 
     public function With($groupId, $groupName, $groupAdminName = 'group admin', $isDefault = 0)
     {
-        $this->rows[] = array(
+        $this->rows[] = [
             ColumnNames::GROUP_ID => $groupId,
             ColumnNames::GROUP_NAME => $groupName,
             ColumnNames::GROUP_ADMIN_GROUP_NAME => $groupAdminName,
             ColumnNames::GROUP_ISDEFAULT => $isDefault,
             ColumnNames::GROUP_ROLE_LIST => '1,2',
-        );
+        ];
 
         return $this;
     }
@@ -448,7 +457,7 @@ class GroupItemRow
 
 class ResourceGroupRow
 {
-    private $rows = array();
+    private $rows = [];
 
     public function Rows()
     {
@@ -457,11 +466,11 @@ class ResourceGroupRow
 
     public function With($groupId, $groupName, $groupParentId = null)
     {
-        $this->rows[] = array(
+        $this->rows[] = [
             ColumnNames::RESOURCE_GROUP_ID => $groupId,
             ColumnNames::RESOURCE_GROUP_NAME => $groupName,
             ColumnNames::RESOURCE_GROUP_PARENT_ID => $groupParentId
-        );
+        ];
 
         return $this;
     }
@@ -469,7 +478,7 @@ class ResourceGroupRow
 
 class ResourceGroupAssignmentRow
 {
-    private $rows = array();
+    private $rows = [];
 
     public function Rows()
     {
@@ -478,12 +487,12 @@ class ResourceGroupAssignmentRow
 
     public function With($resourceId, $resourceName, $groupId)
     {
-        $this->rows[] = array(
+        $this->rows[] = [
             ColumnNames::RESOURCE_GROUP_ID => $groupId,
             ColumnNames::RESOURCE_NAME => $resourceName,
             ColumnNames::RESOURCE_ID => $resourceId,
             ColumnNames::RESOURCE_STATUS_ID => ResourceStatus::AVAILABLE,
-        );
+        ];
 
         return $this;
     }
@@ -491,7 +500,7 @@ class ResourceGroupAssignmentRow
 
 class ResourceTypeRow
 {
-    private $rows = array();
+    private $rows = [];
 
     public function Rows()
     {
@@ -500,12 +509,12 @@ class ResourceTypeRow
 
     public function With($typeId, $name, $description = null)
     {
-        $this->rows[] = array(
+        $this->rows[] = [
             ColumnNames::RESOURCE_TYPE_ID => $typeId,
             ColumnNames::RESOURCE_TYPE_NAME => $name,
             ColumnNames::RESOURCE_TYPE_DESCRIPTION => $description,
             ColumnNames::ATTRIBUTE_LIST => '1=a!sep!2=b'
-        );
+        ];
 
         return $this;
     }
@@ -513,7 +522,7 @@ class ResourceTypeRow
 
 class BlackoutSeriesRow
 {
-    private $rows = array();
+    private $rows = [];
 
     public function Rows()
     {
@@ -524,7 +533,7 @@ class BlackoutSeriesRow
     {
         $start = !empty($currentStart) ? $currentStart->ToDatabase() : null;
         $end = !empty($currentEnd) ? $currentEnd->ToDatabase() : null;
-        $this->rows[] = array(
+        $this->rows[] = [
             ColumnNames::BLACKOUT_SERIES_ID => $seriesId,
             ColumnNames::OWNER_USER_ID => $owner_id,
             ColumnNames::BLACKOUT_TITLE => $title,
@@ -533,7 +542,7 @@ class BlackoutSeriesRow
             ColumnNames::BLACKOUT_START => $start,
             ColumnNames::BLACKOUT_END => $end,
             ColumnNames::BLACKOUT_INSTANCE_ID => 1
-        );
+        ];
 
         return $this;
     }
@@ -541,7 +550,7 @@ class BlackoutSeriesRow
 
 class BlackoutInstanceRow
 {
-    private $rows = array();
+    private $rows = [];
 
     public function Rows()
     {
@@ -550,12 +559,12 @@ class BlackoutInstanceRow
 
     public function With($seriesId, $instance_id, $start_date, $end_date)
     {
-        $this->rows[] = array(
+        $this->rows[] = [
             ColumnNames::BLACKOUT_SERIES_ID => $seriesId,
             ColumnNames::BLACKOUT_INSTANCE_ID => $instance_id,
             ColumnNames::BLACKOUT_START => $start_date,
             ColumnNames::BLACKOUT_END => $end_date,
-        );
+        ];
 
         return $this;
     }
@@ -563,7 +572,7 @@ class BlackoutInstanceRow
 
 class BlackoutResourceRow
 {
-    private $rows = array();
+    private $rows = [];
 
     public function Rows()
     {
@@ -572,14 +581,14 @@ class BlackoutResourceRow
 
     public function With($resourceId, $name, $scheduleId, $adminGroupId = null, $scheduleAdminGroupId = null)
     {
-        $this->rows[] = array(
+        $this->rows[] = [
             ColumnNames::RESOURCE_ID => $resourceId,
             ColumnNames::RESOURCE_NAME => $name,
             ColumnNames::RESOURCE_ADMIN_GROUP_ID => $adminGroupId,
             ColumnNames::SCHEDULE_ID => $scheduleId,
             ColumnNames::SCHEDULE_ADMIN_GROUP_ID_ALIAS => $scheduleAdminGroupId,
             ColumnNames::RESOURCE_STATUS_ID => ResourceStatus::AVAILABLE,
-        );
+        ];
 
         return $this;
     }
@@ -587,7 +596,7 @@ class BlackoutResourceRow
 
 class UserRow
 {
-    private $rows = array();
+    private $rows = [];
 
     public function Rows()
     {
@@ -596,7 +605,7 @@ class UserRow
 
     public function With($userId, $firstName = 'fname', $lastName = 'lname')
     {
-        $this->rows[] = array(
+        $this->rows[] = [
             ColumnNames::USER_ID => $userId,
             ColumnNames::FIRST_NAME => $firstName,
             ColumnNames::LAST_NAME => $lastName,
@@ -613,7 +622,7 @@ class UserRow
             ColumnNames::POSITION => 'head honcho',
             ColumnNames::ORGANIZATION => 'earth',
             ColumnNames::USER_CREATED => '2011-01-04 12:12:12',
-        );
+        ];
 
         return $this;
     }

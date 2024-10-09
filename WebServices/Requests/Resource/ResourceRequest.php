@@ -64,7 +64,7 @@ class ResourceRequest extends JsonRequest
     /**
      * @var array|AttributeValueRequest[]
      */
-    public $customAttributes = array();
+    public $customAttributes = [];
     /**
      * @var int
      */
@@ -98,10 +98,19 @@ class ResourceRequest extends JsonRequest
      * @var int|null
      */
     public $peakCreditsPerSlot;
-	/**
-	 * @var int|null
-	 */
-	public $maxConcurrentReservations;
+    /**
+     * @var int|null
+     */
+    public $maxConcurrentReservations;
+
+    public string $bufferTime;
+    public array|null $groupIds;
+    public string|null $icsUrl;
+    public string $minNoticeAdd;
+    public string $minNoticeDelete;
+    public string $minNoticeUpdate;
+    public int|null $typeId;
+
 
     /**
      * @return ExampleResourceRequest
@@ -119,7 +128,7 @@ class ResourceRequest extends JsonRequest
         if (!empty($this->customAttributes)) {
             return $this->customAttributes;
         }
-        return array();
+        return [];
     }
 }
 
@@ -141,7 +150,7 @@ class ExampleResourceRequest extends ResourceRequest
         $this->description = 'description';
         $this->scheduleId = 10;
         $this->autoAssignPermissions = true;
-        $this->customAttributes = array(AttributeValueRequest::Example());
+        $this->customAttributes = [AttributeValueRequest::Example()];
         $this->sortOrder = 1;
         $this->statusId = ResourceStatus::AVAILABLE;
         $this->statusReasonId = 2;
@@ -151,5 +160,12 @@ class ExampleResourceRequest extends ResourceRequest
         $this->creditsPerSlot = 3;
         $this->peakCreditsPerSlot = 6;
         $this->maxConcurrentReservations = 1;
+        $this->bufferTime = '1d2h3m';
+        $this->groupIds = [];
+        $this->icsUrl = 'http://ics.example.com/a_calendar.ics';
+        $this->minNoticeAdd = '0d0h1m';
+        $this->minNoticeDelete = '0d0h2m';
+        $this->minNoticeUpdate = '0d0h3m';
+        $this->typeId = 1;
     }
 }

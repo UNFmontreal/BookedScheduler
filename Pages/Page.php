@@ -1,9 +1,8 @@
 <?php
 
 // debugging tools / libs
-if (file_exists(ROOT_DIR . 'vendor/autoload.php'))
-{
-	require ROOT_DIR . 'vendor/autoload.php';
+if (file_exists(ROOT_DIR . 'vendor/autoload.php')) {
+    require ROOT_DIR . 'vendor/autoload.php';
 }
 
 require_once(ROOT_DIR . 'Pages/IPage.php');
@@ -32,7 +31,7 @@ abstract class Page implements IPage
 
     protected function __construct($titleKey = '', $pageDepth = 0)
     {
-        ExceptionHandler::SetExceptionHandler(new WebExceptionHandler(array($this, 'RedirectToError')));
+        ExceptionHandler::SetExceptionHandler(new WebExceptionHandler([$this, 'RedirectToError']));
 
         $this->SetSecurityHeaders();
 
@@ -50,8 +49,8 @@ abstract class Page implements IPage
         $this->smarty->assign('HtmlTextDirection', $resources->TextDirection);
         $appTitle = Configuration::Instance()->GetKey(ConfigKeys::APP_TITLE);
         $pageTile = $resources->GetString($titleKey);
-        $this->smarty->assign('Title', (empty($appTitle) ? 'Booked' : $appTitle) . (empty($pageTile) ? '' : ' - ' . $pageTile));
-        $this->smarty->assign('AppTitle', (empty($appTitle) ? 'Booked Scheduler' : $appTitle));
+        $this->smarty->assign('Title', (empty($appTitle) ? 'LibreBooking' : $appTitle) . (empty($pageTile) ? '' : ' - ' . $pageTile));
+        $this->smarty->assign('AppTitle', (empty($appTitle) ? 'LibreBooking' : $appTitle));
         $companyName = Configuration::Instance()->GetKey(ConfigKeys::COMPANY_NAME);
         $companyUrl = Configuration::Instance()->GetKey(ConfigKeys::COMPANY_URL);
         $this->smarty->assign('CompanyName', (empty($companyName) ? '' : $companyName));
@@ -72,6 +71,7 @@ abstract class Page implements IPage
         $this->smarty->assign('CanViewResponsibilities', !$userSession->IsAdmin && ($userSession->IsGroupAdmin || $userSession->IsResourceAdmin || $userSession->IsScheduleAdmin));
         $allowAllUsersToReports = Configuration::Instance()->GetSectionKey(ConfigSection::REPORTS, ConfigKeys::REPORTS_ALLOW_ALL, new BooleanConverter());
         $this->smarty->assign('CanViewReports', ($allowAllUsersToReports || $userSession->IsAdmin || $userSession->IsGroupAdmin || $userSession->IsResourceAdmin || $userSession->IsScheduleAdmin));
+
         $timeout = Configuration::Instance()->GetKey(ConfigKeys::INACTIVITY_TIMEOUT);
         if (!empty($timeout)) {
             $this->smarty->assign('SessionTimeoutSeconds', max($timeout, 1) * 60);
@@ -85,7 +85,10 @@ abstract class Page implements IPage
         $this->smarty->assign('PaymentsEnabled', Configuration::Instance()->GetSectionKey(ConfigSection::CREDITS, ConfigKeys::CREDITS_ALLOW_PURCHASE, new BooleanConverter()));
         $this->smarty->assign('EmailEnabled', Configuration::Instance()->GetKey(ConfigKeys::ENABLE_EMAIL, new BooleanConverter()));
 
-        $this->smarty->assign('LogoUrl', 'booked.png');
+        $this->smarty->assign('checkinAdminOnly', Configuration::Instance()->GetSectionKey(ConfigSection::RESERVATION, ConfigKeys::RESERVATION_CHECKIN_ADMIN_ONLY, new BooleanConverter()));
+        $this->smarty->assign('checkoutAdminOnly', Configuration::Instance()->GetSectionKey(ConfigSection::RESERVATION, ConfigKeys::RESERVATION_CHECKOUT_ADMIN_ONLY, new BooleanConverter()));
+
+        $this->smarty->assign('LogoUrl', 'librebooking.png');
         if (file_exists($this->path . 'img/custom-logo.png')) {
             $this->smarty->assign('LogoUrl', 'custom-logo.png');
         }
@@ -130,7 +133,6 @@ abstract class Page implements IPage
         $this->Set('IsDesktop', $this->IsDesktop);
         $this->Set('GoogleAnalyticsTrackingId', Configuration::Instance()->GetSectionKey(ConfigSection::GOOGLE_ANALYTICS, ConfigKeys::GOOGLE_ANALYTICS_TRACKING_ID));
         $this->Set('ShowNewVersion', $this->ShouldShowNewVersion());
-
     }
 
     protected function SetTitle($title)
@@ -170,7 +172,7 @@ abstract class Page implements IPage
 
     public function GetLastPage($defaultPage = '')
     {
-        $referer = getenv("HTTP_REFERER");
+        $referer = filter_var(getenv("HTTP_REFERER"), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if (empty($referer)) {
             return empty($defaultPage) ? Pages::LOGIN : $defaultPage;
         }
@@ -306,18 +308,15 @@ abstract class Page implements IPage
     protected function GetQuerystring($key, $forceArray = false)
     {
         $val = $this->server->GetQuerystring($key);
-        if (!$forceArray)
-        {
+        if (!$forceArray) {
             return $val;
         }
 
-        if (empty($val))
-        {
-            return array();
+        if (empty($val)) {
+            return [];
         }
-        if (!is_array($val))
-        {
-            return array($val);
+        if (!is_array($val)) {
+            return [$val];
         }
 
         return $val;
@@ -345,9 +344,8 @@ abstract class Page implements IPage
 
         if (empty($error)) {
             $this->Set('data', json_encode($objectToSerialize));
-        }
-        else {
-            $this->Set('error', json_encode(array('response' => $objectToSerialize, 'errors' => $error)));
+        } else {
+            $this->Set('error', json_encode(['response' => $objectToSerialize, 'errors' => $error]));
         }
         $this->smarty->display('json_data.tpl');
     }
@@ -374,8 +372,7 @@ abstract class Page implements IPage
     {
         if (!$this->InMaintenanceMode()) {
             $this->smarty->display($templateName);
-        }
-        else {
+        } else {
             $this->smarty->display('maintenance.tpl');
         }
     }
@@ -408,8 +405,7 @@ abstract class Page implements IPage
 
         if (file_exists($localizedPath . '/' . $templateName)) {
             $this->smarty->AddTemplateDirectory($localizedPath);
-        }
-        else {
+        } else {
             $this->smarty->AddTemplateDirectory($defaultPath);
         }
 

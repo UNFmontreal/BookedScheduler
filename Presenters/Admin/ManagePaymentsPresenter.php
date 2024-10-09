@@ -6,9 +6,10 @@ require_once(ROOT_DIR . 'Domain/Access/PaymentRepository.php');
 
 class ManagePaymentsActions
 {
-    const UPDATE_CREDIT_COST = 'updateCreditCost';
-    const UPDATE_PAYMENT_GATEWAYS = 'updatePaymentGateways';
-    const ISSUE_REFUND = 'issueRefund';
+    public const UPDATE_CREDIT_COST = 'updateCreditCost';
+    public const DELETE_CREDIT_COST = 'deleteCreditCost';
+    public const UPDATE_PAYMENT_GATEWAYS = 'updatePaymentGateways';
+    public const ISSUE_REFUND = 'issueRefund';
 }
 
 class ManagePaymentsPresenter extends ActionPresenter
@@ -34,14 +35,15 @@ class ManagePaymentsPresenter extends ActionPresenter
         $this->paymentLogger = $logger;
 
         $this->AddAction(ManagePaymentsActions::UPDATE_CREDIT_COST, 'UpdateCreditCost');
+        $this->AddAction(ManagePaymentsActions::DELETE_CREDIT_COST, 'UpdateCreditCost');
         $this->AddAction(ManagePaymentsActions::UPDATE_PAYMENT_GATEWAYS, 'UpdatePaymentGateways');
         $this->AddAction(ManagePaymentsActions::ISSUE_REFUND, 'IssueRefund');
     }
 
     public function PageLoad()
     {
-        $cost = $this->paymentRepository->GetCreditCost();
-        $this->page->SetCreditCost($cost->Cost(), $cost->Currency());
+        $costs = $this->paymentRepository->GetCreditCosts();
+        $this->page->SetCreditCosts($costs);
 
         $paypal = $this->paymentRepository->GetPayPalGateway();
         $stripe = $this->paymentRepository->GetStripeGateway();
@@ -52,11 +54,20 @@ class ManagePaymentsPresenter extends ActionPresenter
 
     public function UpdateCreditCost()
     {
+        $count = max(1, intval($this->page->GetCreditCount()));
         $cost = max(0, floatval($this->page->GetCreditCost()));
         $currency = $this->page->GetCreditCurrency();
 
-        Log::Debug('Updating credit cost. %s, %s', $cost, $currency);
-        $this->paymentRepository->UpdateCreditCost(new CreditCost($cost, $currency));
+        Log::Debug('Updating credit cost. %s, %s, %s', $count, $cost, $currency);
+        $this->paymentRepository->UpdateCreditCost(new CreditCost($count, $cost, $currency));
+    }
+
+    public function DeleteCreditCost()
+    {
+        $count = max(1, intval($this->page->GetCreditCount()));
+
+        Log::Debug('Deleting credit cost. %s', $count);
+        $this->paymentRepository->DeleteCreditCost($count);
     }
 
     public function UpdatePaymentGateways()
@@ -74,8 +85,7 @@ class ManagePaymentsPresenter extends ActionPresenter
     {
         if ($dataRequest == 'transactionLog') {
             $this->GetTransactionLog();
-        }
-        else {
+        } else {
             $this->GetTransactionDetails();
         }
     }
@@ -109,8 +119,7 @@ class ManagePaymentsPresenter extends ActionPresenter
             $refund = $gateway->Refund($transactionLogView, $amount, $this->paymentLogger);
 
             $this->page->BindRefundIssued($refund->state == 'completed');
-        }
-        else{
+        } else {
             $gateway = $this->paymentRepository->GetStripeGateway();
 
             $refunded = $gateway->Refund($transactionLogView, $amount, $this->paymentLogger);

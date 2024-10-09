@@ -10,14 +10,11 @@ class FullName
     public function __construct($firstName, $lastName)
     {
         $formatter = Configuration::Instance()->GetKey(ConfigKeys::NAME_FORMAT);
-        if (empty($formatter))
-        {
+        if (empty($formatter)) {
             $this->fullName = "$firstName $lastName";
-        }
-        else
-        {
-            $this->fullName = str_replace('{first}', $firstName, $formatter);
-            $this->fullName = str_replace('{last}', $lastName, $this->fullName);
+        } else {
+            $this->fullName = str_replace('{first}', $firstName ?? "", $formatter);
+            $this->fullName = str_replace('{last}', $lastName ?? "", $this->fullName);
         }
     }
 

@@ -11,6 +11,10 @@ interface IManagePaymentsPage extends IActionPage
     /**
      * @return string
      */
+    public function GetCreditCount();
+    /**
+     * @return string
+     */
     public function GetCreditCost();
 
     /**
@@ -22,7 +26,7 @@ interface IManagePaymentsPage extends IActionPage
      * @param float $cost
      * @param string $currency
      */
-    public function SetCreditCost($cost, $currency);
+    public function SetCreditCosts($creditCosts);
 
     /**
      * @return bool
@@ -154,6 +158,11 @@ class ManagePaymentsPage extends ActionPage implements IManagePaymentsPage
         $this->Display('Admin/Payments/manage_payments.tpl');
     }
 
+    public function GetCreditCount()
+    {
+        return $this->GetForm(FormKeys::CREDIT_COUNT);
+    }
+
     public function GetCreditCost()
     {
         return $this->GetForm(FormKeys::CREDIT_COST);
@@ -164,10 +173,9 @@ class ManagePaymentsPage extends ActionPage implements IManagePaymentsPage
         return $this->GetForm(FormKeys::CREDIT_CURRENCY);
     }
 
-    public function SetCreditCost($cost, $currency)
+    public function SetCreditCosts($creditCosts)
     {
-        $this->Set('CreditCost', $cost);
-        $this->Set('CreditCurrency', $currency);
+        $this->Set('CreditCosts', $creditCosts);
     }
 
     public function GetPayPalIsEnabled()
@@ -249,7 +257,7 @@ class ManagePaymentsPage extends ActionPage implements IManagePaymentsPage
 
     public function GetRefundAmount()
     {
-       return floatval($this->GetForm(FormKeys::REFUND_AMOUNT));
+        return floatval($this->GetForm(FormKeys::REFUND_AMOUNT));
     }
 
     public function BindTransactionLogView(TransactionLogView $transactionLogView)

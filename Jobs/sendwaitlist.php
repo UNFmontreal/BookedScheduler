@@ -2,7 +2,7 @@
 /**
 *  Cron Example:
 *  This script must be executed every minute for to enable waitlist notification emails
-*  * * * * * /usr/bin/env php -f ${WWW_DIR}/booked/Jobs/sendwaitlist.php
+*  * * * * * /usr/bin/env php -f ${WWW_DIR}/librebooking/Jobs/sendwaitlist.php
 */
 
 define('ROOT_DIR', dirname(__FILE__) . '/../');
@@ -14,40 +14,34 @@ Log::Debug('Running sendwaitlist.php');
 
 JobCop::EnsureCommandLine();
 
-try
-{
+try {
     $emailEnabled = Configuration::Instance()->GetKey(ConfigKeys::ENABLE_EMAIL, new BooleanConverter());
-    if (!$emailEnabled)
-    {
+    if (!$emailEnabled) {
         return;
     }
 
     $reservationViewRepository = new ReservationViewRepository();
-	$resourceRepository = new ResourceRepository();
-	$waitlistRepository = new ReservationWaitlistRepository();
+    $resourceRepository = new ResourceRepository();
+    $waitlistRepository = new ReservationWaitlistRepository();
     $userRepository = new UserRepository();
 
     $waitlistRequests = $waitlistRepository->GetAll();
 
     /** @var ReservationWaitlistRequest $r */
-    foreach ($waitlistRequests as $r)
-    {
+    foreach ($waitlistRequests as $r) {
         $reservations = $reservationViewRepository->GetReservations($r->StartDate(), $r->EndDate(), null, null, null, $r->ResourceId());
 
         $conflicts = false;
 
         /** @var ReservationItemView $reservation */
-        foreach ($reservations as $reservation)
-        {
-            if ($reservation->BufferedTimes()->Overlaps($r->Duration()))
-            {
+        foreach ($reservations as $reservation) {
+            if ($reservation->BufferedTimes()->Overlaps($r->Duration())) {
                 $conflicts = true;
                 break;
             }
         }
 
-        if (!$conflicts || $r->StartDate()->LessThanOrEqual(Date::Now()))
-        {
+        if (!$conflicts || $r->StartDate()->LessThanOrEqual(Date::Now())) {
             $user = $userRepository->LoadById($r->UserId());
             $resource = $resourceRepository->LoadById($r->ResourceId());
             $email = new ReservationAvailableEmail($user, $resource, $r);
@@ -55,9 +49,8 @@ try
             $waitlistRepository->Delete($r);
         }
     }
-} catch (Exception $ex)
-{
-	Log::Error('Error running sendwaitlist.php: %s', $ex);
+} catch (Exception $ex) {
+    Log::Error('Error running sendwaitlist.php: %s', $ex);
 }
 
 Log::Debug('Finished running sendwaitlist.php');

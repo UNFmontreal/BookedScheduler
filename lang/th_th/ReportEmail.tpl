@@ -1,3 +1,3 @@
-Your report from Booked Scheduler is attached.<br/><br/>
+แนบรายงานของคุณจาก LibreBooking แล้ว<br/><br/>
 
-<a href="{$ScriptUrl}">Log in to Booked Scheduler</a>
+<a href="{$ScriptUrl}">เข้าสู่ระบบ LibreBooking</a>

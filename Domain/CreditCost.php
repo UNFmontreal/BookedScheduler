@@ -1,10 +1,14 @@
 <?php
 
-require_once (ROOT_DIR . 'Domain/Values/Currency.php');
+require_once(ROOT_DIR . 'Domain/Values/Currency.php');
 use Booked\Currency;
 
 class CreditCost
 {
+    /**
+     * @var int
+     */
+    private $count;
     /**
      * @var float
      */
@@ -18,10 +22,19 @@ class CreditCost
      * @param float $cost
      * @param string $currency
      */
-    public function __construct($cost = 0.0, $currency = 'USD')
+    public function __construct($count = 1, $cost = 0.0, $currency = 'USD')
     {
+        $this->count = $count;
         $this->cost = $cost;
         $this->currency = $currency;
+    }
+
+    /**
+     * @return int
+     */
+    public function Count()
+    {
+        return $this->count;
     }
 
     /**

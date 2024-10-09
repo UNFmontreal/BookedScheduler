@@ -2,42 +2,47 @@
 
 abstract class Control
 {
-	/**
-	 * @$var SmartyPage|Smarty
-	 */
-	protected $smarty = null;
+    /**
+     * @var SmartyPage|Smarty
+     */
+    protected $smarty = null;
 
-	/**
-	 * @var Smarty_Data
-	 */
-	protected $data = null;
+    /**
+     * @var string
+     */
+    protected $id = null;
 
-	/**
-	 * @param SmartyPage|Smarty $smarty
-	 */
-	public function __construct(SmartyPage $smarty)
-	{
-		$this->smarty = $smarty;
-		$this->id = uniqid();
+    /**
+     * @var Smarty_Data
+     */
+    protected $data = null;
 
-		$this->data = $smarty->createData();
-	}
+    /**
+     * @param SmartyPage|Smarty $smarty
+     */
+    public function __construct(SmartyPage $smarty)
+    {
+        $this->smarty = $smarty;
+        $this->id = uniqid();
 
-	public function Set($var, $value)
-	{
-		$this->data->assign($var, $value);
-	}
+        $this->data = $smarty->createData();
+    }
 
-	protected function Get($var)
-	{
-		return $this->data->getTemplateVars($var);
-	}
+    public function Set($var, $value)
+    {
+        $this->data->assign($var, $value);
+    }
 
-	protected function Display($templateName)
-	{
-		$tpl = $this->smarty->createTemplate($templateName, $this->data);
-		$tpl->display();
-	}
+    protected function Get($var)
+    {
+        return $this->data->getTemplateVars($var);
+    }
 
-	public abstract function PageLoad();
+    protected function Display($templateName)
+    {
+        $tpl = $this->smarty->createTemplate($templateName, $this->data);
+        $tpl->display();
+    }
+
+    abstract public function PageLoad();
 }

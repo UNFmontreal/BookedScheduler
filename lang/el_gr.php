@@ -15,7 +15,7 @@ class el_gr extends en_gb
      */
     protected function _LoadDates()
     {
-        $dates = array();
+        $dates = [];
 
         $dates['general_date'] = 'd/m/Y';
         $dates['general_datetime'] = 'd/m/Y g:i:s A';
@@ -50,7 +50,7 @@ class el_gr extends en_gb
      */
     protected function _LoadStrings()
     {
-        $strings = array();
+        $strings = [];
 
         $strings['FirstName'] = 'Όνομα';
         $strings['LastName'] = 'Επώνυμο';
@@ -794,11 +794,11 @@ class el_gr extends en_gb
         // End Strings
 
         // Install
-        $strings['InstallApplication'] = 'Εγκατάσταση του Booked Scheduler (μόνο MySQL)';
+        $strings['InstallApplication'] = 'Εγκατάσταση του LibreBooking (μόνο MySQL)';
         $strings['IncorrectInstallPassword'] = 'Συγγνώμη, το συνθηματικό ήταν λάθος.';
         $strings['SetInstallPassword'] = 'Πρέπει να ορίσετε ένα συνθηματικό εγκατάστασης προτού εκτελεστεί η εγκατάσταση.';
         $strings['InstallPasswordInstructions'] = 'Στο %s ορίστε το %s σε ένα συνθηματικό που είναι τυχαίο και δύσκολο να μαντεφθεί, μετά επιστρέψτε σε αυτή τη σελίδα.<br/>Μπορείτε να χρησιμοποιήσετε %s';
-        $strings['NoUpgradeNeeded'] = 'Το Booked είναι ενημερωμένο. Δεν χρειάζεται αναβάθμιση.';
+        $strings['NoUpgradeNeeded'] = 'Το LibreBooking είναι ενημερωμένο. Δεν χρειάζεται αναβάθμιση.';
         $strings['ProvideInstallPassword'] = 'Παρακαλούμε εισάγετε το συνθηματικό εγκατάστασης.';
         $strings['InstallPasswordLocation'] = 'Αυτό μπορεί να βρεθεί στο %s σε %s.';
         $strings['VerifyInstallSettings'] = 'Επαληθεύστε τις ακόλουθες ρυθμίσεις προτού συνεχίσετε. Μπορείτε να τις αλλάξετε στο %s.';
@@ -823,10 +823,10 @@ class el_gr extends en_gb
         $strings['InstallationSuccess'] = 'Η εγκατάσταση ολοκληρώθηκε με επιτυχία!';
         $strings['RegisterAdminUser'] = 'Κάντε εγγραφή για τον διαχειριστή. Αυτό απαιτείται αν δεν κάνατε εισαγωγή των δοκιμαστικών δεδομένων. Βεβαιωθείτε ότι το είναι $conf[\'settings\'][\'allow.self.registration\'] = \'true\' στο αρχείο %s.';
         $strings['LoginWithSampleAccounts'] = 'Αν κάνατε εισαγωγή των δοκιμαστικών δεδομένων, κάνετε είσοδο με τα στοιχεία χρήστη admin/password για το διαχειριστή ή user/password για τον απλό χρήστη.';
-        $strings['InstalledVersion'] = 'Εκτελείτε τώρα την έκδοση %s του Booked Scheduler';
+        $strings['InstalledVersion'] = 'Εκτελείτε τώρα την έκδοση %s του LibreBooking';
         $strings['InstallUpgradeConfig'] = 'Προτείνεται να αναβαθμίσετε το αρχείο ρυθμίσεών σας';
         $strings['InstallationFailure'] = 'Υπάρχουν προβλήματα με την εγκατάσταση. Παρακαλούμε διορθώστε τα και ξαναδοκιμάστε την εγκατάσταση.';
-        $strings['ConfigureApplication'] = 'Παραμετροποίηση του Booked Scheduler';
+        $strings['ConfigureApplication'] = 'Παραμετροποίηση του LibreBooking';
         $strings['ConfigUpdateSuccess'] = 'Το αρχείο ρυθμίσεών σας είναι τώρα ενημερωμένο!';
         $strings['ConfigUpdateFailure'] = 'Δεν ήταν δυνατή η αυτόματη ενημέρωση του αρχείου ρυθμίσεών σας. Παρακαλούμε εισάγετε τα παρακάτω σε όλο το περιεχόμενο του αρχείου config.php:';
         $strings['ScriptUrlWarning'] = 'Η ρύθμιση <em>script.url</em> ενδέχεται να μην είναι σωστή. Αυτή τη στιγμή είναι <strong>%s</strong>, ενώ θεωρούμε ότι πρέπει να είναι <strong>%s</strong>';
@@ -1015,6 +1015,44 @@ class el_gr extends en_gb
         $strings['ResourceStatusChangedSubject'] = 'Η διαθεσιμότητα του %s άλλαξε';
         // End Email Subjects
 
+        //NEEDS CHECKING
+        //Past Reservations
+        $strings['NoPastReservations'] = 'Δεν έχετε προηγούμενες κρατήσεις';
+        $strings['PastReservations'] = 'Προηγούμενες κρατήσεις';
+        $strings['AllNoPastReservations'] = 'Δεν υπάρχουν προηγούμενες κρατήσεις τις τελευταίες %s ημέρες';
+        $strings['AllPastReservations'] = 'Όλες οι προηγούμενες κρατήσεις';
+        $strings['Yesterday'] = 'Χθες';
+        $strings['EarlierThisWeek'] = 'Νωρίτερα αυτήν την εβδομάδα';
+        $strings['PreviousWeek'] = 'Προηγούμενη εβδομάδα';
+        //End Past Reservations
+
+        //Group Upcoming Reservations
+        $strings['NoGroupUpcomingReservations'] = 'Η ομάδα σας δεν έχει καμία προσεχή κράτηση';
+        $strings['GroupUpcomingReservations'] = 'Μελλοντικές κρατήσεις της ομάδας(ών) μου';
+        //End Group Upcoming Reservations
+        
+        //Facebook Login SDK Error
+        $strings['FacebookLoginErrorMessage'] = 'Προέκυψε σφάλμα κατά τη σύνδεση με το Facebook. Παρακαλούμε δοκιμάστε ξανά.';
+        //End Facebook Login SDK Error
+
+        //Pending Approval Reservations in Dashboard
+        $strings['NoPendingApprovalReservations'] = 'Δεν έχετε κρατήσεις που αναμένουν έγκριση';
+        $strings['PendingApprovalReservations'] = 'Κρατήσεις προς Έγκριση';
+        $strings['LaterThisMonth'] = 'Αργότερα αυτόν το μήνα';
+        $strings['LaterThisYear'] = 'Αργότερα φέτος';
+        $strings['Remaining'] = 'Υπολειπόμενο';
+        //End Pending Approval Reservations in Dashboard
+
+        //Missing Check In/Out Reservations in Dashboard
+        $strings['NoMissingCheckOutReservations'] = 'Δεν υπάρχουν λείπουσες κρατήσεις εξόδου';
+        $strings['MissingCheckOutReservations'] = 'Λείπουσες κρατήσεις εξόδου';        
+        //End Missing Check In/Out Reservations in Dashboard
+
+        //Schedule Resource Permissions
+        $strings['NoResourcePermissions'] = 'Δεν μπορείτε να δείτε λεπτομέρειες κράτησης επειδή δεν έχετε άδειες για κανένα από τους πόρους σε αυτήν την κράτηση';
+        //End Schedule Resource Permissions
+        //END NEEDS CHECKING
+
         $this->Strings = $strings;
 
         return $this->Strings;
@@ -1025,7 +1063,7 @@ class el_gr extends en_gb
      */
     protected function _LoadDays()
     {
-        $days = array();
+        $days = [];
 
         /***
          * DAY NAMES
@@ -1033,13 +1071,13 @@ class el_gr extends en_gb
          * and go through the seven day week, ending on Saturday
          ***/
         // The full day name
-        $days['full'] = array('Κυριακή', 'Δευτέρα', 'Τρίτη', 'Τετάρτη', 'Πέμπτη', 'Παρασκευή', 'Σάββατο');
+        $days['full'] = ['Κυριακή', 'Δευτέρα', 'Τρίτη', 'Τετάρτη', 'Πέμπτη', 'Παρασκευή', 'Σάββατο'];
         // The three letter abbreviation
-        $days['abbr'] = array('Κυρ', 'Δευ', 'Τρί', 'Τετ', 'Πέμ', 'Παρ', 'Σάβ');
+        $days['abbr'] = ['Κυρ', 'Δευ', 'Τρί', 'Τετ', 'Πέμ', 'Παρ', 'Σάβ'];
         // The two letter abbreviation
-        $days['two'] = array('Κυ', 'Δε', 'Τρ', 'Τε', 'Πέ', 'Πα', 'Σά');
+        $days['two'] = ['Κυ', 'Δε', 'Τρ', 'Τε', 'Πέ', 'Πα', 'Σά'];
         // The one letter abbreviation
-        $days['letter'] = array('Κ', 'Δ', 'T', 'Τ', 'Π', 'Π', 'Σ');
+        $days['letter'] = ['Κ', 'Δ', 'T', 'Τ', 'Π', 'Π', 'Σ'];
 
         $this->Days = $days;
 
@@ -1051,7 +1089,7 @@ class el_gr extends en_gb
      */
     protected function _LoadMonths()
     {
-        $months = array();
+        $months = [];
 
         /***
          * MONTH NAMES
@@ -1059,9 +1097,9 @@ class el_gr extends en_gb
          * and go through the twelve months of the year, ending on December
          ***/
         // The full month name
-        $months['full'] = array('Ιανουάριος', 'Φεβρουάριος', 'Μάρτιος', 'Απρίλιος', 'Μάιος', 'Ιούνιος', 'Ιούλιος', 'Αύγουστος', 'Σεπτέμβριος', 'Οκτώβριος', 'Νοέμβριος', 'Δεκέμβριος');
+        $months['full'] = ['Ιανουάριος', 'Φεβρουάριος', 'Μάρτιος', 'Απρίλιος', 'Μάιος', 'Ιούνιος', 'Ιούλιος', 'Αύγουστος', 'Σεπτέμβριος', 'Οκτώβριος', 'Νοέμβριος', 'Δεκέμβριος'];
         // The three letter month name
-        $months['abbr'] = array('Ιαν', 'Φεβ', 'Μάρ', 'Απρ', 'Μάι', 'Ιούν', 'Ιούλ', 'Αύγ', 'Σεπ', 'Οκτ', 'Νοέ', 'Δεκ');
+        $months['abbr'] = ['Ιαν', 'Φεβ', 'Μάρ', 'Απρ', 'Μάι', 'Ιούν', 'Ιούλ', 'Αύγ', 'Σεπ', 'Οκτ', 'Νοέ', 'Δεκ'];
 
         $this->Months = $months;
 
@@ -1073,7 +1111,7 @@ class el_gr extends en_gb
      */
     protected function _LoadLetters()
     {
-        $this->Letters = array('Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ', 'Η', 'Θ', 'Ι', 'Κ', 'Λ', 'Μ', 'Ν', 'Ξ', 'Ο', 'Π', 'Ρ', 'Σ', 'Τ', 'Υ', 'Φ', 'Χ', 'Ψ', 'Ω');
+        $this->Letters = ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ', 'Η', 'Θ', 'Ι', 'Κ', 'Λ', 'Μ', 'Ν', 'Ξ', 'Ο', 'Π', 'Ρ', 'Σ', 'Τ', 'Υ', 'Φ', 'Χ', 'Ψ', 'Ω'];
 
         return $this->Letters;
     }

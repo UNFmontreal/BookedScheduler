@@ -25,11 +25,12 @@ class UserCreditsPresenter extends ActionPresenter
      */
     private $creditRepository;
 
-    public function __construct(IUserCreditsPage $page,
-                                IUserRepository $userRepository,
-                                IPaymentRepository $paymentRepository,
-                                ICreditRepository $creditRepository)
-    {
+    public function __construct(
+        IUserCreditsPage $page,
+        IUserRepository $userRepository,
+        IPaymentRepository $paymentRepository,
+        ICreditRepository $creditRepository
+    ) {
         parent::__construct($page);
 
         $this->page = $page;
@@ -43,9 +44,10 @@ class UserCreditsPresenter extends ActionPresenter
         $user = $this->userRepository->LoadById($userSession->UserId);
         $this->page->SetCurrentCredits($user->GetCurrentCredits());
 
-        $cost = $this->paymentRepository->GetCreditCost();
+        $costs = $this->paymentRepository->GetCreditCosts();
 
-        $this->page->SetCreditCost($cost);
+        $this->page->SetCreditCosts($costs);
+        $this->page->SetCreditCost($costs[0]); // Just a default value, will be overwritten by javascript
     }
 
     /**
@@ -56,14 +58,24 @@ class UserCreditsPresenter extends ActionPresenter
     {
         if ($dataRequest == 'creditLog') {
             $this->GetCreditLog($userSession);
-        }
-        elseif ($dataRequest == 'transactionLog') {
+        } elseif ($dataRequest == 'transactionLog') {
             $this->GetTransactionLog($userSession);
-        }
-        else {
+        } else {
             $quantity = $this->page->GetQuantity();
-            $cost = $this->paymentRepository->GetCreditCost();
-            $this->page->SetTotalCost($cost->GetFormattedTotal($quantity));
+            $count = $this->page->GetCount();
+            $costs = $this->paymentRepository->GetCreditCosts();
+            // Get the cost that matches the count
+            foreach ($costs as $c) {
+                if ($c->Count() == $count) {
+                    $cost = $c;
+                    break;
+                }
+            }
+            if (!isset($cost)) { // Error if not found
+                echo "ERR|ERR";
+                return;
+            }
+            $this->page->SetTotalCost($cost->FormatCurrency($cost->Cost())."|".$cost->GetFormattedTotal($quantity));
         }
     }
 

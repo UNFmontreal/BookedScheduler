@@ -23,11 +23,12 @@ class ResourceAvailabilityControlPresenter
      */
     private $scheduleRepository;
 
-    public function __construct(IResourceAvailabilityControl $control,
-                                IResourceService $resourceService,
-                                IReservationViewRepository $reservationViewRepository,
-                                IScheduleRepository $scheduleRepository)
-    {
+    public function __construct(
+        IResourceAvailabilityControl $control,
+        IResourceService $resourceService,
+        IReservationViewRepository $reservationViewRepository,
+        IScheduleRepository $scheduleRepository
+    ) {
         $this->control = $control;
         $this->resourceService = $resourceService;
         $this->reservationViewRepository = $reservationViewRepository;
@@ -41,15 +42,14 @@ class ResourceAvailabilityControlPresenter
         $resources = $this->resourceService->GetAllResources(false, $user);
         $reservations = $this->GetReservations($this->reservationViewRepository->GetReservations($now, $now->AddDays(30)));
 
-        $available = array();
-        $unavailable = array();
-        $allday = array();
+        $available = [];
+        $unavailable = [];
+        $allday = [];
 
         foreach ($resources as $resource) {
-        	if ($resource->StatusId == ResourceStatus::HIDDEN)
-			{
-				continue;
-			}
+            if ($resource->StatusId == ResourceStatus::HIDDEN) {
+                continue;
+            }
             $reservation = $this->GetOngoingReservation($resource, $reservations);
 
             if ($reservation != null) {
@@ -61,17 +61,14 @@ class ResourceAvailabilityControlPresenter
 
                 if (!$reservation->EndDate->DateEquals($now)) {
                     $allday[$resource->ScheduleId][] = new UnavailableDashboardItem($resource, $lastReservationBeforeOpening);
-                }
-                else {
+                } else {
                     $unavailable[$resource->ScheduleId][] = new UnavailableDashboardItem($resource, $lastReservationBeforeOpening);
                 }
-            }
-            else {
+            } else {
                 $resourceId = $resource->GetId();
                 if (array_key_exists($resourceId, $reservations)) {
                     $available[$resource->ScheduleId][] = new AvailableDashboardItem($resource, $reservations[$resourceId][0]);
-                }
-                else {
+                } else {
                     $available[$resource->ScheduleId][] = new AvailableDashboardItem($resource);
                 }
             }
@@ -103,7 +100,7 @@ class ResourceAvailabilityControlPresenter
      */
     private function GetReservations($reservations)
     {
-        $indexed = array();
+        $indexed = [];
         foreach ($reservations as $reservation) {
             $indexed[$reservation->ResourceId][] = $reservation;
         }

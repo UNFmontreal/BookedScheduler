@@ -2,7 +2,7 @@
 /**
 *  Cron Example:
 *  This script must be executed every day for to enable series ending email functionality
-*  0 0 * * * /usr/bin/env php -f ${WWW_DIR}/booked/Jobs/sendseriesend.php
+*  0 0 * * * /usr/bin/env php -f ${WWW_DIR}/librebooking/Jobs/sendseriesend.php
 */
 
 define('ROOT_DIR', dirname(__FILE__) . '/../');
@@ -76,13 +76,15 @@ try {
 
         $reservation = $reservationRepository->LoadByReferenceNumber($referenceNumber);
 
-        Log::Debug('Sending series ending email. ReferenceNumber=%s, User=%s',
-            $referenceNumber, $reservation->UserId());
+        Log::Debug(
+            'Sending series ending email. ReferenceNumber=%s, User=%s',
+            $referenceNumber,
+            $reservation->UserId()
+        );
 
         ServiceLocator::GetEmailService()->Send(new ReservationSeriesEndingEmail($reservation, $language, $timezone, $email));
     }
     $reader->Free();
-
 } catch (Exception $ex) {
     Log::Error('Error running sendseriesend.php: %s', $ex);
 }

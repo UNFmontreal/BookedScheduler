@@ -69,18 +69,19 @@ class ResourceDisplayPresenter extends ActionPresenter
      */
     private $termsOfServiceRepository;
 
-    public function __construct(IResourceDisplayPage $page,
-                                IResourceRepository $resourceRepository,
-                                IReservationService $reservationService,
-                                IAuthorizationService $authorizationService,
-                                IWebAuthentication $authentication,
-                                IScheduleRepository $scheduleRepository,
-                                IDailyLayoutFactory $dailyLayoutFactory,
-                                IGuestUserService $guestUserService,
-                                IAttributeService $attributeService,
-                                IReservationRepository $reservationRepository,
-                                ITermsOfServiceRepository $termsOfServiceRepository)
-    {
+    public function __construct(
+        IResourceDisplayPage $page,
+        IResourceRepository $resourceRepository,
+        IReservationService $reservationService,
+        IAuthorizationService $authorizationService,
+        IWebAuthentication $authentication,
+        IScheduleRepository $scheduleRepository,
+        IDailyLayoutFactory $dailyLayoutFactory,
+        IGuestUserService $guestUserService,
+        IAttributeService $attributeService,
+        IReservationRepository $reservationRepository,
+        ITermsOfServiceRepository $termsOfServiceRepository
+    ) {
         parent::__construct($page);
         $this->page = $page;
         $this->resourceRepository = $resourceRepository;
@@ -105,10 +106,9 @@ class ResourceDisplayPresenter extends ActionPresenter
         $resourceId = $this->page->GetPublicResourceId();
         if (!empty($resourceId)) {
             $this->page->DisplayResourceShell();
+        } else {
+            $this->page->DisplayInstructions();
         }
-        else {
-        	$this->page->DisplayInstructions();
-		}
     }
 
     public function Login()
@@ -121,7 +121,7 @@ class ResourceDisplayPresenter extends ActionPresenter
         if ($isValid) {
             $this->authentication->Login($username, new WebLoginContext(new LoginData()));
             $user = ServiceLocator::GetServer()->GetUserSession();
-            $resourceList = array();
+            $resourceList = [];
             $resources = $this->resourceRepository->GetResourceList();
             foreach ($resources as $resource) {
                 if ($this->authorizationService->CanEditForResource($user, $resource)) {
@@ -130,8 +130,7 @@ class ResourceDisplayPresenter extends ActionPresenter
             }
 
             $this->page->BindResourceList($resourceList);
-        }
-        else {
+        } else {
             $this->page->BindInvalidLogin();
         }
     }
@@ -146,15 +145,15 @@ class ResourceDisplayPresenter extends ActionPresenter
         }
     }
 
-    public function DisplayResource($resourcePublicId)
+    public function DisplayResource($resourcePublicId, $startDate)
     {
         $resource = $this->resourceRepository->LoadByPublicId($resourcePublicId);
 
         if (!$resource->GetIsCalendarSubscriptionAllowed()) {
-
             $this->page->DisplayNotEnabled();
             return;
         }
+
         $scheduleId = $resource->GetScheduleId();
 
         $schedule = $this->scheduleRepository->LoadById($scheduleId);
@@ -164,17 +163,26 @@ class ResourceDisplayPresenter extends ActionPresenter
 
         $layout = $this->scheduleRepository->GetLayout($scheduleId, new ScheduleLayoutFactory($timezone));
         $slots = $layout->GetLayout($now, true);
-        if ($slots[count($slots) - 1]->EndDate()->LessThanOrEqual($now)) {
-            $now = $now->AddDays(1)->GetDate();
+        if(!empty($startDate)){
+            $reservationDate = $startDate;
+        }else{
+            $reservationDate = $now;
+            if ($slots[count($slots) - 1]->EndDate()->LessThanOrEqual($now)) {
+                $now = $now->AddDays(1)->GetDate();
+            }
         }
 
-        $reservationSearchRange = new DateRange($now->GetDate()->ToUtc(), $now->AddDays(1)->GetDate()->ToUtc());
+        $reservationSearchRange = new DateRange($reservationDate->GetDate()->ToUtc(), $reservationDate->AddDays(1)->GetDate()->ToUtc());
         $reservations = $this->reservationService->GetReservations($reservationSearchRange, null, $timezone, $resource->GetResourceId());
 
-        $attributes = $this->attributeService->GetReservationAttributes(ServiceLocator::GetServer()->GetUserSession(),
-            new ReservationView(), 0, array($resource->GetResourceId()));
+        $attributes = $this->attributeService->GetReservationAttributes(
+            ServiceLocator::GetServer()->GetUserSession(),
+            new ReservationView(),
+            0,
+            [$resource->GetResourceId()]
+        );
 
-        $requiredAttributes = array();
+        $requiredAttributes = [];
         /** @var Attribute $attribute */
         foreach ($attributes as $attribute) {
             if ($attribute->Required()) {
@@ -187,7 +195,7 @@ class ResourceDisplayPresenter extends ActionPresenter
 
         $dailyLayout = $this->dailyLayoutFactory->Create($reservations, $layout);
 
-        $reservationList = $reservations->OnDateForResource($now, $resource->GetId());
+        $reservationList = $reservations->OnDateForResource($reservationDate, $resource->GetId());
 
         /** @var ReservationListItem $next */
         $next = null;
@@ -221,7 +229,7 @@ class ResourceDisplayPresenter extends ActionPresenter
 
         $this->SetTermsOfService();
         $this->page->SetIsAvailableNow($current == null);
-        $this->page->DisplayAvailability($dailyLayout, $now, $current, $next, $upcoming, $requiresCheckin, $checkinReferenceNumber);
+        $this->page->DisplayAvailability($dailyLayout, $now, $reservationDate->GetDate(), $current, $next, $upcoming, $requiresCheckin, $checkinReferenceNumber);
     }
 
     public function Reserve()
@@ -230,25 +238,37 @@ class ResourceDisplayPresenter extends ActionPresenter
         $resourceId = $this->page->GetResourceId();
         $email = $this->page->GetEmail();
 
-        $now = Date::Now()->ToTimezone($timezone)->Format('Y-m-d ');
+        $reservationDate = Date::Parse($this->page->GetBeginDate(), $timezone)->Format('Y-m-d ');
+        $date = DateRange::Create($reservationDate . $this->page->GetBeginTime(), $reservationDate . $this->page->GetEndTime(), $timezone);
 
-        $date = DateRange::Create($now . $this->page->GetBeginTime(), $now . $this->page->GetEndTime(), $timezone);
-
-        $userSession = $this->guestUserService->CreateOrLoad($email);
-        $resource = $this->resourceRepository->LoadById($resourceId);
+        $maxFutureDays = Configuration::Instance()->GetSectionKey(ConfigSection::PRIVACY, ConfigKeys::PRIVACY_PUBLIC_FUTURE_DAYS, new IntConverter());
+        if ($maxFutureDays == 0) {
+            $maxFutureDays = 1;
+        }
+        $maxDate = Date::Now()->ToTimezone($timezone)->AddDays($maxFutureDays+1)->GetDate();
 
         $resultCollector = new ReservationResultCollector();
-        $series = ReservationSeries::Create($userSession->UserId, $resource, Resources::GetInstance()->GetString('AdHocMeeting'), Resources::GetInstance()->GetString('AdHocMeeting'), $date, new RepeatNone(), $userSession);
+        
+        if ($date->GetBegin()->GreaterThan($maxDate)) {
+            $resultCollector->SetSaveSuccessfulMessage(false);
+            $resultCollector->SetErrors(["Unauthorized"]);
+            $success = false;
+        }else{
 
-        $series->AcceptTerms($this->page->GetTermsOfServiceAcknowledgement());
+            $userSession = $this->guestUserService->CreateOrLoad($email);
+            $resource = $this->resourceRepository->LoadById($resourceId);
 
-        $attributes = $this->page->GetAttributes();
-        foreach ($attributes as $attribute) {
-            $series->AddAttributeValue(new AttributeValue($attribute->Id, $attribute->Value));
+            $series = ReservationSeries::Create($userSession->UserId, $resource, Resources::GetInstance()->GetString('AdHocMeeting'), Resources::GetInstance()->GetString('AdHocMeeting'), $date, new RepeatNone(), $userSession);
+
+            $series->AcceptTerms($this->page->GetTermsOfServiceAcknowledgement());
+
+            $attributes = $this->page->GetAttributes();
+            foreach ($attributes as $attribute) {
+                $series->AddAttributeValue(new AttributeValue($attribute->Id, $attribute->Value));
+            }
+
+            $success = $this->GetHandler($userSession)->Handle($series, $resultCollector);
         }
-
-        $success = $this->GetHandler($userSession)->Handle($series, $resultCollector);
-
         $this->page->SetReservationSaveResults($success, $resultCollector);
     }
 
@@ -270,8 +290,8 @@ class ResourceDisplayPresenter extends ActionPresenter
     {
         if ($dataRequest == 'display') {
             $resourceId = $this->page->GetPublicResourceId();
-
-            $this->DisplayResource($resourceId);
+            $startDate = $this->page->GetStartDate();
+            $this->DisplayResource($resourceId, $startDate);
         }
     }
 
@@ -279,8 +299,7 @@ class ResourceDisplayPresenter extends ActionPresenter
     {
         if ($action == 'reserve') {
             $this->page->RegisterValidator('emailformat', new EmailValidator($this->page->GetEmail()));
-            if (!Configuration::Instance()->GetSectionKey(ConfigSection::TABLET_VIEW, ConfigKeys::TABLET_VIEW_ALLOW_GUESTS, new BooleanConverter()))
-            {
+            if (!Configuration::Instance()->GetSectionKey(ConfigSection::TABLET_VIEW, ConfigKeys::TABLET_VIEW_ALLOW_GUESTS, new BooleanConverter())) {
                 $this->page->RegisterValidator('guestdenied', new RestrictedGuestValidator($this->page->GetEmail(), $this->guestUserService));
             }
         }
@@ -289,9 +308,11 @@ class ResourceDisplayPresenter extends ActionPresenter
     private function GetHandler($userSession)
     {
         if ($this->reservationCreateHandler == null) {
-            return ReservationHandler::Create(ReservationAction::Create,
+            return ReservationHandler::Create(
+                ReservationAction::Create,
                 new AddReservationPersistenceService($this->reservationRepository),
-                $userSession);
+                $userSession
+            );
         }
 
         return $this->reservationCreateHandler;
@@ -382,7 +403,7 @@ class ReservationResultCollector implements IReservationSaveResultsView
      */
     public function GetRetryParameters()
     {
-        return array();
+        return [];
     }
 
     /**

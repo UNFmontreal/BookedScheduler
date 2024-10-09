@@ -305,8 +305,8 @@ class ca extends en_gb
         $strings['Pending'] = 'Pendent';
         $strings['Past'] = 'Passat';
         $strings['Restricted'] = 'Restringit';
-		$strings['ViewAll'] = 'Veure-ho tot';
-		$strings['MoveResourcesAndReservations'] = 'Moure tamb� Recursos i Reserves';
+        $strings['ViewAll'] = 'Veure-ho tot';
+        $strings['MoveResourcesAndReservations'] = 'Moure tamb� Recursos i Reserves';
 
         // Errors
         $strings['LoginError'] = 'No s\'ha trobat una correspond&egrave;ncia pel teu nom d\'usuari i contrasenya';
@@ -388,7 +388,47 @@ class ca extends en_gb
         $strings['InviteeAddedSubject'] = 'Invitaci&oacute; a Reserva';
         $strings['ResetPassword'] = 'Petici&oacute; de Reinici de Contrasenya';
         $strings['ForgotPasswordEmailSent'] = 'S\'ha enviat un email a la direcci&oacute; proporcionada amb instruccions per reiniciar la teva contrasenya';
-        //
+        //End Email Subjects
+
+        //NEEDS CHECKING
+        //Past Reservations
+        $strings['NoPastReservations'] = 'No tens cap reserva anterior';
+        $strings['PastReservations'] = 'Reserves anteriors';
+        $strings['AllNoPastReservations'] = 'No hi ha cap reserva anterior en els darrers %s dies';
+        $strings['AllPastReservations'] = 'Totes les reserves anteriors';
+        $strings['Yesterday'] = 'Ahir';
+        $strings['EarlierThisWeek'] = 'Més aviat aquesta setmana';
+        $strings['PreviousWeek'] = 'Setmana anterior';
+        //End Past Reservations
+
+        //Group Upcoming Reservations
+        $strings['NoGroupUpcomingReservations'] = 'El vostre grup no té cap reserva futura';
+        $strings['GroupUpcomingReservations'] = 'Properes reserves del meu(s) grup(s)';
+        //End Group Upcoming Reservations
+        
+        //Facebook Login SDK Error
+        $strings['FacebookLoginErrorMessage'] = 'S\'ha produït un error en iniciar la sessió amb Facebook. Torneu-ho a provar.';
+        //End Facebook Login SDK Error
+
+        //Pending Approval Reservations in Dashboard
+        $strings['NoPendingApprovalReservations'] = 'No teniu cap reserva a l\'espera d\'aprovació';
+        $strings['PendingApprovalReservations'] = 'Reserves pendents d\'aprovació';
+        $strings['LaterThisMonth'] = 'Més endavant aquest mes';
+        $strings['LaterThisYear'] = 'Més endavant aquest any';
+        $strings['Remaining'] = 'Restant';
+        //End Pending Approval Reservations in Dashboard
+
+        //Missing Check In/Out Reservations in Dashboard
+        $strings['NoMissingCheckOutReservations'] = 'No hi ha cap reserva de sortida que falti';
+        $strings['MissingCheckOutReservations'] = 'Reserves de sortida que falten';        
+        //End Missing Check In/Out Reservations in Dashboard
+
+        //Schedule Resource Permissions
+        $strings['NoResourcePermissions'] = 'No es poden veure els detalls de la reserva perquè no teniu permisos per a cap dels recursos d\'aquesta reserva';
+        //End Schedule Resource Permissions
+        //END NEEDS CHECKING
+
+
 
         $this->Strings = $strings;
     }
@@ -403,13 +443,13 @@ class ca extends en_gb
         and go through the seven day week, ending on Saturday
          ***/
         // The full day name
-        $days['full'] = array('Diumenge', 'Dilluns', 'Dimarts', 'Dimecres', 'Dijous', 'Divendres', 'Dissabte');
+        $days['full'] = ['Diumenge', 'Dilluns', 'Dimarts', 'Dimecres', 'Dijous', 'Divendres', 'Dissabte'];
         // The three letter abbreviation
-        $days['abbr'] = array('Dig', 'Dls', 'Dts', 'Dcs', 'Djs', 'Dvs', 'Dst');
+        $days['abbr'] = ['Dig', 'Dls', 'Dts', 'Dcs', 'Djs', 'Dvs', 'Dst'];
         // The two letter abbreviation
-        $days['two'] = array('Dg', 'Dl', 'Dm', 'Dc', 'Dj', 'Dv', 'Ds');
+        $days['two'] = ['Dg', 'Dl', 'Dm', 'Dc', 'Dj', 'Dv', 'Ds'];
         // The one letter abbreviation
-        $days['letter'] = array('G', 'L', 'T', 'C', 'J', 'V', 'S');
+        $days['letter'] = ['G', 'L', 'T', 'C', 'J', 'V', 'S'];
 
         $this->Days = $days;
     }
@@ -424,16 +464,16 @@ class ca extends en_gb
         and go through the twelve months of the year, ending on December
          ***/
         // The full month name
-        $months['full'] = array('Gener', 'Febrer', 'Mar&ccedil;', 'Abril', 'Maig', 'Juny', 'Juliol', 'Agost', 'Setembre', 'Octubre', 'Novembre', 'Desembre');
+        $months['full'] = ['Gener', 'Febrer', 'Mar&ccedil;', 'Abril', 'Maig', 'Juny', 'Juliol', 'Agost', 'Setembre', 'Octubre', 'Novembre', 'Desembre'];
         // The three letter month name
-        $months['abbr'] = array('Gen', 'Feb', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Agt', 'Set', 'Oct', 'Nov', 'Des');
+        $months['abbr'] = ['Gen', 'Feb', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Agt', 'Set', 'Oct', 'Nov', 'Des'];
 
         $this->Months = $months;
     }
 
     protected function _LoadLetters()
     {
-        $this->Letters = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', '&Ntilde;', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+        $this->Letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', '&Ntilde;', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
     }
 
     protected function _GetHtmlLangCode()

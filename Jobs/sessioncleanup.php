@@ -2,7 +2,7 @@
 /**
 *  Cron Example:
 *  This script must be executed every day to enable session cleanup functionality
-*  0 0 * * * /usr/bin/env php -f ${WWW_DIR}/booked/Jobs/sessioncleanup.php
+*  0 0 * * * /usr/bin/env php -f ${WWW_DIR}/librebooking/Jobs/sessioncleanup.php
 */
 
 define('ROOT_DIR', dirname(__FILE__) . '/../');
@@ -13,15 +13,12 @@ Log::Debug('Running sessioncleanup.php');
 
 JobCop::EnsureCommandLine();
 
-try
-{
-	$userSessionRepository = new UserSessionRepository();
+try {
+    $userSessionRepository = new UserSessionRepository();
     $userSessionRepository->CleanUp();
     Log::Debug('Cleaning up stale user sessions');
-
-} catch (Exception $ex)
-{
-	Log::Error('Error running sessioncleanup.php: %s', $ex);
+} catch (Exception $ex) {
+    Log::Error('Error running sessioncleanup.php: %s', $ex);
 }
 
 Log::Debug('Finished running sessioncleanup.php');

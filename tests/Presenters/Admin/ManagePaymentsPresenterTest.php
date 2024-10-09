@@ -90,9 +90,9 @@ class ManagePaymentsPresenterTests extends TestBase
         $this->page->_CurrentPage = 10;
         $this->page->_PageSize = 50;
 
-        $this->paymentRepository->_TransactionLogs = new PageableData(array(
+        $this->paymentRepository->_TransactionLogs = new PageableData([
             $this->GetTransactionLogView()
-        ));
+        ]);
 
         $this->presenter->GetTransactionLog();
 
@@ -163,12 +163,14 @@ class ManagePaymentsPresenterTests extends TestBase
             'refundref',
             'gatewaydate',
             $gateway,
-            100);
+            100
+        );
     }
 }
 
 class FakeManagePaymentsPage extends ManagePaymentsPage
 {
+    public $_CreditCount;
     public $_CreditCost;
     public $_CreditCurrency;
     public $_PayPalEnabled;
@@ -202,8 +204,9 @@ class FakeManagePaymentsPage extends ManagePaymentsPage
         return $this->_CreditCurrency;
     }
 
-    public function SetCreditCost($cost, $currency)
+    public function SetCreditCost($count, $cost, $currency)
     {
+        $this->_CreditCount = $count;
         $this->_CreditCost = $cost;
         $this->_CreditCurrency = $currency;
     }

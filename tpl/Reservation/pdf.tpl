@@ -117,7 +117,7 @@ $('.btnPDF').click(function (e) {
 				{/if}
 				],
 			{/if}
-			{if count(array($RepeatWeekdays)) gt 0}
+			{if (is_array($RepeatWeekdays) && count($RepeatWeekdays) gt 0)}
 				[{ content: daysText, styles: { fontStyle: 'bold'}},
 				{ colSpan: 3, content: '{foreach from=$RepeatWeekdays item=day name=weekdaysLoop}{if $smarty.foreach.weekdaysLoop.last}{translate key=$DayNames[$day]}{else}{translate key=$DayNames[$day]},{/if} {/foreach}'},
 				],
@@ -146,7 +146,7 @@ $('.btnPDF').click(function (e) {
 		],
 		{foreach from=$AvailableResources item=resource}
 			{if is_array($AdditionalResourceIds) && in_array($resource->Id, $AdditionalResourceIds)}
-				[{ content: '{$resource->Name}'},
+				[{ content: '{$resource->Name|escape:'javascript'}'},
 				 { content: '{if $resource->GetRequiresApproval()}X{/if}', styles: { fontStyle: 'bold', halign: 'center'}},
 				 { content: '{if $resource->IsCheckInEnabled()}X{/if}', styles: { fontStyle: 'bold', halign: 'center'}},
 				 { content: '{if $resource->IsAutoReleased()}{$resource->GetAutoReleaseMinutes()}{else} - {/if}', styles: { halign: 'center'}},
@@ -228,7 +228,7 @@ $('.btnPDF').click(function (e) {
 
 	var bodyAttributes = [[{ content: '{translate key="AdditionalAttributes"}', styles: { fontStyle: 'bold'}}, { content: ''}]];
 
-	if (Object.keys(allAttributes).length != 0) {
+	if (allAttributes && Object.keys(allAttributes).length != 0) {
 		for (var obj in allAttributes) {
 			if (allAttributes[obj][0] == "4") {
 				if (allAttributes[obj][2] == "1") {

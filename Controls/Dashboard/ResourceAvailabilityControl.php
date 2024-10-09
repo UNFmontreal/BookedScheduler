@@ -32,6 +32,16 @@ interface IResourceAvailabilityControl
 class AvailableDashboardItem
 {
     /**
+     * @var ResourceDto $resource
+     */
+    private $resource;
+
+    /**
+     * @var ReservationItemView|null $nextItem
+     */
+    private $next;
+
+    /**
      * @param ResourceDto $resource
      * @param ReservationItemView|null $nextItem
      */
@@ -171,15 +181,18 @@ class ResourceAvailabilityControl extends DashboardItem implements IResourceAvai
     {
         parent::__construct($smarty);
 
-        $this->presenter = new ResourceAvailabilityControlPresenter($this,
-            new ResourceService(new ResourceRepository(),
+        $this->presenter = new ResourceAvailabilityControlPresenter(
+            $this,
+            new ResourceService(
+                new ResourceRepository(),
                 new SchedulePermissionService(PluginManager::Instance()->LoadPermission()),
                 new AttributeService(new AttributeRepository()),
                 new UserRepository(),
                 new AccessoryRepository()
             ),
             new ReservationViewRepository(),
-            new ScheduleRepository());
+            new ScheduleRepository()
+        );
     }
 
     public function PageLoad()

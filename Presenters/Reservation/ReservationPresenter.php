@@ -19,7 +19,7 @@ abstract class ReservationPresenterBase implements IReservationPresenter
         $this->basePage = $page;
     }
 
-    public abstract function PageLoad();
+    abstract public function PageLoad();
 }
 
 class ReservationPresenter extends ReservationPresenterBase
@@ -42,8 +42,8 @@ class ReservationPresenter extends ReservationPresenterBase
     public function __construct(
         INewReservationPage $page,
         IReservationInitializerFactory $initializationFactory,
-        INewReservationPreconditionService $preconditionService)
-    {
+        INewReservationPreconditionService $preconditionService
+    ) {
         parent::__construct($page);
 
         $this->_page = $page;
@@ -86,8 +86,8 @@ class EditReservationPresenter extends ReservationPresenterBase
         IExistingReservationPage $page,
         IReservationInitializerFactory $initializationFactory,
         EditReservationPreconditionService $preconditionService,
-        IReservationViewRepository $reservationViewRepository)
-    {
+        IReservationViewRepository $reservationViewRepository
+    ) {
         parent::__construct($page);
 
         $this->page = $page;

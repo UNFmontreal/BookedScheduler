@@ -56,8 +56,8 @@ class SlotLabelFactory
         $shouldHideUser = Configuration::Instance()->GetSectionKey(ConfigSection::PRIVACY, ConfigKeys::PRIVACY_HIDE_USER_DETAILS, new BooleanConverter());
         $shouldHideDetails = ReservationDetailsFilter::HideReservationDetails($reservation->StartDate, $reservation->EndDate);
         $shouldHideReservations = Configuration::Instance()->GetSectionKey(ConfigSection::PRIVACY, ConfigKeys::PRIVACY_VIEW_RESERVATIONS, new BooleanConverter());
-        
-		if ($shouldHideUser || $shouldHideDetails) {
+
+        if ($shouldHideUser || $shouldHideDetails) {
             $canSeeUserDetails = $reservation->OwnerId == $this->user->UserId || $this->user->IsAdmin || $this->user->IsAdminForGroup($reservation->OwnerGroupIds());
             $canEditResource = $this->authorizationService->CanEditForResource($this->user, new SlotLabelResource($reservation));
             $shouldHideUser = $shouldHideUser && !$canSeeUserDetails && !$canEditResource;
@@ -67,14 +67,20 @@ class SlotLabelFactory
         if ($shouldHideDetails) {
             return '';
         }
-		
+
         if (!$shouldHideReservations && !$this->user->IsLoggedIn()) {
             return '';
         }
 
+        if(!in_array($reservation->ResourceId,$this->UserResourcePermissions($this->user->UserId)) && !$reservation->IsUserOwner($this->user->UserId) && !$reservation->IsUserInvited($this->user->UserId) && !$reservation->IsUserParticipating($this->user->UserId)){
+            return '';
+        }
+
         if (empty($format)) {
-            $format = Configuration::Instance()->GetSectionKey(ConfigSection::SCHEDULE,
-                ConfigKeys::SCHEDULE_RESERVATION_LABEL);
+            $format = Configuration::Instance()->GetSectionKey(
+                ConfigSection::SCHEDULE,
+                ConfigKeys::SCHEDULE_RESERVATION_LABEL
+            );
         }
 
         if ($format == 'none' || empty($format)) {
@@ -89,13 +95,13 @@ class SlotLabelFactory
             $timezone = $this->user->Timezone;
         }
         $label = $format;
-        $label = str_replace('{name}', $name, $label);
-        $label = str_replace('{title}', $reservation->Title, $label);
-        $label = str_replace('{description}', $reservation->Description, $label);
+        $label = str_replace('{name}', $name ?? '', $label);
+        $label = str_replace('{title}', $reservation->Title ?? '', $label);
+        $label = str_replace('{description}', $reservation->Description ?? '', $label);
         $label = str_replace('{email}', $reservation->OwnerEmailAddress, $label);
-        $label = str_replace('{organization}', $reservation->OwnerOrganization, $label);
-        $label = str_replace('{phone}', $reservation->OwnerPhone, $label);
-        $label = str_replace('{position}', $reservation->OwnerPosition, $label);
+        $label = str_replace('{organization}', $reservation->OwnerOrganization ?? '', $label);
+        $label = str_replace('{phone}', $reservation->OwnerPhone ?? '', $label);
+        $label = str_replace('{position}', $reservation->OwnerPosition ?? '', $label);
         $label = str_replace('{startdate}', $reservation->StartDate->ToTimezone($timezone)->Format($dateFormat), $label);
         $label = str_replace('{enddate}', $reservation->EndDate->ToTimezone($timezone)->Format($dateFormat), $label);
         $label = str_replace('{resourcename}', implode(', ', $reservation->ResourceNames), $label);
@@ -104,7 +110,7 @@ class SlotLabelFactory
             $label = str_replace('{invitees}', trim(implode(', ', $reservation->InviteeNames)), $label);
         }
 
-        $matches = array();
+        $matches = [];
         preg_match_all('/\{(att\d+?)\}/', $format, $matches);
 
         $matches = $matches[0];
@@ -139,6 +145,30 @@ class SlotLabelFactory
     {
         $name = new FullName($reservation->FirstName, $reservation->LastName);
         return $name->__toString();
+    }
+
+     /**
+     * Gets the resources the user has permissions (full access and view only permissions)
+     * This is used to block a user from seeing reservation details if he has no permissions to it's resources
+     */
+    private function UserResourcePermissions($userId)
+    {
+        $resourceRepo = new ResourceRepository();
+        $resourceIds = [];
+
+        $resourceIds = $resourceRepo->GetUserResourcePermissions($userId);
+
+        $resourceIds = $resourceRepo->GetUserGroupResourcePermissions($userId,$resourceIds);
+
+        if (ServiceLocator::GetServer()->GetUserSession()->IsResourceAdmin){    
+            $resourceIds = $resourceRepo->GetResourceAdminResourceIds($userId, $resourceIds);
+        }
+
+        if (ServiceLocator::GetServer()->GetUserSession()->IsScheduleAdmin){
+            $resourceIds = $resourceRepo->GetScheduleAdminResourceIds($userId, $resourceIds);
+        }
+
+        return $resourceIds;
     }
 }
 
@@ -208,7 +238,7 @@ class SlotLabelResource implements IResource
 
     public function GetAdminGroupId()
     {
-       return $this->adminGroupId;
+        return $this->adminGroupId;
     }
 
     public function GetScheduleId()
@@ -223,7 +253,7 @@ class SlotLabelResource implements IResource
 
     public function GetStatusId()
     {
-       return $this->statusId;
+        return $this->statusId;
     }
 
     public function GetResourceId()

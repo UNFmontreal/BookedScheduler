@@ -1,5 +1,6 @@
 <?php
 
+mysqli_report(MYSQLI_REPORT_OFF);
 error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
 //ini_set('display_errors', 1);
 //ini_set('display_startup_errors', 1);
@@ -7,11 +8,11 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
 /**
  * Application configuration
  */
-$conf['settings']['app.title'] = 'Booked Scheduler';            // application title
+$conf['settings']['app.title'] = 'LibreBooking';            // application title
 $conf['settings']['default.timezone'] = 'Etc/UTC';              // look up here http://php.net/manual/en/timezones.php
 $conf['settings']['allow.self.registration'] = 'true';          // if users can register themselves
 $conf['settings']['admin.email'] = 'admin@example.com';         // email address of admin user
-$conf['settings']['admin.email.name'] = 'Booked Administrator'; // name to be used in From: field when sending automatic emails
+$conf['settings']['admin.email.name'] = 'LB Administrator'; // name to be used in From: field when sending automatic emails
 $conf['settings']['company.name'] = '';                         // name of company, if applicable
 $conf['settings']['company.url'] = '';                          // URL of company, if applicable
 $conf['settings']['default.page.size'] = '50';                  // number of records per page
@@ -40,6 +41,7 @@ $conf['settings']['schedule']['reservation.label'] = '{name}';          // forma
 $conf['settings']['schedule']['hide.blocked.periods'] = 'false';        // if blocked periods should be hidden or shown
 $conf['settings']['schedule']['update.highlight.minutes'] = '0';    // if set, will show reservations as 'updated' for a certain amount of time
 $conf['settings']['schedule']['show.week.numbers'] = 'false';
+$conf['settings']['schedule']['fast.reservation.load'] = 'false';  // Experimental: Use new algorithm to load reservations faster in the schedule. Currently does not support concurrent reservations. With larger number of resources this can be 10x or 100x faster. Only runs with the StandardSchedule otherwise will fall back to legacy mode.
 /**
  * ical integration configuration
  */
@@ -53,7 +55,7 @@ $conf['settings']['privacy']['view.schedules'] = 'true';                // if un
 $conf['settings']['privacy']['view.reservations'] = 'false';                // if unauthenticated users can view reservations
 $conf['settings']['privacy']['hide.user.details'] = 'false';                // if personal user details should be displayed to non-administrators
 $conf['settings']['privacy']['hide.reservation.details'] = 'false';         // if reservation details should be displayed to non-administrators. options are true, false, current, future, past
-$conf['settings']['privacy']['allow.guest.reservations'] = 'false';         // if reservations can be made by users without a Booked account, if true this overrides schedule and resource visibility
+$conf['settings']['privacy']['allow.guest.reservations'] = 'false';         // if reservations can be made by users without a LibreBooking account, if true this overrides schedule and resource visibility
 /**
  * Reservation specific configuration
  */
@@ -69,6 +71,8 @@ $conf['settings']['reservation']['default.start.reminder'] = '';            // t
 $conf['settings']['reservation']['default.end.reminder'] = '';              // the default end reservation reminder. format is ## interval. for example, 10 minutes, 2 hours, 6 days.
 $conf['settings']['reservation']['title.required'] = 'false';
 $conf['settings']['reservation']['description.required'] = 'false';
+$conf['settings']['reservation']['checkin.admin.only'] = 'true';
+$conf['settings']['reservation']['checkout.admin.only'] = 'true';
 /**
  * Email notification configuration
  */
@@ -94,10 +98,10 @@ $conf['settings']['uploads']['reservation.attachment.extensions'] = 'txt,jpg,gif
  * Database configuration
  */
 $conf['settings']['database']['type'] = 'mysql';
-$conf['settings']['database']['user'] = 'test';        // database user with permission to the booked database
+$conf['settings']['database']['user'] = 'test';        // database user with permission to the LibreBooking database
 $conf['settings']['database']['password'] = 'test';
 $conf['settings']['database']['hostspec'] = '127.0.0.1';      // ip, dns or named pipe
-$conf['settings']['database']['name'] = 'bookedscheduler';
+$conf['settings']['database']['name'] = 'librebooking';
 /**
  * Mail server configuration
  */
@@ -138,6 +142,7 @@ $conf['settings']['api']['allow.self.registration'] = 'false';
 $conf['settings']['recaptcha']['enabled'] = 'false';
 $conf['settings']['recaptcha']['public.key'] = '';
 $conf['settings']['recaptcha']['private.key'] = '';
+$conf['settings']['recaptcha']['request.method'] = 'curl'; // options are curl, post or socket. default: post
 /**
  * Email
  */
@@ -166,7 +171,7 @@ $conf['settings']['reservation.labels']['reservation.popup'] = ''; // Format for
  * Security header settings
  */
 $conf['settings']['security']['security.headers'] = 'false'; // Enable the following options
-$conf['settings']['security']['security.strict-transport'] = 'true';
+$conf['settings']['security']['security.strict-transport'] = 'max-age=31536000';
 $conf['settings']['security']['security.x-frame'] = 'deny';
 $conf['settings']['security']['security.x-xss'] = '1; mode=block';
 $conf['settings']['security']['security.x-content-type'] = 'nosniff';
@@ -174,7 +179,7 @@ $conf['settings']['security']['security.content-security-policy'] = ""; // Requi
 /**
  * Google Analytics settings
  */
-$conf['settings']['google.analytics']['tracking.id'] = ''; // if set, Google Analytics tracking code will be added to every page in Booked
+$conf['settings']['google.analytics']['tracking.id'] = ''; // if set, Google Analytics tracking code will be added to every page in LibreBooking
 
 $conf['settings']['authentication']['allow.facebook.login'] = 'false';
 $conf['settings']['authentication']['allow.google.login'] = 'false';
@@ -201,3 +206,9 @@ $conf['settings']['tablet.view']['auto.suggest.emails'] = 'false';
 $conf['settings']['registration']['require.phone'] = 'false';
 $conf['settings']['registration']['require.position'] = 'false';
 $conf['settings']['registration']['require.organization'] = 'false';
+/**
+ * Error logging
+ */
+$conf['settings']['logging']['folder'] = '/var/log/librebooking/log'; //Absolute path to folder were the log will be written, writing permissions to the folder are required
+$conf['settings']['logging']['level'] = 'debug'; //Set to none disable logs, error to only log errors or debug to log all messages to the app.log file 
+$conf['settings']['logging']['sql'] = 'false'; //Set to true no enable the creation of and sql.log file

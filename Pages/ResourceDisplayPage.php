@@ -43,13 +43,14 @@ interface IResourceDisplayPage extends IPage, IActionPage
     /**
      * @param IDailyLayout $dailyLayout
      * @param Date $today
+     * @param Date $reservationDate
      * @param ReservationListItem|null $current
      * @param ReservationListItem|null $next
      * @param ReservationListItem[] $upcoming
      * @param bool $requiresCheckin
      * @param string $checkinReferenceNumber
      */
-    public function DisplayAvailability(IDailyLayout $dailyLayout, Date $today, $current, $next, $upcoming, $requiresCheckin, $checkinReferenceNumber);
+    public function DisplayAvailability(IDailyLayout $dailyLayout, Date $today, Date $reservationDate, $current, $next, $upcoming, $requiresCheckin, $checkinReferenceNumber);
 
     /**
      * @param bool $availableNow
@@ -117,7 +118,7 @@ interface IResourceDisplayPage extends IPage, IActionPage
      */
     public function GetTermsOfServiceAcknowledgement();
 
-	public function DisplayInstructions();
+    public function DisplayInstructions();
 }
 
 class ResourceDisplayPage extends ActionPage implements IResourceDisplayPage, IRequestedResourcePage
@@ -130,25 +131,33 @@ class ResourceDisplayPage extends ActionPage implements IResourceDisplayPage, IR
     public function __construct()
     {
         parent::__construct('Resource');
-        $this->presenter = new ResourceDisplayPresenter($this,
+        $this->presenter = new ResourceDisplayPresenter(
+            $this,
             new ResourceRepository(),
-            new ReservationService(new ReservationViewRepository(),
-                new ReservationListingFactory()),
+            new ReservationService(
+                new ReservationViewRepository(),
+                new ReservationListingFactory()
+            ),
             PluginManager::Instance()->LoadAuthorization(),
             new WebAuthentication(PluginManager::Instance()->LoadAuthentication()),
             new ScheduleRepository(),
             new DailyLayoutFactory(),
-            new GuestUserService(PluginManager::Instance()->LoadAuthentication(),
-                new GuestRegistration(new PasswordEncryption(),
+            new GuestUserService(
+                PluginManager::Instance()->LoadAuthentication(),
+                new GuestRegistration(
+                    new PasswordEncryption(),
                     new UserRepository(),
                     new GuestRegistrationNotificationStrategy(),
-                    new GuestReservationPermissionStrategy($this))),
+                    new GuestReservationPermissionStrategy($this)
+                )
+            ),
             new AttributeService(new AttributeRepository(), new GuestPermissionService()),
             new ReservationRepository(),
-            new TermsOfServiceRepository());
+            new TermsOfServiceRepository()
+        );
 
         $this->Set('AllowAutocomplete', Configuration::Instance()->GetSectionKey(ConfigSection::TABLET_VIEW, ConfigKeys::TABLET_VIEW_AUTOCOMPLETE, new BooleanConverter()));
-		$this->Set('ShouldLogout', false);
+        $this->Set('ShouldLogout', false);
     }
 
     public function ProcessAction()
@@ -193,23 +202,23 @@ class ResourceDisplayPage extends ActionPage implements IResourceDisplayPage, IR
 
     public function BindInvalidLogin()
     {
-        $this->SetJson(array('error' => true));
+        $this->SetJson(['error' => true]);
     }
 
     public function BindResourceList($resourceList)
     {
-        $resources = array();
+        $resources = [];
         foreach ($resourceList as $resource) {
-            $resources[] = array('id' => $resource->GetId(), 'name' => $resource->GetName());
+            $resources[] = ['id' => $resource->GetId(), 'name' => $resource->GetName()];
         }
 
-        $this->SetJson(array('resources' => $resources));
+        $this->SetJson(['resources' => $resources]);
     }
 
     public function SetActivatedResourceId($publicId)
     {
         $resourceDisplayUrl = Configuration::Instance()->GetScriptUrl() . '/' . Pages::DISPLAY_RESOURCE . '?' . QueryStringKeys::RESOURCE_ID . '=' . $publicId;
-        $this->SetJson(array('location' => $resourceDisplayUrl));
+        $this->SetJson(['location' => $resourceDisplayUrl]);
     }
 
     public function GetPublicResourceId()
@@ -217,16 +226,29 @@ class ResourceDisplayPage extends ActionPage implements IResourceDisplayPage, IR
         return $this->GetQuerystring(QueryStringKeys::RESOURCE_ID);
     }
 
+    public function GetStartDate()
+    {
+        $userTimezone = ServiceLocator::GetServer()->GetUserSession()->Timezone;
+        $parsedDate = $this->GetQuerystring(QueryStringKeys::START_DATE);
+        if (!empty($parsedDate)) {
+            $startDate = Date::Parse($parsedDate, $userTimezone);
+        }else{
+            $startDate = Date::Now()->ToTimezone($userTimezone);
+        }
+        return $startDate;
+    }
+    
     public function BindResource(BookableResource $resource)
     {
         $this->Set('ResourceName', $resource->GetName());
         $this->Set('ResourceId', $resource->GetId());
     }
 
-    public function DisplayAvailability(IDailyLayout $dailyLayout, Date $today, $current, $next, $upcoming, $requiresCheckin, $checkinReferenceNumber)
+    public function DisplayAvailability(IDailyLayout $dailyLayout, Date $today, Date $reservationDate, $current, $next, $upcoming, $requiresCheckin, $checkinReferenceNumber)
     {
         $this->Set('TimeFormat', Resources::GetInstance()->GetDateFormat('period_time'));
         $this->Set('Today', $today);
+        $this->Set('ReservationDate', $reservationDate);
         $this->Set('Now', Date::Now());
         $this->Set('DailyLayout', $dailyLayout);
         $this->Set('SlotLabelFactory', new SlotLabelFactory(new NullUserSession()));
@@ -252,6 +274,12 @@ class ResourceDisplayPage extends ActionPage implements IResourceDisplayPage, IR
     public function DisplayResourceShell()
     {
         $this->Set('PublicResourceId', $this->GetPublicResourceId());
+        $this->Set('InitialDate', $this->GetStartDate()->Format('Y-m-d H:i:s'));
+        $futureDays = Configuration::Instance()->GetSectionKey(ConfigSection::PRIVACY, ConfigKeys::PRIVACY_PUBLIC_FUTURE_DAYS, new IntConverter());
+        if ($futureDays == 0) {
+            $futureDays = 1;
+        }
+        $this->Set('MaxFutureDate', Date::Now()->AddDays($futureDays-1));
         $this->Display('ResourceDisplay/resource-display-shell.tpl');
     }
 
@@ -265,6 +293,11 @@ class ResourceDisplayPage extends ActionPage implements IResourceDisplayPage, IR
         return $this->GetForm(FormKeys::BEGIN_PERIOD);
     }
 
+    public function GetBeginDate()
+    {
+        return $this->GetForm(FormKeys::BEGIN_DATE);
+    }
+
     public function GetEndTime()
     {
         return $this->GetForm(FormKeys::END_PERIOD);
@@ -272,12 +305,12 @@ class ResourceDisplayPage extends ActionPage implements IResourceDisplayPage, IR
 
     public function SetReservationSaveResults($success, $resultCollector)
     {
-        $this->SetJson(array('success' => $success, 'errors' => $resultCollector->Errors));
+        $this->SetJson(['success' => $success, 'errors' => $resultCollector->Errors]);
     }
 
     public function SetReservationCheckinResults($success, $resultCollector)
     {
-        $this->SetJson(array('success' => $success, 'errors' => $resultCollector->Errors));
+        $this->SetJson(['success' => $success, 'errors' => $resultCollector->Errors]);
     }
 
     public function GetRequestedResourceId()
@@ -321,8 +354,8 @@ class ResourceDisplayPage extends ActionPage implements IResourceDisplayPage, IR
         return $this->GetCheckbox(FormKeys::TOS_ACKNOWLEDGEMENT);
     }
 
-	public function DisplayInstructions()
-	{
-		$this->Display('ResourceDisplay/resource-display-instructions.tpl');
-	}
+    public function DisplayInstructions()
+    {
+        $this->Display('ResourceDisplay/resource-display-instructions.tpl');
+    }
 }

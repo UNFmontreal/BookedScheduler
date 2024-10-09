@@ -1,3 +1,3 @@
-Se adjunta un informe de Booked Scheduler.<br/><br/>
+Tu informe de {$AppTitle} está adjunto.<br/><br/>
 
-<a href="{$ScriptUrl}">Iniciar sesión en Booked Scheduler</a>
+<a href="{$ScriptUrl}">Iniciar sesión en {$AppTitle}</a>

@@ -71,13 +71,13 @@
 </div>
 
 
-{if $CheckInRequired}
+{if $CheckInRequired && (!checkinAdminOnly || $CanViewAdmin)}
     <button type="button" class="btn btn-warning btnCheckin"><i class="fa fa-sign-in"></i> {translate key=CheckIn}
         <span class="autoReleaseButtonMessage"
               data-autorelease-minutes="{$AutoReleaseMinutes}"> - {translate key=ReleasedIn} <span
                     class="autoReleaseMinutes"></span> {translate key=minutes}</span></button>
 {/if}
-{if $CheckOutRequired}
+{if $CheckOutRequired && (!checkoutAdminOnly || $CanViewAdmin)}
     <button type="button" class="btn btn-warning btnCheckout"><i
                 class="fa fa-sign-out"></i> {translate key=CheckOut}</button>
 {/if}
@@ -142,7 +142,7 @@
                 <div>{translate key=DeleteReminderWarning}</div>
                 <div>
                     <label for="deleteReason">{translate key=Reason} ({translate key=Optional})</label>
-                    <textarea class="deleteReason form-control"></textarea>
+                    <textarea id="deleteReason" class="deleteReason form-control"></textarea>
                 </div>
              </div>
             <div class="modal-footer">

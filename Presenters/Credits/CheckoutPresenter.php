@@ -44,24 +44,35 @@ class CheckoutPresenter extends ActionPresenter
 
     public function PageLoad(UserSession $userSession)
     {
+        $creditCount = floatval($this->page->GetCreditCount());
         $creditQuantity = floatval($this->page->GetCreditQuantity());
 
-        $cost = $this->paymentRepository->GetCreditCost();
+        $costs = $this->paymentRepository->GetCreditCosts();
+        // Find the cost that matches the credit count
+        foreach ($costs as $c) {
+            if ($c->Count() == $creditCount) {
+                $cost = $c;
+                break;
+            }
+        }
+        if (!isset($cost)) {
+            Log::Error('Could not find cost for credit count %s', $creditCount);
+            return;
+        }
+
         $paypal = $this->paymentRepository->GetPayPalGateway();
         $stripe = $this->paymentRepository->GetStripeGateway();
 
         $total = $cost->GetTotal($creditQuantity);
 
-        if ($creditQuantity == 0)
-        {
+        if ($creditQuantity == 0) {
             $this->page->SetEmptyCart(true);
-        }
-        else {
+        } else {
             $this->page->SetTotals($total, $cost, $creditQuantity);
             $this->page->SetPayPalSettings($paypal->IsEnabled(), $paypal->ClientId(), $paypal->Environment());
             $this->page->SetStripeSettings($stripe->IsEnabled(), $stripe->PublishableKey());
 
-            ServiceLocator::GetServer()->SetSession(SessionKeys::CREDIT_CART, new CreditCartSession($creditQuantity, $cost->Cost(), $cost->Currency(), $userSession->UserId));
+            ServiceLocator::GetServer()->SetSession(SessionKeys::CREDIT_CART, new CreditCartSession($creditQuantity * $creditCount, $cost->Cost() / $creditCount, $cost->Currency(), $userSession->UserId));
         }
     }
 
@@ -86,8 +97,7 @@ class CheckoutPresenter extends ActionPresenter
         $cart = ServiceLocator::GetServer()->GetSession(SessionKeys::CREDIT_CART);
         $payment = $gateway->ExecutePayment($cart, $this->page->GetPaymentId(), $this->page->GetPayerId(), $this->paymentLogger);
 
-        if ($payment->state == "approved")
-        {
+        if ($payment->state == "approved") {
             $user = $this->userRepository->LoadById(ServiceLocator::GetServer()->GetUserSession()->UserId);
             $user->AddCredits($cart->Quantity, Resources::GetInstance()->GetString('NoteCreditsPurchased'));
             $this->userRepository->Update($user);
@@ -108,8 +118,7 @@ class CheckoutPresenter extends ActionPresenter
         $cart = ServiceLocator::GetServer()->GetSession(SessionKeys::CREDIT_CART);
         $result = $gateway->Charge($cart, $userSession->Email, $token, $this->paymentLogger);
 
-        if ($result == true)
-        {
+        if ($result == true) {
             $user = $this->userRepository->LoadById($userSession->UserId);
             $user->AddCredits($cart->Quantity, Resources::GetInstance()->GetString('NoteCreditsPurchased'));
             $this->userRepository->Update($user);

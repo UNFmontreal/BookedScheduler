@@ -1,9 +1,9 @@
-Votre mot de passe temporaire Booked Scheduler : {$TemporaryPassword}
+Votre mot de passe temporaire {$AppTitle}: {$TemporaryPassword}
 
 <br/>
 
 Votre ancien mot de passe ne fonctionne maintenant plus.
+<br/>
+<br/>
 
-SVP : <a href="{$ScriptUrl}">Connexion à Booked Scheduler</a> pour changer au plus vite votre mot de passe.
-
-
+Veuillez vous <a href="{$ScriptUrl}">connecter à {$AppTitle}</a> pour changer votre mot de passe au plus vite.

@@ -340,63 +340,63 @@ class ro_ro extends en_gb
         $strings['AdditionalAttributes'] = 'Atribute suplimentare';
         $strings['True'] = 'Adevarat';
         $strings['False'] = 'Fals';
-		$strings['ForgotPasswordEmailSent'] = 'Una email e\' stata inviata all\'indirizzo fornito con le istruzioni per resettare la password';
-		$strings['ActivationEmailSent'] = 'Veti primi in cel mai scurt timp un e-mail de activare.';
-		$strings['AccountActivationError'] = 'Scuze, nu pot activa contul tau';
-		$strings['Attachments'] = 'Anexe';
-		$strings['AttachFile'] = 'Anexeaza fisier';
-		$strings['Maximum'] = 'max';
-		$strings['FindATime'] = 'Gaseste un loc liber';
-		$strings['ThisWeek'] = 'Saptamana curenta';
-		$strings['DateRange'] = 'Defineste interval';
-		$strings['GetReport'] = 'Obtine raportul';
-		$strings['NoResultsFound'] = 'Nu au fost gasite rezultate care sa se potriveasca';
-		$strings['SaveThisReport'] = 'Salveaza acest raport';
-		$strings['ReportSaved'] = 'Raport salvat!';
-		$strings['EmailReport'] = 'Trimite raport prin e-mail';
-		$strings['ReportSent'] = 'Raport trimis!';
-		$strings['RunReport'] = 'Ruleaza raportul';
-		$strings['NoSavedReports'] = 'Nu aveti rapoarte salvate.';
-		$strings['CurrentWeek'] = 'Saptamana curenta';
-		$strings['CurrentMonth'] = 'Luna curenta';
-		$strings['AllTime'] = 'Oricand';
-		$strings['FilterBy'] = 'Filtreaza dupa';
-		$strings['Select'] = 'Selecteaza';
-		$strings['List'] = 'Lista';
-		$strings['TotalTime'] = 'Timp total';
-		$strings['Count'] = 'Contor';
-		$strings['Usage'] = 'Folosire';
-		$strings['AggregateBy'] = 'Grupeaza dupa';
-		$strings['Range'] = 'Interval';
-		$strings['Choose'] = 'Alege';
-		$strings['All'] = 'Toate';
-		$strings['ViewAsChart'] = 'Vezi ca si grafic';
-		$strings['ReservedResources'] = 'Resurse rezervate';
-		$strings['ReservedAccessories'] = 'Accesorii rezervate';
-		$strings['ResourceUsageTimeBooked'] = 'Folosire resurse - timp rezervat';
-		$strings['ResourceUsageReservationCount'] = 'Folosire resurse - Contor rezervari';
-		$strings['Top20UsersTimeBooked'] = 'Top 20 utilizatori - Timp rezervat';
-		$strings['Top20UsersReservationCount'] = 'Top 20 utilizatori - Contor rezervari';
-		$strings['IncludeDeleted'] = 'Include rezervarile sterse';
-		$strings['Columns'] = 'Coloane';
-		$strings['DeleteReminderWarning'] = 'Esti sigur ca vrei sa stergi asta?';
-		$strings['More'] = 'Mai mult';
-		$strings['ResourceFilter'] = 'Filtru resurse';
-		$strings['ClearFilter'] = 'Sterge filtrele';
-		$strings['MinimumCapacity'] = 'Capacitate minima';
-		$strings['ResourceType'] = 'Tipul de resursa';
-		$strings['ResourceAvailability'] = 'Disponibilitate resurse';
-		$strings['UnavailableAllDay'] = 'Nu sunt disponibile intreaga zi';
-		$strings['AvailableUntil'] = 'Disponibil pana';
-		$strings['AvailableBeginningAt'] = 'Disponibil incepand de';
-		$strings['Available'] = 'Disponibile';
-		$strings['Unavailable'] = 'Nu sunt disponibile';
-		$strings['NotifyWhenAvailable'] = 'Notifica-ma cand este disponibila';
-		$strings['AddingToWaitlist'] = 'Adauga la lista de asteptare';
-		$strings['WaitlistRequestAdded'] = 'Veti fi notificat cand intervalul de timp devine disponibil';
-		$strings['Reserve'] = 'Rezerva';
-		$strings['MoreOptions'] = 'Mai multe optiuni';
-		$strings['SendAsEmail'] = 'Trimite ca si e-mail';
+        $strings['ForgotPasswordEmailSent'] = 'Una email e\' stata inviata all\'indirizzo fornito con le istruzioni per resettare la password';
+        $strings['ActivationEmailSent'] = 'Veti primi in cel mai scurt timp un e-mail de activare.';
+        $strings['AccountActivationError'] = 'Scuze, nu pot activa contul tau';
+        $strings['Attachments'] = 'Anexe';
+        $strings['AttachFile'] = 'Anexeaza fisier';
+        $strings['Maximum'] = 'max';
+        $strings['FindATime'] = 'Gaseste un loc liber';
+        $strings['ThisWeek'] = 'Saptamana curenta';
+        $strings['DateRange'] = 'Defineste interval';
+        $strings['GetReport'] = 'Obtine raportul';
+        $strings['NoResultsFound'] = 'Nu au fost gasite rezultate care sa se potriveasca';
+        $strings['SaveThisReport'] = 'Salveaza acest raport';
+        $strings['ReportSaved'] = 'Raport salvat!';
+        $strings['EmailReport'] = 'Trimite raport prin e-mail';
+        $strings['ReportSent'] = 'Raport trimis!';
+        $strings['RunReport'] = 'Ruleaza raportul';
+        $strings['NoSavedReports'] = 'Nu aveti rapoarte salvate.';
+        $strings['CurrentWeek'] = 'Saptamana curenta';
+        $strings['CurrentMonth'] = 'Luna curenta';
+        $strings['AllTime'] = 'Oricand';
+        $strings['FilterBy'] = 'Filtreaza dupa';
+        $strings['Select'] = 'Selecteaza';
+        $strings['List'] = 'Lista';
+        $strings['TotalTime'] = 'Timp total';
+        $strings['Count'] = 'Contor';
+        $strings['Usage'] = 'Folosire';
+        $strings['AggregateBy'] = 'Grupeaza dupa';
+        $strings['Range'] = 'Interval';
+        $strings['Choose'] = 'Alege';
+        $strings['All'] = 'Toate';
+        $strings['ViewAsChart'] = 'Vezi ca si grafic';
+        $strings['ReservedResources'] = 'Resurse rezervate';
+        $strings['ReservedAccessories'] = 'Accesorii rezervate';
+        $strings['ResourceUsageTimeBooked'] = 'Folosire resurse - timp rezervat';
+        $strings['ResourceUsageReservationCount'] = 'Folosire resurse - Contor rezervari';
+        $strings['Top20UsersTimeBooked'] = 'Top 20 utilizatori - Timp rezervat';
+        $strings['Top20UsersReservationCount'] = 'Top 20 utilizatori - Contor rezervari';
+        $strings['IncludeDeleted'] = 'Include rezervarile sterse';
+        $strings['Columns'] = 'Coloane';
+        $strings['DeleteReminderWarning'] = 'Esti sigur ca vrei sa stergi asta?';
+        $strings['More'] = 'Mai mult';
+        $strings['ResourceFilter'] = 'Filtru resurse';
+        $strings['ClearFilter'] = 'Sterge filtrele';
+        $strings['MinimumCapacity'] = 'Capacitate minima';
+        $strings['ResourceType'] = 'Tipul de resursa';
+        $strings['ResourceAvailability'] = 'Disponibilitate resurse';
+        $strings['UnavailableAllDay'] = 'Nu sunt disponibile intreaga zi';
+        $strings['AvailableUntil'] = 'Disponibil pana';
+        $strings['AvailableBeginningAt'] = 'Disponibil incepand de';
+        $strings['Available'] = 'Disponibile';
+        $strings['Unavailable'] = 'Nu sunt disponibile';
+        $strings['NotifyWhenAvailable'] = 'Notifica-ma cand este disponibila';
+        $strings['AddingToWaitlist'] = 'Adauga la lista de asteptare';
+        $strings['WaitlistRequestAdded'] = 'Veti fi notificat cand intervalul de timp devine disponibil';
+        $strings['Reserve'] = 'Rezerva';
+        $strings['MoreOptions'] = 'Mai multe optiuni';
+        $strings['SendAsEmail'] = 'Trimite ca si e-mail';
 
         // Errors
         $strings['LoginError'] = 'Username o password errate';
@@ -449,16 +449,16 @@ class ro_ro extends en_gb
         $strings['ForgotPassword'] = 'Am uitat parola';
         $strings['NotificationPreferences'] = 'Preferinte de notificare';
         $strings['ManageAnnouncements'] = 'Administreaza anunturile';
-		$strings['LookAndFeel'] = 'Aspect aplicatie';
-		$strings['ManageConfiguration'] = 'Configurare aplicatie';
-		$strings['ManageResourceTypes'] = 'Tipuri de resurse';
-		$strings['Reports'] = 'Rapoarte';
-		$strings['GenerateReport'] = 'Creeaza un raport nou';
-		$strings['MySavedReports'] = 'Rapoartele mele salvate';
-		$strings['CommonReports'] = 'Rapoarte comune';
-		$strings['Responsibilities'] = 'Responsabilitati';
-		$strings['GroupReservations'] = 'Rezervari de grup';
-		$strings['ResourceReservations'] = 'Rezervari de resurse';
+        $strings['LookAndFeel'] = 'Aspect aplicatie';
+        $strings['ManageConfiguration'] = 'Configurare aplicatie';
+        $strings['ManageResourceTypes'] = 'Tipuri de resurse';
+        $strings['Reports'] = 'Rapoarte';
+        $strings['GenerateReport'] = 'Creeaza un raport nou';
+        $strings['MySavedReports'] = 'Rapoartele mele salvate';
+        $strings['CommonReports'] = 'Rapoarte comune';
+        $strings['Responsibilities'] = 'Responsabilitati';
+        $strings['GroupReservations'] = 'Rezervari de grup';
+        $strings['ResourceReservations'] = 'Rezervari de resurse';
         //
 
         // Day representations
@@ -488,14 +488,53 @@ class ro_ro extends en_gb
         $strings['InviteeAddedSubject'] = 'Invito a prenotazione';
         $strings['ResetPassword'] = 'Cerere de resetare parola';
         $strings['ForgotPasswordEmailSent'] = 'Un email\' a fost transmis\'in care sunt furnizate instructiuni pentru resetarea parolei';
-        //
+        //End Email Subjects
+
+        //NEEDS CHECKING
+        //Past Reservations
+        $strings['NoPastReservations'] = 'Nu aveți rezervări anterioare';
+        $strings['PastReservations'] = 'Rezervări Anterioare';
+        $strings['AllNoPastReservations'] = 'Nu există rezervări anterioare în ultimele %s zile';
+        $strings['AllPastReservations'] = 'Toate Rezervările Anterioare';
+        $strings['Yesterday'] = 'Ieri';
+        $strings['EarlierThisWeek'] = 'Mai devreme în această săptămână';
+        $strings['PreviousWeek'] = 'Săptămâna trecută';
+        //End Past Reservations
+
+        //Group Upcoming Reservations
+        $strings['NoGroupUpcomingReservations'] = 'Grupul tău nu are rezervări viitoare';
+        $strings['GroupUpcomingReservations'] = 'Viitoarele rezervări ale grupului/meu(ă)';
+        //End Group Upcoming Reservations
+
+        //Facebook Login SDK Error
+        $strings['FacebookLoginErrorMessage'] = 'A apărut o eroare la autentificarea cu Facebook. Vă rugăm să încercați din nou.';
+        //End Facebook Login SDK Error
+
+        //Pending Approval Reservations in Dashboard
+        $strings['NoPendingApprovalReservations'] = 'Nu aveți rezervări în așteptare de aprobare';
+        $strings['PendingApprovalReservations'] = 'Rezervări în așteptare de aprobare';
+        $strings['LaterThisMonth'] = 'Mai târziu în acest lună';
+        $strings['LaterThisYear'] = 'Mai târziu în acest an';
+        $strings['Remaining'] = 'Rămase';        
+        //End Pending Approval Reservations in Dashboard
+
+        //Missing Check In/Out Reservations in Dashboard
+        $strings['NoMissingCheckOutReservations'] = 'Nu există rezervări de ieșire lipsă';
+        $strings['MissingCheckOutReservations'] = 'Rezervări de ieșire lipsă';        
+        //End Missing Check In/Out Reservations in Dashboard
+
+        //Schedule Resource Permissions
+        $strings['NoResourcePermissions'] = 'Nu puteți vedea detaliile rezervării deoarece nu aveți permisiuni pentru niciunul dintre resursele din această rezervare';
+        //End Schedule Resource Permissions
+        //END NEEDS CHECKING
+
 
         $this->Strings = $strings;
     }
 
     protected function _LoadDays()
     {
-         $days = parent::_LoadDays();
+        $days = parent::_LoadDays();
 
         /***
         DAY NAMES
@@ -503,13 +542,13 @@ class ro_ro extends en_gb
         and go through the seven day week, ending on Saturday
          ***/
         // The full day name
-        $days['full'] = array('Duminica', 'Luni', 'Marti', 'Miercuri', 'Joi', 'Vineri', 'Sambata');
+        $days['full'] = ['Duminica', 'Luni', 'Marti', 'Miercuri', 'Joi', 'Vineri', 'Sambata'];
         // The three letter abbreviation
-        $days['abbr'] = array('Du', 'Lu', 'Ma', 'Mi', 'Jo', 'Vi', 'Sa');
+        $days['abbr'] = ['Du', 'Lu', 'Ma', 'Mi', 'Jo', 'Vi', 'Sa'];
         // The two letter abbreviation
-        $days['two'] = array('Du', 'Lu', 'Ma', 'Mi', 'Jo', 'Vi', 'Sa');
+        $days['two'] = ['Du', 'Lu', 'Ma', 'Mi', 'Jo', 'Vi', 'Sa'];
         // The one letter abbreviation
-        $days['letter'] = array('D', 'L', 'M', 'M', 'J', 'V', 'S');
+        $days['letter'] = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
 
         $this->Days = $days;
     }
@@ -524,16 +563,16 @@ class ro_ro extends en_gb
         and go through the twelve months of the year, ending on December
          ***/
         // The full month name
-        $months['full'] = array('Ianuarie', 'Februarie', 'martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie');
+        $months['full'] = ['Ianuarie', 'Februarie', 'martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie'];
         // The three letter month name
-        $months['abbr'] = array('Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
+        $months['abbr'] = ['Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
         $this->Months = $months;
     }
 
     protected function _LoadLetters()
     {
-        $this->Letters = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+        $this->Letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
     }
 
     protected function _GetHtmlLangCode()
@@ -541,5 +580,3 @@ class ro_ro extends en_gb
         return 'ro';
     }
 }
-
-?>

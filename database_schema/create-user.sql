@@ -1,8 +1,8 @@
-DROP USER 'booked_user'@'localhost';
-DROP USER 'booked_user'@'127.0.0.1';
+DROP USER IF EXISTS 'lb_user'@'%';
+CREATE USER 'lb_user'@'%' identified by 'password';
 
-CREATE USER 'booked_user'@'localhost' identified by 'password';
-CREATE USER 'booked_user'@'127.0.0.1' identified by 'password';
+DROP USER IF EXISTS 'lb_user'@'127.0.0.1';
+CREATE USER 'lb_user'@'127.0.0.1' identified by 'password';
 
-GRANT ALL on booked.* to 'booked_user'@'localhost';
-GRANT ALL on booked.* to 'booked_user'@'127.0.0.1';
+GRANT ALL on librebooking.* to 'lb_user'@'%';
+GRANT ALL on librebooking.* to 'lb_user'@'127.0.0.1';

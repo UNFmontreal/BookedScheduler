@@ -4,7 +4,6 @@
 /build/*
 /tools/*
 /var/*
-.phive/*
 
 # Customized Confiuration Files
 /config/config.php
@@ -60,3 +59,6 @@
 *.sublime-workspace
 
 .DS_Store
+
+# php8 phpcompatibility report
+php8-report.log

@@ -27,12 +27,13 @@ class UnavailableResourcesPresenter
      */
     private $reservationRepository;
 
-    public function __construct(IAvailableResourcesPage $page,
-                                IReservationConflictIdentifier $reservationConflictIdentifier,
-                                UserSession $userSession,
-                                IResourceRepository $resourceRepository,
-                                IReservationRepository $reservationRepository)
-    {
+    public function __construct(
+        IAvailableResourcesPage $page,
+        IReservationConflictIdentifier $reservationConflictIdentifier,
+        UserSession $userSession,
+        IResourceRepository $resourceRepository,
+        IReservationRepository $reservationRepository
+    ) {
         $this->page = $page;
         $this->reservationConflictIdentifier = $reservationConflictIdentifier;
         $this->userSession = $userSession;
@@ -42,12 +43,15 @@ class UnavailableResourcesPresenter
 
     public function PageLoad()
     {
-        $duration = DateRange::Create($this->page->GetStartDate() . ' ' . $this->page->GetStartTime(),
-            $this->page->GetEndDate() . ' ' . $this->page->GetEndTime(), $this->userSession->Timezone);
+        $duration = DateRange::Create(
+            $this->page->GetStartDate() . ' ' . $this->page->GetStartTime(),
+            $this->page->GetEndDate() . ' ' . $this->page->GetEndTime(),
+            $this->userSession->Timezone
+        );
 
         $resources = $this->resourceRepository->GetScheduleResources($this->page->GetScheduleId());
 
-        $unavailable = array();
+        $unavailable = [];
         $referenceNumber = $this->page->GetReferenceNumber();
         $series = null;
         $existingSeries = false;
@@ -58,7 +62,6 @@ class UnavailableResourcesPresenter
         }
 
         foreach ($resources as $resource) {
-
             if (!$existingSeries) {
                 $series = ReservationSeries::Create($this->userSession->UserId, $resource, "", "", $duration, new RepeatNone(), $this->userSession);
             }

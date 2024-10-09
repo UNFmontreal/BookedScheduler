@@ -10,47 +10,47 @@ class ja_jp extends en_gb
         parent::__construct();
     }
 
-	/**
-	 * @return array
-	 */
-	protected function _LoadDates()
-	{
-		$dates = array();
+    /**
+     * @return array
+     */
+    protected function _LoadDates()
+    {
+        $dates = [];
 
-		$dates['general_date'] = 'Y-m-d';
+        $dates['general_date'] = 'Y-m-d';
         $dates['general_datetime'] = 'Y-m-d H:i:s';
-		$dates['short_datetime'] = 'Y-m-d g:i A';
+        $dates['short_datetime'] = 'Y-m-d G:i';
         $dates['schedule_daily'] = 'Y-m-d (l)';
-        $dates['reservation_email'] = 'Y-m-d @ g:i A (e)';
-        $dates['res_popup'] = 'Y-m-d g:i A';
-		$dates['res_popup_time'] = 'g:i A';
-		$dates['short_reservation_date'] = 'Y-m-d g:i A';
-        $dates['dashboard'] = 'Y-m-d (l) g:i A';
-        $dates['period_time'] = "g:i A";
-		$dates['timepicker'] = 'h:i a';
-		$dates['mobile_reservation_date'] = 'M/d g:i A';
+        $dates['reservation_email'] = 'Y-m-d @ G:i (e)';
+        $dates['res_popup'] = 'Y-m-d G:i';
+        $dates['res_popup_time'] = 'G:i';
+        $dates['short_reservation_date'] = 'Y-m-d G:i';
+        $dates['dashboard'] = 'Y-m-d (l) G:i';
+        $dates['period_time'] = "G:i";
+        $dates['timepicker'] = 'h:i a';
+        $dates['mobile_reservation_date'] = 'M/d G:i';
         $dates['general_date_js'] = "yy-mm-dd";
         $dates['general_time_js'] = 'h:mm tt';
         $dates['timepicker_js'] = 'h:i a';
         $dates['momentjs_datetime'] = 'YY-m-d h:mm A';
         $dates['calendar_time'] = 'h:mmt';
         $dates['calendar_dates'] = 'm/d';
-		$dates['embedded_date'] = 'D d';
-		$dates['embedded_time'] = 'g:i A';
-		$dates['embedded_datetime'] = 'm/d g:i A';
-		$dates['report_date'] = '%m/%d';
+        $dates['embedded_date'] = 'D d';
+        $dates['embedded_time'] = 'G:i';
+        $dates['embedded_datetime'] = 'm/d G:i';
+        $dates['report_date'] = '%m/%d';
 
-		$this->Dates = $dates;
+        $this->Dates = $dates;
 
-		return $this->Dates;
-	}
+        return $this->Dates;
+    }
 
-	/**
-	 * @return array
-	 */
-	protected function _LoadStrings()
-	{
-		$strings = array();
+    /**
+     * @return array
+     */
+    protected function _LoadStrings()
+    {
+        $strings = [];
 
         $strings['FirstName'] = '名';
         $strings['LastName'] = '姓';
@@ -775,7 +775,7 @@ class ja_jp extends en_gb
         // End Strings
 
         // Install
-        $strings['InstallApplication'] = 'Booked Schedulerをインストール ( MySQLのみ )';
+        $strings['InstallApplication'] = 'LibreBookingをインストール ( MySQLのみ )';
         $strings['IncorrectInstallPassword'] = '申し訳ありませんが、パスワードが違っています。';
         $strings['SetInstallPassword'] = 'インストールを実行する前に、インストールパスワードを設定しておかなくてはなりません。';
         $strings['InstallPasswordInstructions'] = '%s 内の %s にランダムで推測できないようなパスワードを設定して、再度このページに戻って来てください。<br/> %s を使ってもいいでしょう。';
@@ -990,8 +990,45 @@ class ja_jp extends en_gb
         $strings['ReservationParticipantAccept'] = '%s は %s ( %s ) の予約への招待を受け入れました';
         $strings['ReservationParticipantDecline'] = '%s は %s ( %s ) の予約招待を拒否しました';
         $strings['ReservationParticipantJoin'] = '%s は %s ( %s ) の予約に参加しました';
-
         // End Email Subjects
+
+        //NEEDS CHECKING
+        //Past Reservations
+        $strings['NoPastReservations'] = '過去の予約はありません';
+        $strings['PastReservations'] = '過去の予約';
+        $strings['AllNoPastReservations'] = '直近%s日間に過去の予約はありません';
+        $strings['AllPastReservations'] = 'すべての過去の予約';
+        $strings['Yesterday'] = '昨日';
+        $strings['EarlierThisWeek'] = '今週の前半';
+        $strings['PreviousWeek'] = '先週';
+        //End Past Reservations
+
+        //Group Upcoming Reservations
+        $strings['NoGroupUpcomingReservations'] = 'あなたのグループには今後の予約がありません';
+        $strings['GroupUpcomingReservations'] = '私のグループの今後の予約';
+        //End Group Upcoming Reservations
+
+        //Facebook Login SDK Error
+        $strings['FacebookLoginErrorMessage'] = 'Facebookでログイン中にエラーが発生しました。もう一度お試しください。';
+        //End Facebook Login SDK Error
+
+        //Pending Approval Reservations in Dashboard
+        $strings['NoPendingApprovalReservations'] = '承認待ちの予約はありません';
+        $strings['PendingApprovalReservations'] = '承認待ちの予約';
+        $strings['LaterThisMonth'] = '今月の後で';
+        $strings['LaterThisYear'] = '今年の後で';
+        $strings['Remaining'] = '残り';
+        //End Pending Approval Reservations in Dashboard
+
+        //Missing Check In/Out Reservations in Dashboard
+
+        //End Missing Check In/Out Reservations in Dashboard
+
+        //Schedule Resource Permissions
+        $strings['NoResourcePermissions'] = 'この予約に含まれるいずれかのリソースへの権限がないため、予約の詳細を表示できません';
+        //End Schedule Resource Permissions
+        //END NEEDS CHECKING
+
 
         $this->Strings = $strings;
 
@@ -1011,13 +1048,13 @@ class ja_jp extends en_gb
         and go through the seven day week, ending on Saturday
          ***/
         // The full day name
-        $days['full'] = array('日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日');
+        $days['full'] = ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'];
         // The three letter abbreviation
-        $days['abbr'] = array('日', '月', '火', '水', '木', '金', '土');
+        $days['abbr'] = ['日', '月', '火', '水', '木', '金', '土'];
         // The two letter abbreviation
-        $days['two'] = array('日', '月', '火', '水', '木', '金', '土');
+        $days['two'] = ['日', '月', '火', '水', '木', '金', '土'];
         // The one letter abbreviation
-        $days['letter'] = array('日', '月', '火', '水', '木', '金', '土');
+        $days['letter'] = ['日', '月', '火', '水', '木', '金', '土'];
 
         $this->Days = $days;
 
@@ -1037,9 +1074,9 @@ class ja_jp extends en_gb
         and go through the twelve months of the year, ending on December
          ***/
         // The full month name
-        $months['full'] = array('1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月');
+        $months['full'] = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
         // The three letter month name
-        $months['abbr'] = array('1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月');
+        $months['abbr'] = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
 
         $this->Months = $months;
 
@@ -1051,7 +1088,7 @@ class ja_jp extends en_gb
      */
     protected function _LoadLetters()
     {
-        $this->Letters = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+        $this->Letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
         return $this->Letters;
     }

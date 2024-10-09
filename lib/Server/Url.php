@@ -21,21 +21,20 @@ class Url
         $this->hasQuestionMark = BookedStringHelper::Contains($url, '?');
     }
 
-	/**
-	 * @param $urlFragment string
-	 * @return Url
-	 */
-	public function Add($urlFragment)
-	{
-		if (!BookedStringHelper::EndsWith($this->url, '/'))
-		{
-			$this->url .= '/';
-		}
+    /**
+     * @param $urlFragment string
+     * @return Url
+     */
+    public function Add($urlFragment)
+    {
+        if (!BookedStringHelper::EndsWith($this->url, '/')) {
+            $this->url .= '/';
+        }
 
-		$this->url .= urlencode($urlFragment);
+        $this->url .= urlencode($urlFragment);
 
-		return $this;
-	}
+        return $this;
+    }
 
     /**
      * @param string $name
@@ -45,13 +44,12 @@ class Url
     public function AddQueryString($name, $value)
     {
         $char = '?';
-        if ($this->hasQuestionMark)
-        {
+        if ($this->hasQuestionMark) {
             $char = '&';
         }
 
         $this->hasQuestionMark = true;
-        $this->url .= sprintf("$char%s=%s", $name, urlencode($value));
+        $this->url .= sprintf("$char%s=%s", $name, urlencode($value ?? ""));
 
         return $this;
     }
@@ -76,6 +74,4 @@ class Url
     {
         return new Url($this->ToString());
     }
-
 }
-

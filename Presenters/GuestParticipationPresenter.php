@@ -21,11 +21,12 @@ class GuestParticipationPresenter
      */
     private $participationNotification;
 
-    public function __construct(IGuestParticipationPage $page,
-                                IReservationRepository $reservationRepository,
-                                IUserRepository $userRepository,
-                                IParticipationNotification $participationNotification)
-    {
+    public function __construct(
+        IGuestParticipationPage $page,
+        IReservationRepository $reservationRepository,
+        IUserRepository $userRepository,
+        IParticipationNotification $participationNotification
+    ) {
         $this->page = $page;
         $this->reservationRepository = $reservationRepository;
         $this->userRepository = $userRepository;
@@ -36,8 +37,7 @@ class GuestParticipationPresenter
     {
         if ($this->MissingRequired()) {
             $this->page->SetMissingInformation();
-        }
-        else {
+        } else {
             $result = $this->HandleInvitationAction($this->page->GetInvitationAction());
             $result->Populate($this->page);
         }
@@ -65,8 +65,7 @@ class GuestParticipationPresenter
                 // if email is already registered, then add user as participant and delete guest
                 $series->AcceptGuestAsUserInvitation($email, $user);
                 $result = InvitationResult::AcceptedAsUser($series, $user);
-            }
-            else {
+            } else {
                 // if not registered
                 $series->AcceptGuestInvitation($email);
                 $result = InvitationResult::AcceptedAsGuest($series);
@@ -193,7 +192,7 @@ class InvitationResult
     {
         $result = new InvitationResult();
         $result->reachedMaxCapacity = true;
-        $result->maxCapacityMessage = Resources::GetInstance()->GetString('MaxParticipantsError', array($resourceName, $maxParticipants));
+        $result->maxCapacityMessage = Resources::GetInstance()->GetString('MaxParticipantsError', [$resourceName, $maxParticipants]);
 
         return $result;
     }

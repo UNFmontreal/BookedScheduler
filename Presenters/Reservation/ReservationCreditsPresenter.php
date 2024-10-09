@@ -27,12 +27,13 @@ class ReservationCreditsPresenter
      */
     private $paymentRepository;
 
-    public function __construct(IReservationCreditsPage $page,
-                                IReservationRepository $reservationRepository,
-                                IScheduleRepository $scheduleRepository,
-                                IResourceRepository $resourceRepository,
-                                IPaymentRepository $paymentRepository)
-    {
+    public function __construct(
+        IReservationCreditsPage $page,
+        IReservationRepository $reservationRepository,
+        IScheduleRepository $scheduleRepository,
+        IResourceRepository $resourceRepository,
+        IPaymentRepository $paymentRepository
+    ) {
         $this->page = $page;
         $this->reservationRepository = $reservationRepository;
         $this->scheduleRepository = $scheduleRepository;
@@ -54,8 +55,11 @@ class ReservationCreditsPresenter
 
         $cost = '';
         if (Configuration::Instance()->GetSectionKey(ConfigSection::CREDITS, ConfigKeys::CREDITS_ALLOW_PURCHASE, new BooleanConverter())) {
-            $creditCost = $this->paymentRepository->GetCreditCost();
-            $cost = $creditCost->GetFormattedTotal($creditsRequired);
+            $creditCost = $this->paymentRepository->GetCreditCosts();
+            // Only give an estimation of costs if there is only one cost configured
+            if (count($creditCost) == 1) {
+                $cost = $creditCost[0]->GetFormattedTotal($creditsRequired);
+            }
         }
         $this->page->SetCreditRequired($creditsRequired, $cost);
     }
@@ -82,8 +86,7 @@ class ReservationCreditsPresenter
             }
 
             return $reservationSeries;
-        }
-        else {
+        } else {
             $referenceNumber = $this->page->GetReferenceNumber();
             $existingSeries = $this->reservationRepository->LoadByReferenceNumber($referenceNumber);
 
@@ -101,14 +104,15 @@ class ReservationCreditsPresenter
                 $resource,
                 null,
                 null,
-                $userSession);
+                $userSession
+            );
 
             $existingSeries->UpdateDuration($this->GetReservationDuration($userSession));
             $roFactory = new RepeatOptionsFactory();
 
             $existingSeries->Repeats($roFactory->CreateFromComposite($this->page, $userSession->Timezone));
 
-            $additionalResources = array();
+            $additionalResources = [];
             foreach ($resourceIds as $additionalResourceId) {
                 if ($additionalResourceId != $resourceId) {
                     $additionalResources[] = $this->resourceRepository->LoadById($additionalResourceId);

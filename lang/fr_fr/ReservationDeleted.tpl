@@ -15,7 +15,7 @@ Fin: {formatdate date=$EndDate key=reservation_email}<br/>
     Ressource: {$ResourceName}
     <br/>
 {/if}
-Titre: {$Title}<br/>
+Libellé: {$Title}<br/>
 Description: {$Description|nl2br}<br/>
 {$DeleteReason|nl2br}<br/>
 
@@ -40,6 +40,6 @@ Description: {$Description|nl2br}<br/>
     {/foreach}
 {/if}
 
-<a href="{$ScriptUrl}">Connexion à Booked Scheduler</a>
+<a href="{$ScriptUrl}">Connexion à LibreBooking</a>
 
 

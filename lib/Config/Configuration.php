@@ -37,7 +37,7 @@ interface IConfigurationFile
     public function GetKey($name, $converter = null);
 
     /**
-     * @return string the full url to the root of this Booked Scheduler instance WITHOUT the trailing /
+     * @return string the full url to the root of this LibreBooking instance WITHOUT the trailing /
      */
     public function GetScriptUrl();
 
@@ -70,18 +70,18 @@ class Configuration implements IConfiguration
     /**
      * @var array|Configuration[]
      */
-    protected $_configs = array();
+    protected $_configs = [];
 
     /**
      * @var Configuration
      */
     private static $_instance = null;
 
-    const SETTINGS = 'settings';
-    const DEFAULT_CONFIG_ID = 'booked';
-    const DEFAULT_CONFIG_FILE_PATH = 'config/config.php';
+    public const SETTINGS = 'settings';
+    public const DEFAULT_CONFIG_ID = 'librebooking';
+    public const DEFAULT_CONFIG_FILE_PATH = 'config/config.php';
 
-    const VERSION = '2.8.5.4';
+    public const VERSION = '2.8.6.2';
 
     protected function __construct()
     {
@@ -96,7 +96,8 @@ class Configuration implements IConfiguration
             self::$_instance = new Configuration();
             self::$_instance->Register(
                 dirname(__FILE__) . '/../../' . self::DEFAULT_CONFIG_FILE_PATH,
-                self::DEFAULT_CONFIG_ID);
+                self::DEFAULT_CONFIG_ID
+            );
         }
 
         return self::$_instance;
@@ -186,7 +187,7 @@ class Configuration implements IConfiguration
 
 class ConfigurationFile implements IConfigurationFile
 {
-    private $_values = array();
+    private $_values = [];
 
     public function __construct($values)
     {
@@ -218,8 +219,7 @@ class ConfigurationFile implements IConfigurationFile
 
             if ($isHttps) {
                 $url = "https:$url";
-            }
-            else {
+            } else {
                 $url = "http:$url";
             }
         }
