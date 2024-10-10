@@ -32,7 +32,7 @@ class en_us extends Language
         $dates['general_time_js'] = 'h:mm tt';
         $dates['timepicker_js'] = 'h:i a';
         $dates['momentjs_datetime'] = 'M/D/YY h:mm A';
-        $dates['calendar_time'] = 'h:mmt';
+        $dates['calendar_time'] = 'H:mm';
         $dates['calendar_dates'] = 'M d';
         $dates['embedded_date'] = 'D d';
         $dates['embedded_time'] = 'g:i A';
